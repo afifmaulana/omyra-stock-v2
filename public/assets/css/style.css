@@ -1,0 +1,647 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
+*{
+    font-family: inter, sans-serif;
+}
+
+input[type=text]{
+    border: 1px solid #FFB4B4;
+    border-radius: 4px;
+}
+
+/* Start Background Color*/
+.bg-mist-pink{
+    background: #B8A6B5;
+}
+.bg-asparagus-white{
+    background: #7E9394;
+}
+.bg-washout-green{
+    background: #A4B7A6;
+}
+.bg-heather-mauve{
+    background: #8A7C93;
+}
+.bg-girly-light-blue{
+    background: #DAEAF9;
+}
+.bg-sarah{
+    background: #FDC8DC;
+}
+.bg-green{
+    background: #58D874;
+}
+.bg-blue {
+    background: #619ED7;
+}
+.bg-red{
+    background: #DB3A3A;
+}
+.bg-yellow{
+    background: #FFB240;
+}
+.bg-pink{
+    background: #D6D6D6;
+}
+.bg-grey{
+    background: #FAFAFA;
+}
+.bg-input-auth{
+    background: #FFFAFA;
+}
+/* End Background Color*/
+
+/* Start Button Style */
+.btn-pink {
+    background: #F25287;
+    color: #fff;
+}
+.btn-pink:hover{
+    background: #ff8fad;
+    color: #F25287;
+    border-color: #F25287;
+}
+.btn-profile{
+    background: #ffffff;
+    color: #F25287;
+    border-color: #fce4ec;
+}
+.btn-profile:hover{
+    background: #F25287;
+    color: #f1f1f1;
+}
+.btn-omyra{
+    height: 53px;
+}
+/* End Button Style */
+
+/* Start Nav Bottom */
+.bottom-nav {
+    overflow: hidden;
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .bottom-nav img {
+    float: left;
+    display: block;
+    color: #D6d6d6;
+    text-align: center;
+    padding: 0 16px;
+    padding-top: 3px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  .bottom-nav a:hover {
+    background: #fff;
+    color: #F25287;
+  }
+
+  .bottom-nav a.active {
+    background-color: #fff;
+    color: #F25287;
+  }
+  .border-nav-bottom {
+    border: solid 1px #EDEDED;
+}
+/* End Nav Bottom */
+
+/* Start Bubble */
+.buble {
+    background: #8fd4fc;
+    position: absolute;
+    border-radius: 50%;
+}
+.buble1{
+    height: 256px;
+    width: 256px;
+    top: 70px;
+    left: -100px
+}
+.buble2{
+    height: 145px;
+    width: 145px;
+    top: 30px;
+    right: -70px;
+}
+.buble3{
+    height: 150px;
+    width: 150px;
+    top: 30px;
+    right: -70px;
+}
+.buble4{
+    height: 125px;
+    width: 125px;
+    top: 70px;
+    left: -30px;
+}
+/* End Bubble */
+
+.box-shadow {
+    box-shadow: 0 1px 2px 0
+    rgba(238, 238, 238, 0.5), 0
+    1px 5px 0 rgb(235, 235, 235);
+}
+
+.border-span{
+    border: 0.4px solid #FFB4B4;
+    border-left: none;
+    border-radius: 4px;
+}
+
+.border-right-none{
+    border-right: #FFFAFA;
+}
+.border-pink{
+    border: solid 1px #FFB4B4 !important;
+}
+.border-left-none{
+    border-left: 0 !important;
+}
+
+.border-nav-bottom {
+    border: solid 1px #EDEDED;
+}
+
+.container-omyra {
+    margin: 0 25px;
+}
+
+/* Start Font Size */
+.font-size-14{
+    font-size: 14px;
+}
+.font-size-18{
+    font-size: 18px;
+}
+.font-size-16{
+    font-size: 16px;
+}
+.font-size-24{
+    font-size: 24px;
+}
+.text-black{
+    color: black;
+}
+.font-xs {
+    font-size: 12px;
+}
+.font-18px {
+    font-size: 17px;
+}
+.font-40px{
+    font-size: 40px;
+}
+/* End Font Size */
+
+.font-weight-500{
+    font-weight: 500;
+}
+
+.form-omyra{
+    height: 51px;
+    border: solid 1px #b4d5ff;
+}
+
+.text-header{
+    position: absolute;
+    top: 15px;
+}
+.mr-15{
+    margin-right: 15px;
+}
+/* Start Margin Bottom */
+.mb-37 {
+    margin-bottom: 37px;
+}
+.mb-41{
+    margin-bottom: 41px;
+}
+.mb-34{
+    margin-bottom: 34px;
+}
+.mb-64px{
+    margin-bottom: 64px;
+}
+.mb-20{
+    margin-bottom: 20px;
+}
+.mb-1px{
+    margin-bottom: 3px;
+}
+/* End Margin Bottom */
+
+/* Start Margin Left */
+.ml-25{
+    margin-left: 25px;
+}
+/* End Margin Left */
+
+/* Start Margin Right */
+.mr-5px {
+    margin-right: 5px;
+}
+
+.btn-omyra{
+    height: 53px;
+}
+
+.form-omyra{
+    height: 51px;
+    border: solid 1px #b4d5ff !important;
+}
+.form-omyra::placeholder{
+    color: #b4d5ff;
+}
+
+.mr-15{
+    margin-right: 15px;
+}
+.mr-19{
+    margin-right: 19px;
+}
+/* End Margin Right */
+
+.pt-23{
+    padding-top: 23px;
+}
+.pt-39{
+    padding-top: 39px;
+}
+
+.line-height-23{
+    line-height: 23.4px;
+}
+
+/* Start Widht & Height */
+.w-76{
+    width: 76px;
+}
+.h-114{
+    height: 114px;
+}
+.w-94{
+    width: 94px;
+}
+.w-251{
+    width: 251px;
+}
+.w-31{
+    width: 31px;
+}
+.h-94{
+    height: 94px;
+}
+.h-39{
+    height: 39px;
+}
+.h-40{
+    height: 40px;
+}
+/* End Widht & Height */
+
+.bg-green{
+    background: #58D874;
+}
+.bg-blue {
+    background: #619ED7;
+}
+.bg-red{
+    background: #DB3A3A;
+}
+.bg-yellow{
+    background: #FFB240;
+}
+
+input[type=text]{
+    border: 1px solid #FFB4B4;
+    border-radius: 4px;
+}
+.text-pink{
+    color: #FFB4B4;
+}
+.mb-29 {
+    margin-bottom: 29px;
+}
+.text-light-pink{
+    color: #888888;
+}
+.text-light-pink.active{
+    color: black;
+}
+.text-light-pink:active{
+    color: black;
+}
+.text-active-pink{
+    color: #F25287;
+}
+.border-white{
+    border: solid 1px white;
+}
+.font-size-24{
+    font-size: 24px;
+}
+.text-grey{
+    color: #bfbfbf;
+}
+.text-white{
+    color: #fff;
+}
+.icon-login{
+    width: 90%;
+    height: 60%;
+}
+.btn-pink {
+    background: #F25287;
+    color: #fff;
+}
+
+.btn-pink:hover{
+    background: #ff8fad;
+    color: #F25287;
+    border-color: #F25287;
+}
+.btn-profile{
+    height: 50px;
+    /* background: #ffffff;
+    color: #F25287;
+    border-color: #fce4ec; */
+}
+.btn-profile:hover{
+    background: #F25287;
+    color: #f1f1f1;
+}
+
+.bg-pink{
+    background: #D6D6D6;
+}
+
+.bg-light-pink{
+    background: #FFB4B4;
+}
+.span-category{
+    bottom: 30px;
+    right: 30px;
+    position: absolute;
+    padding: 8px 23px;
+}
+
+.bg-grey{
+    background: #FAFAFA;
+}
+
+.lh-15 {
+    line-height: 15.6px;
+}
+
+.mt-62{
+    margin-top: 62px;
+}
+
+/* Start Page Home */
+.box-home{
+    width: 76px;
+    height: 76px;
+}
+.card-home{
+    width: auto;
+    height: 169px;
+    background: rgba(255, 255, 255, 0.26);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8.2px);
+    -webkit-backdrop-filter: blur(8.2px);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+}
+.home-card{
+    overflow: hidden;
+    position: relative;
+    height: 380px;
+    background: #52b7f2;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.bg-pink-2{
+    background: #F25287;
+}
+/* End Page Home */
+
+/* Start Page Doctor */
+.profile-doctor-card{
+    overflow: hidden;
+    position: relative;
+    height: 350px;
+    background: #F25287;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.doctor-name{
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 140%;
+    color: #FFFFFF;
+}
+/* End Page Doctor */
+
+/* Start Text Color */
+.text-pink{
+    color: #FFB4B4;
+}
+
+.text-active-pink{
+    color: #F25287;
+}
+.text-grey{
+    color: #bfbfbf;
+}
+.box-shadow {
+    box-shadow: 0 1px 2px 0
+    rgba(238, 238, 238, 0.5), 0
+    1px 5px 0 rgb(235, 235, 235);
+}
+.text-gray{
+    color: #242424;
+}
+.text-white{
+    color: #fff;
+}
+.text-red {
+    color: red;
+}
+/* End Text Color */
+
+.font-14{
+    font-size: 14px;
+}
+.font-20{
+    font-size: 20px;
+}
+.font-weight-700{
+    font-weight: 700;
+}
+.font-size-19{
+    font-size: 19px;
+}
+
+.font-size-24{
+    font-size: 24px;
+}
+
+.rounded-4{
+    border-radius: 4px;
+}
+
+.image-responsive{
+    object-fit: cover;
+    object-position: center;
+    width: 90px;
+    height: 90px;
+    border-radius: 10px;
+}
+
+.font-18px {
+    font-size: 17px;
+}
+.text-smooth-pink {
+    color: #BBBBBB;
+}
+.text-card-top {
+    line-height: 1.2;
+    font-size: 12px;
+}
+
+
+
+.topnav {
+    background-color: #FFD5D5;
+    overflow: hidden;
+  }
+
+  /* Style the links inside the navigation bar */
+  .topnav a {
+    float: left;
+    display: block;
+    color: darkslategrey;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    border-bottom: 3px solid transparent;
+  }
+
+  .topnav a:hover {
+    border-bottom: 3px solid #F25287;
+  }
+
+  .topnav a.active {
+    border-bottom: 3px solid #F25287;
+  }
+
+  .profile-card{
+    overflow: hidden;
+    /* position: relative; */
+    height: 540px;
+    background: #F25287;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.thumb-lg {
+    height: 120px;
+    width: 120px;
+}
+.img-thumbnail {
+    padding: .1rem;
+    background-color: #fff;
+    border: 1px #dee2e6;
+    border-radius: .25rem;
+    max-width: 100%;
+    height: auto;
+}
+
+.image-chat-responsive{
+    object-fit: cover;
+    object-position: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.floating-action{
+    bottom: 90px;
+    right: 30px;
+    position: fixed;
+    border-radius: 50%;
+    line-height: 50px;
+    vertical-align: middle;
+    background: #F25287;
+    width: 50px;
+    height: 50px;
+}
+.text-title-omyra{
+    font-size:  19px;
+    line-height: 24.19px;
+}
+
+/* Start Page Summary */
+.summary{
+    font-family: inter;
+}
+.summary-card{
+    overflow: hidden;
+    position: relative;
+    height: 198px;
+    background: #F25287;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+/* End Page Summary */
+
+/* Start Page Patient */
+.patient{
+    background: #FAFAFA;
+}
+.profile-patient{
+    color: #C7C7C7;
+}
+.profile-patient-card{
+    overflow: hidden;
+    position: relative;
+    height: 490px;
+    background: #F25287;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.card-action{
+    border: 1px solid #FFB4B4;
+}
+
+/* Page References Patient*/
+.references{
+    font-weight: 500;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 19px;
+    color: #000000;
+}
+/* End Page References Patient*/
+
+/* Page Visit Patient*/
+.visit{
+    font-weight: 500;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 19px;
+    color: #000000;
+}
+/* End Page Visit Patient*/
+
+/* End Page Patient */
