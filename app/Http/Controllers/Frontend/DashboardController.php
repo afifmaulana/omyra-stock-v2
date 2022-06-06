@@ -16,6 +16,7 @@ class DashboardController extends Controller
         $total_master = Materials::where('type', 'master')->sum('stock');
         $total_plastic = Materials::where('type', 'plastic')->sum('stock');
         $stock_semifinish = Product::sum('stock_semifinish');
+        $stock_finish = Product::sum('stock_finish');
         $log = LogActivity::orderBy('id', 'DESC')->paginate('5');
         return view('ui.frontend.dashboard.dashboard',[
             'log' => $log,
@@ -23,6 +24,7 @@ class DashboardController extends Controller
             'total_master' => $total_master,
             'total_plastic' => $total_plastic,
             'stock_semifinish' => $stock_semifinish,
+            'stock_finish' => $stock_finish,
         ]);
     }
 }

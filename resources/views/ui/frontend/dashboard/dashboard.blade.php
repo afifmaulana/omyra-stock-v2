@@ -93,7 +93,7 @@
                         <div class="d-flex justify-content-center">
                             <i class="fas fa-cubes fa-2x text-white"></i>
                         </div>
-                        <div class="font-weight-bold text-white text-center">1111 Kg</div>
+                        <div class="font-weight-bold text-white text-center">{{ $stock_finish }} Kg</div>
                         {{-- <img src="{{ asset('images/icon/catatan.png') }}" width="30" height="30"> --}}
                         {{-- <i class="fas fa-list-ul fa-2x text-white"></i> --}}
                     </div>

@@ -12,7 +12,7 @@ class MaterialController extends Controller
 {
     public function index()
     {
-        $materials = Materials::all();
+        $materials = Materials::orderBy('id', 'DESC')->paginate('10');
         return view('ui.admin.material.index', [
             'materials' => $materials,
         ]);
@@ -40,7 +40,7 @@ class MaterialController extends Controller
     public function destroy($id)
     {
         $material = Materials::where('id', $id)->first();
-        dd($material);
+        // dd($material);
         $material->delete();
         return redirect()->route('admin.material.index')->with(['success' => 'Berhasil menghapus data.']);
     }

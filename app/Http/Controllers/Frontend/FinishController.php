@@ -66,7 +66,7 @@ class FinishController extends Controller
             $log->description = $description;
             $log->save();
 
-        return redirect()->route('admin.finish.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
+        return redirect()->route('frontend.finish.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
     }
 
     public function destroy($id)
