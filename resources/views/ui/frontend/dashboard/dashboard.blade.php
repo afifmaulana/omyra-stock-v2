@@ -52,7 +52,7 @@
                     <h6>Total Stok Barang 1/2 Jadi</h6>
                     <div class="row justify-content-center mb-2">
                         <div class="col-auto">
-                            <div class="text-red px-2 font-40px font-weight-bold border border-danger">{{ $stock_semifinish }} Kg</div>
+                            <div class="text-red px-2 font-40px font-weight-bold border border-danger">{{ $stock_semifinish }}</div>
                         </div>
                     </div>
                     <p class="text-red text-card-top d-sm-inline-block" style="line-height: 150%">Jumlah stok otomatis akan
@@ -93,7 +93,7 @@
                         <div class="d-flex justify-content-center">
                             <i class="fas fa-cubes fa-2x text-white"></i>
                         </div>
-                        <div class="font-weight-bold text-white text-center">{{ $stock_finish }} Kg</div>
+                        <div class="font-weight-bold text-white text-center">{{ $stock_finish }}</div>
                         {{-- <img src="{{ asset('images/icon/catatan.png') }}" width="30" height="30"> --}}
                         {{-- <i class="fas fa-list-ul fa-2x text-white"></i> --}}
                     </div>

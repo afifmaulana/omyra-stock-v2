@@ -42,12 +42,12 @@
                     <select
                         class="select2 form-control font-size-16 form-omyra {{ $errors->has('product') ? 'is-invalid' : '' }}"
                         id="product" name="product">
-                        <option value="" selected="selected" disabled>-- Pilih Brand / Ukuran / Stock
-                            Semifinish --
+                        <option value="" selected="selected" disabled>-- Pilih Brand/Ukuran/Stock
+                            Barang 1/2 Jadi --
                         </option>
                         @foreach ($products as $product)
                             <option value="{{ $product->id }}">
-                                {{ $product->brand->name . ' / ' . $product->size . ' / semifinish: ' . $product->stock_semifinish }}
+                                {{ $product->brand->name . ' / ' . $product->size . ' / barang 1/2 jadi: ' . $product->stock_semifinish }}
                             </option>
                         @endforeach
                         @if ($errors->has('product'))
@@ -73,7 +73,7 @@
                         <div id="max-label-inner" class="text-danger font-weight-bold font-size-16 form-omyra"></div>
                     </div>
                     <input type="number" name="need_inner" class="form-control font-size-16 form-omyra" id="need_inner"
-                        placeholder="Masukan jumlah kebutuhan Inner" readonly>
+                        placeholder="Kebutuhan inner akan otomatis terisi" readonly>
                 </div>
                 <div class="form-group">
                     <label class="font-weight-500">Jumlah master yang digunakan</label>
@@ -146,10 +146,6 @@
                     $('#total').attr('disabled', false);
                 }
             }
-
-            $('.select2').select2({
-                theme: 'bootstrap4'
-            });
 
             $('#form-tambah').validate({
                 rules: {
