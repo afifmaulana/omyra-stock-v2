@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="bg-grey pt-23 mt-1" style="max-height: 86vh; overflow: scroll;">
-        @include('components.frontend.flashmessage')
+        {{-- @include('components.frontend.flashmessage') --}}
         <div class="container-omyra" style="margin-bottom: 90px;">
 
             <div class="float-right">
@@ -25,7 +25,7 @@
             </div>
             <h5 class="py-3"></h5>
 
-            <table id="dataTable" class="table table-striped table-bordered" style="width:100%">
+            <table id="dataTable" class="table table-striped table-bordered table-responsive" style="width:100%">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -48,7 +48,8 @@
                             <td>{{ $stock->total }}</td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
-                                <form id="delete-inner" action="{{ route('frontend.inner.delete', $stock->id) }}" class="d-inline" method="POST">
+                                <form id="delete-inner" action="{{ route('frontend.inner.delete', $stock->id) }}"
+                                    class="d-inline" method="POST">
                                     @csrf
                                     @method('delete')
                                     <button id="btn-delete" class="btn btn-sm btn-danger"><i
@@ -99,4 +100,22 @@
             });
         });
     </script>
+    {{-- Display success message --}}
+    @if ($message = Session::get('success'))
+        <script>
+            $(function() {
+                let Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+                Toast.fire({
+                    icon: 'success',
+                    title: '{{ $message }}'
+                });
+            });
+        </script>
+    @endif
+    {{-- End Display success message --}}
 @endpush
