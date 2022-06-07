@@ -69,7 +69,7 @@
     </div>
 
     <div class="container-omyra pb-5 mb-5">
-        <h4 class="font-weight-bold font-20 py-4">Laporan</h4>
+        <h4 class="font-weight-bold font-20 pb-4">Laporan</h4>
         {{-- Desktop View --}}
             <div class="d-none d-md-block">
                 <div class="row mb-2 px-2">
