@@ -152,47 +152,47 @@
                                 <img src="{{ asset('images/icon/plastic.png') }}" alt="" height="30" width="30">
                             </div>
                         </div>
-                        <div class="text-center text-black font-size-12 pt-2">
+                        <div class="text-center text-black font-size-12 pt-2 d-sm-inline-block">
                             Plastik
                         </div>
                     </a>
                     <a href="">
-                        <div class="rounded-circle border border-2 circle--menu shadow-lg">
+                        <div class="rounded-circle border-2 circle--menu shadow-lg">
                             <div class="text-success">
                                 <img src="{{ asset('images/icon/inner.png') }}" alt="" height="30" width="30">
                             </div>
                         </div>
-                        <div class="text-center text-black font-size-12 pt-2">
+                        <div class="text-center text-black font-size-12 pt-2 d-sm-inline-block">
                             Inner
                         </div>
                     </a>
                     <a href="">
-                        <div class="rounded-circle border border-2 circle--menu shadow-lg">
+                        <div class="rounded-circle border-2 circle--menu shadow-lg">
                             <div class="text-success">
                                 <img src="{{ asset('images/icon/master.png') }}" alt="" height="30" width="30">
                             </div>
                         </div>
-                        <div class="text-center text-black font-size-12 pt-2">
+                        <div class="text-center text-black font-size-12 pt-2 d-sm-inline-block">
                             Master
                         </div>
                     </a>
                     <a href="">
-                        <div class="rounded-circle border border-2 circle--menu shadow-lg">
+                        <div class="rounded-circle border-2 circle--menu shadow-lg">
                             <div class="text-success">
                                 <img src="{{ asset('images/icon/semifinish.png') }}" alt="" height="30" width="30">
                             </div>
                         </div>
-                        <div class="text-center text-black font-size-12 pt-2">
+                        <div class="text-center text-black font-size-12 pt-2 d-sm-inline-block">
                             Borongan
                         </div>
                     </a>
                     <a href="">
-                        <div class="rounded-circle border border-2 circle--menu shadow-lg">
+                        <div class="rounded-circle border-2 circle--menu shadow-lg">
                             <div class="text-success">
                                 <img src="{{ asset('images/icon/finish.png') }}" alt="" height="30" width="30">
                             </div>
                         </div>
-                        <div class="text-center text-black font-size-12 pt-2">
+                        <div class="text-center text-black font-size-12 pt-2 d-sm-inline-block">
                             Stuffing
                         </div>
                     </a>
