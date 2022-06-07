@@ -147,7 +147,7 @@
             <div class="d-block d-md-none">
                 <div class="d-flex justify-content-around mb-3">
                     <a href="">
-                        <div class="rounded-circle border-2 circle--menu shadow-lg" style="box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
+                        <div class="rounded-circle border-2 circle--menu shadow-lg" style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
                             <div class="text-success">
                                 <img src="{{ asset('images/icon/plastic.png') }}" alt="" height="30" width="30">
                             </div>
@@ -157,7 +157,7 @@
                         </div>
                     </a>
                     <a href="">
-                        <div class="rounded-circle border-2 circle--menu shadow-lg" style="box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
+                        <div class="rounded-circle border-2 circle--menu shadow-lg" style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
                             <div class="text-success">
                                 <img src="{{ asset('images/icon/inner.png') }}" alt="" height="30" width="30">
                             </div>
@@ -167,7 +167,7 @@
                         </div>
                     </a>
                     <a href="">
-                        <div class="rounded-circle border-2 circle--menu shadow-lg" style="box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
+                        <div class="rounded-circle border-2 circle--menu shadow-lg" style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
                             <div class="text-success">
                                 <img src="{{ asset('images/icon/master.png') }}" alt="" height="30" width="30">
                             </div>
@@ -177,7 +177,7 @@
                         </div>
                     </a>
                     <a href="">
-                        <div class="rounded-circle border-2 circle--menu shadow-lg" style="box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
+                        <div class="rounded-circle border-2 circle--menu shadow-lg" style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
                             <div class="text-success">
                                 <img src="{{ asset('images/icon/semifinish.png') }}" alt="" height="30" width="30">
                             </div>
@@ -187,7 +187,7 @@
                         </div>
                     </a>
                     <a href="">
-                        <div class="rounded-circle border-2 circle--menu shadow-lg" style="box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
+                        <div class="rounded-circle border-2 circle--menu shadow-lg" style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
                             <div class="text-success">
                                 <img src="{{ asset('images/icon/finish.png') }}" alt="" height="30" width="30">
                             </div>
