@@ -147,7 +147,7 @@
             <div class="d-block d-md-none">
                 <div class="d-flex justify-content-around mb-3">
                     <a href="">
-                        <div class="rounded-circle border border-2 circle--menu shadow-lg">
+                        <div class="rounded-circle border-2 circle--menu shadow-lg">
                             <div class="text-success">
                                 <img src="{{ asset('images/icon/plastic.png') }}" alt="" height="30" width="30">
                             </div>
