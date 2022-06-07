@@ -152,7 +152,7 @@
                                 <img src="{{ asset('images/icon/plastic.png') }}" alt="" height="30" width="30">
                             </div>
                         </div>
-                        <div class="text-center text-black font-size-12 pt-2 d-sm-inline-block">
+                        <div class="text-center text-black font-size-12 pt-2 d-sm-inline-block" style="line-height: 1.2;">
                             Plastik
                         </div>
                     </a>
@@ -162,7 +162,7 @@
                                 <img src="{{ asset('images/icon/inner.png') }}" alt="" height="30" width="30">
                             </div>
                         </div>
-                        <div class="text-center text-black font-size-12 pt-2 d-sm-inline-block">
+                        <div class="text-center text-black font-size-12 pt-2 d-sm-inline-block" style="line-height: 1.2;">
                             Inner
                         </div>
                     </a>
@@ -172,7 +172,7 @@
                                 <img src="{{ asset('images/icon/master.png') }}" alt="" height="30" width="30">
                             </div>
                         </div>
-                        <div class="text-center text-black font-size-12 pt-2 d-sm-inline-block">
+                        <div class="text-center text-black font-size-12 pt-2 d-sm-inline-block" style="line-height: 1.2;">
                             Master
                         </div>
                     </a>
@@ -182,7 +182,7 @@
                                 <img src="{{ asset('images/icon/semifinish.png') }}" alt="" height="30" width="30">
                             </div>
                         </div>
-                        <div class="text-center text-black font-size-12 pt-2 d-sm-inline-block">
+                        <div class="text-center text-black font-size-12 pt-2 d-sm-inline-block" style="line-height: 1.2;">
                             Borongan
                         </div>
                     </a>
@@ -192,7 +192,7 @@
                                 <img src="{{ asset('images/icon/finish.png') }}" alt="" height="30" width="30">
                             </div>
                         </div>
-                        <div class="text-center text-black font-size-12 pt-2 d-sm-inline-block">
+                        <div class="text-center text-black font-size-12 pt-2 d-sm-inline-block" style="line-height: 1.2;">
                             Stuffing
                         </div>
                     </a>
