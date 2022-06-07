@@ -53,6 +53,9 @@ input[type=text]{
 /* End Background Color*/
 
 /* Start Button Style */
+.bg-orange{
+    background: #f29411;
+}
 .btn-pink {
     background: #F25287;
     color: #fff;
@@ -171,6 +174,14 @@ input[type=text]{
 .container-omyra {
     margin: 0 25px;
 }
+.circle--menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    width: 60px;
+    box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);
+  }
 
 /* Start Font Size */
 .font-size-14{
@@ -340,11 +351,17 @@ input[type=text]{
 .text-active-pink{
     color: #F25287;
 }
+.text-orange{
+    color: #f29411;
+}
 .border-white{
     border: solid 1px white;
 }
 .font-size-24{
     font-size: 24px;
+}
+.font-size-12{
+    font-size: 12px;
 }
 .text-grey{
     color: #bfbfbf;
