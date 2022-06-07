@@ -180,7 +180,7 @@ input[type=text]{
     justify-content: center;
     height: 60px;
     width: 60px;
-    
+    box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);
   }
 
 /* Start Font Size */
@@ -662,3 +662,21 @@ input[type=text]{
 /* End Page Visit Patient*/
 
 /* End Page Patient */
+
+.float{
+    position:fixed;
+    width:60px;
+    height:60px;
+    bottom:110px;
+    right:20px;
+    background-color:#198dd1;
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+    font-size:30px;
+    box-shadow: 3px 3px 2px rgb(175, 175, 175);
+    z-index:100;
+}
+.my-float{
+    margin-top:16px;
+}
