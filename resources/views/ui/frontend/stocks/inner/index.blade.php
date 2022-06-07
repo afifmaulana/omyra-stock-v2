@@ -18,7 +18,7 @@
     <div class="bg-grey pt-23 mt-1" style="max-height: 86vh; overflow: scroll;">
         {{-- @include('components.frontend.flashmessage') --}}
         <div class="container-omyra" style="margin-bottom: 90px;">
-            <a href="{{ route('frontend.inner.create') }}" class="float" target="_blank"
+            <a href="{{ route('frontend.inner.create') }}" class="float"
                 data-bs-toggle="tooltip" data-bs-placement="left" title="Tambah Data">
                 <i class="fa fa-plus my-float"></i>
             </a>
