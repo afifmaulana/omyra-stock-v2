@@ -218,7 +218,9 @@
                 </div>
             </div>
         @endforeach
-
+        <div class="d-flex justify-content-center py-3">
+            {{ $log->links('pagination::bootstrap-4') }}
+        </div>
 
     </div>
 @endsection
