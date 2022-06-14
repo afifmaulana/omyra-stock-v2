@@ -89,7 +89,7 @@
                 </div>
                 @endif
                 <button class="btn btn-block btn-omyra btn-pink text-white mt-3" type="submit">Simpan Perubahan</button>
-                <a class="btn btn-outline-secondary btn-block" href="{{ route('logout') }}">Keluar</a>
+                <a class="btn btn-outline-secondary btn-block" href="{{ route('logout.submit') }}">Keluar</a>
             </form>
         </div>
     </div>

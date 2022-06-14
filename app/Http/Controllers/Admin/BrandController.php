@@ -32,6 +32,29 @@ class BrandController extends Controller
         return redirect()->route('admin.brand.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
     }
 
+    public function edit($id)
+    {
+        $brand = Brand::where('id', $id)->first();
+        return view('ui.admin.brand.edit', [
+            'brand' => $brand
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'required|string',
+        ]);
+
+        $brand = Brand::where('id', $id)->first();
+        $params = $request->all();
+
+        $brand->update([
+            'name' => $params['name'] ?? $brand->name,
+        ]);
+        return redirect()->route('admin.brand.index')->with('success', 'Berhasil mengubah Brand!');
+    }
+
     public function destroy($id)
     {
         $brand = Brand::where('id', $id)->first();

@@ -69,7 +69,7 @@
                                         <td>{{ $product->stock_finish }}</td>
                                         <td>{{ $product->need_inner }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-sm btn-info"><i
+                                            <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-sm btn-info"><i
                                                     class="fa fa-edit"></i></a>
                                             <form id="delete-product"
                                                 action="{{ route('admin.product.delete', $product->id) }}"

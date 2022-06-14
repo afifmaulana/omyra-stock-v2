@@ -43,7 +43,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label class="font-weight-500" for="email">Email</label>
-                                    <input type="text"
+                                    <input type="email"
                                         class="form-control bg-input-auth font-size-16 form-omyra @error('email') is-invalid @enderror"
                                         name="email" id="email" placeholder="Masukkan Email">
                                     @error('email')
@@ -62,12 +62,12 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                    <div class="input-group-prepend">
+                                    {{-- <div class="input-group-prepend">
                                         <span class="input-group-text bg-input-auth border-span">
-                                            {{-- <img src="{{ asset('images/icon/hide-password.png') }}" alt=""> --}}
+                                            <img src="{{ asset('images/icon/hide-password.png') }}" alt="">
                                             <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                                         </span>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <button class="btn btn-omyra btn-pink text-white btn-block" type="submit">Masuk
                                     Sekarang</button>
@@ -82,7 +82,7 @@
                     @csrf
                     <div class="form-group">
                         <label class="font-weight-500" for="email">Email</label>
-                        <input type="text"
+                        <input type="email"
                             class="form-control bg-input-auth font-size-16 form-omyra @error('email') is-invalid @enderror"
                             name="email" id="email" placeholder="Masukkan Email">
                         @error('email')
@@ -101,11 +101,11 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
-                        <div class="input-group-prepend">
+                        {{-- <div class="input-group-prepend">
                             <span class="input-group-text bg-input-auth border-span">
                                 <img src="{{ asset('images/icon/hide-password.png') }}" alt="">
                             </span>
-                        </div>
+                        </div> --}}
                     </div>
                     <button class="btn btn-omyra btn-pink text-white btn-block" type="submit">Masuk Sekarang</button>
                 </form>

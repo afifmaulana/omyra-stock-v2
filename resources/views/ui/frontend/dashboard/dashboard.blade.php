@@ -76,7 +76,7 @@
                     <div class="col-sm">
                         <div class="card mb-1px shadow-lg"
                             style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <a href="">
+                            <a href="{{ route('frontend.report.plastic.index') }}">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-center">
                                         <img src="{{ asset('images/icon/plastic.png') }}" alt="" height="50" width="50">
@@ -146,7 +146,7 @@
         {{-- Mobile View --}}
             <div class="d-block d-md-none">
                 <div class="d-flex justify-content-around mb-3">
-                    <a href="">
+                    <a href="{{ route('frontend.report.plastic.index') }}">
                         <div class="rounded-circle border-2 circle--menu shadow-lg" style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
                             <div class="text-success">
                                 <img src="{{ asset('images/icon/plastic.png') }}" alt="" height="30" width="30">

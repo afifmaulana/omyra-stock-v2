@@ -68,7 +68,7 @@
                                         <td>{{ Str::title($material->type) }}</td>
                                         <td>{{ $material->stock }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-sm btn-info"><i
+                                            <a href="{{ route('admin.material.edit', $material->id) }}" class="btn btn-sm btn-info"><i
                                                     class="fa fa-edit"></i></a>
                                             <form id="delete-material"
                                                 action="{{ route('admin.material.delete', $material->id) }}"

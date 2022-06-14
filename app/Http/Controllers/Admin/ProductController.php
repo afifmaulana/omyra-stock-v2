@@ -37,6 +37,35 @@ class ProductController extends Controller
         return redirect()->route('admin.product.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
     }
 
+    public function edit($id)
+    {
+        $product = Product::where('id', $id)->first();
+        $brands = Brand::orderBy('id', 'DESC')->get();
+        return view('ui.admin.product.edit', [
+            'brands' => $brands,
+            'product' => $product
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // dd($request->all());
+        $this->validate($request, [
+            'brand_id' => 'required',
+            'size' => 'required',
+            'need_inner' => 'required',
+        ]);
+        $product = Product::where('id', $id)->first();
+        $params = $request->all();
+
+        $product->update([
+            'brand_id' => $params['brand_id'] ?? $product->brand_id,
+            'size' => $params['size'] ?? $product->size,
+            'need_inner' => $params['need_inner'] ?? $product->need_inner,
+        ]);
+        return redirect()->route('admin.product.index')->with('success', 'Berhasil mengubah produk!');
+    }
+
     public function destroy($id)
     {
         $product = Product::where('id', $id)->first();

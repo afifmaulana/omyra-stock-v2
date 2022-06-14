@@ -37,6 +37,37 @@ class MaterialController extends Controller
         return redirect()->route('admin.material.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
     }
 
+    public function edit($id)
+    {
+        $products = Product::orderBy('id', 'DESC')->get();
+        $material = Materials::where('id', $id)->first();
+        return view('ui.admin.material.edit', [
+            'material' => $material,
+            'products' => $products
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // dd($request->all());
+        $this->validate($request, [
+            'product_id' => 'required',
+            'name' => 'required',
+            'type' => 'required',
+        ]);
+
+        $material = Materials::where('id', $id)->first();
+        $params = $request->all();
+
+        $material->update([
+            'product_id' => $params['product_id'] ?? $material->product_id,
+            'name' => $params['name'] ?? $material->name,
+            'type' => $params['type'] ?? $material->type,
+        ]);
+        return redirect()->route('admin.material.index')->with('success', 'Berhasil mengubah Material!');
+
+    }
+
     public function destroy($id)
     {
         $material = Materials::where('id', $id)->first();

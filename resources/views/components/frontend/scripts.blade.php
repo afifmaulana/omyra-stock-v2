@@ -12,5 +12,9 @@
     $(document).ready(function() {
         $('#example').DataTable();
         $('.select2').select2();
+        $('#preloader-active').delay(300).fadeOut('slow');
+        $('body').delay(300).css({
+            'overflow': 'visible'
+        });
     } );
 </script>

@@ -61,7 +61,7 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $brand->name }}</td>
                                                 <td>
-                                                    <a href="#" class="btn btn-sm btn-info"><i
+                                                    <a href="{{ route('admin.brand.edit', $brand->id) }}" class="btn btn-sm btn-info"><i
                                                             class="fa fa-edit"></i></a>
                                                     <form id="delete-brand"
                                                         action="{{ route('admin.brand.delete', $brand->id) }}"
