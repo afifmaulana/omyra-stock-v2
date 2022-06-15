@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\LogActivity;
 use App\Models\Materials;
 use App\Models\Product;
+use App\Models\Semifinish;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -18,6 +19,7 @@ class DashboardController extends Controller
         $stock_semifinish = Product::sum('stock_semifinish');
         $stock_finish = Product::sum('stock_finish');
         $log = LogActivity::orderBy('id', 'DESC')->paginate('5');
+        $semifinish = Semifinish::orderBy('id', 'DESC')->paginate('3');
         return view('ui.frontend.dashboard.dashboard',[
             'log' => $log,
             'total_inner' => $total_inner,
@@ -25,6 +27,7 @@ class DashboardController extends Controller
             'total_plastic' => $total_plastic,
             'stock_semifinish' => $stock_semifinish,
             'stock_finish' => $stock_finish,
+            'semifinish' => $semifinish,
         ]);
     }
 }

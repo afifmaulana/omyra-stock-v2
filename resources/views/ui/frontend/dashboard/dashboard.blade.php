@@ -50,20 +50,33 @@
                 <h4 class="d-block font-weight-bold">{{ Auth::user()->name }}</h4>
             </div>
 
-
-            <div class="card card-home">
-                <div class="card-body shadow text-center" style="height: 150px">
-                    <h6>Total Stok Barang 1/2 Jadi</h6>
-                    <div class="row justify-content-center mb-2">
-                        <div class="col-auto">
-                            <div class="text-red px-2 font-40px font-weight-bold border border-danger">
-                                {{ $stock_semifinish }}</div>
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    @foreach ($semifinish as $item)
+                        <div class="swiper-slide">
+                            <div class="card card-home">
+                                <div class="card-body shadow text-center" style="height: 150px">
+                                    {{-- <h6>Total Stok Barang 1/2 Jadi</h6> --}}
+                                    <h6>{{ $item->product->brand->name . ' / ' . $item->product->size . ' / ' . $item->material->name }}
+                                    </h6>
+                                    <div class="row justify-content-center mb-2">
+                                        <div class="col-auto">
+                                            <div class="text-red px-2 font-40px font-weight-bold border border-danger">
+                                                {{ $stock_semifinish }}</div>
+                                        </div>
+                                    </div>
+                                    <p>{{ \Carbon\Carbon::parse($item->date)->format('d-m-Y') }}</p>
+                                    {{-- <p class="text-red text-card-top d-sm-inline-block" style="line-height: 150%">Jumlah
+                                        stok
+                                        otomatis akan
+                                        berkurang setelah selesai laporan jumlah Stuffing
+                                    </p> --}}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <p class="text-red text-card-top d-sm-inline-block" style="line-height: 150%">Jumlah stok otomatis akan
-                        berkurang setelah selesai laporan jumlah Stuffing
-                    </p>
+                    @endforeach
                 </div>
+                <div class="swiper-pagination"></div>
             </div>
         </div>
     </div>
@@ -71,134 +84,144 @@
     <div class="container-omyra pb-5 mb-5">
         <h4 class="font-weight-bold font-20 pb-4">Laporan</h4>
         {{-- Desktop View --}}
-            <div class="d-none d-md-block">
-                <div class="row mb-2 px-2">
-                    <div class="col-sm">
-                        <div class="card mb-1px shadow-lg"
-                            style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <a href="{{ route('frontend.report.plastic.index') }}">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <img src="{{ asset('images/icon/plastic.png') }}" alt="" height="50" width="50">
-                                    </div>
-                                    <div class="font-weight-bold text-black text-center">Plastik</div>
+        <div class="d-none d-md-block">
+            <div class="row mb-2 px-2">
+                <div class="col-sm">
+                    <div class="card mb-1px shadow-lg"
+                        style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
+                        <a href="{{ route('frontend.report.plastic.index') }}">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center">
+                                    <img src="{{ asset('images/icon/plastic.png') }}" alt="" height="50" width="50">
                                 </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card mb-1px shadow-lg"
-                            style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <a href="">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <img src="{{ asset('images/icon/inner.png') }}" alt="" height="50" width="50">
-                                    </div>
-                                    <div class="font-weight-bold text-black text-center">Inner</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card mb-1px shadow-lg"
-                            style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <a href="">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <img src="{{ asset('images/icon/master.png') }}" alt="" height="50" width="50">
-                                    </div>
-                                    <div class="font-weight-bold text-black text-center">Master</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card mb-1px shadow-lg"
-                            style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <a href="">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <img src="{{ asset('images/icon/semifinish.png') }}" alt="" height="50" width="50">
-                                    </div>
-                                    <div class="font-weight-bold text-black text-center">Borongan</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card mb-1px shadow-lg"
-                            style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <a href="">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <img src="{{ asset('images/icon/finish.png') }}" alt="" height="50" width="50">
-                                    </div>
-                                    <div class="font-weight-bold text-black text-center">Stuffing</div>
-                                </div>
-                            </a>
-                        </div>
-                        {{-- <p class="text-center font-xs lh-15">Inner Box</p> --}}
+                                <div class="font-weight-bold text-black text-center">Plastik</div>
+                            </div>
+                        </a>
                     </div>
                 </div>
+                <div class="col-sm">
+                    <div class="card mb-1px shadow-lg"
+                        style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
+                        <a href="">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center">
+                                    <img src="{{ asset('images/icon/inner.png') }}" alt="" height="50" width="50">
+                                </div>
+                                <div class="font-weight-bold text-black text-center">Inner</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="card mb-1px shadow-lg"
+                        style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
+                        <a href="">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center">
+                                    <img src="{{ asset('images/icon/master.png') }}" alt="" height="50" width="50">
+                                </div>
+                                <div class="font-weight-bold text-black text-center">Master</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="card mb-1px shadow-lg"
+                        style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
+                        <a href="">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center">
+                                    <img src="{{ asset('images/icon/semifinish.png') }}" alt="" height="50" width="50">
+                                </div>
+                                <div class="font-weight-bold text-black text-center">Borongan</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="card mb-1px shadow-lg"
+                        style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
+                        <a href="">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center">
+                                    <img src="{{ asset('images/icon/finish.png') }}" alt="" height="50" width="50">
+                                </div>
+                                <div class="font-weight-bold text-black text-center">Stuffing</div>
+                            </div>
+                        </a>
+                    </div>
+                    {{-- <p class="text-center font-xs lh-15">Inner Box</p> --}}
+                </div>
             </div>
+        </div>
         {{-- Desktop View End --}}
 
         {{-- Mobile View --}}
-            <div class="d-block d-md-none">
-                <div class="d-flex justify-content-around mb-3">
-                    <a href="{{ route('frontend.report.plastic.index') }}">
-                        <div class="rounded-circle border-2 circle--menu shadow-lg" style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <div class="text-success">
-                                <img src="{{ asset('images/icon/plastic.png') }}" alt="" height="30" width="30">
-                            </div>
+        <div class="d-block d-md-none">
+            <div class="d-flex justify-content-around mb-3">
+                <a href="">
+                    <div class="rounded-circle border-2 circle--menu shadow-lg"
+                        style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
+                        <div class="text-success">
+                            <img src="{{ asset('images/icon/plastic.png') }}" alt="" height="30" width="30">
                         </div>
-                        <div class="text-center text-black text-card-top font-size-12 pt-2 d-sm-inline-block" style="line-height: 150%;">
-                            Plastik
+                    </div>
+                    <div class="text-center text-black text-card-top font-size-12 pt-2 d-sm-inline-block"
+                        style="line-height: 150%;">
+                        Plastik
+                    </div>
+                </a>
+                <a href="">
+                    <div class="rounded-circle border-2 circle--menu shadow-lg"
+                        style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
+                        <div class="text-success">
+                            <img src="{{ asset('images/icon/inner.png') }}" alt="" height="30" width="30">
                         </div>
-                    </a>
-                    <a href="">
-                        <div class="rounded-circle border-2 circle--menu shadow-lg" style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <div class="text-success">
-                                <img src="{{ asset('images/icon/inner.png') }}" alt="" height="30" width="30">
-                            </div>
+                    </div>
+                    <div class="text-center text-black text-card-top font-size-12 pt-2 d-sm-inline-block"
+                        style="line-height: 150%;">
+                        Inner
+                    </div>
+                </a>
+                <a href="">
+                    <div class="rounded-circle border-2 circle--menu shadow-lg"
+                        style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
+                        <div class="text-success">
+                            <img src="{{ asset('images/icon/master.png') }}" alt="" height="30" width="30">
                         </div>
-                        <div class="text-center text-black text-card-top font-size-12 pt-2 d-sm-inline-block" style="line-height: 150%;">
-                            Inner
+                    </div>
+                    <div class="text-center text-black text-card-top font-size-12 pt-2 d-sm-inline-block"
+                        style="line-height: 150%;">
+                        Master
+                    </div>
+                </a>
+                <a href="">
+                    <div class="rounded-circle border-2 circle--menu shadow-lg"
+                        style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
+                        <div class="text-success">
+                            <img src="{{ asset('images/icon/semifinish.png') }}" alt="" height="30" width="30">
                         </div>
-                    </a>
-                    <a href="">
-                        <div class="rounded-circle border-2 circle--menu shadow-lg" style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <div class="text-success">
-                                <img src="{{ asset('images/icon/master.png') }}" alt="" height="30" width="30">
-                            </div>
+                    </div>
+                    <div class="text-center text-black text-card-top font-size-12 pt-2 d-sm-inline-block"
+                        style="line-height: 150%;">
+                        Borongan
+                    </div>
+                </a>
+                <a href="">
+                    <div class="rounded-circle border-2 circle--menu shadow-lg"
+                        style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
+                        <div class="text-success">
+                            <img src="{{ asset('images/icon/finish.png') }}" alt="" height="30" width="30">
                         </div>
-                        <div class="text-center text-black text-card-top font-size-12 pt-2 d-sm-inline-block" style="line-height: 150%;">
-                            Master
-                        </div>
-                    </a>
-                    <a href="">
-                        <div class="rounded-circle border-2 circle--menu shadow-lg" style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <div class="text-success">
-                                <img src="{{ asset('images/icon/semifinish.png') }}" alt="" height="30" width="30">
-                            </div>
-                        </div>
-                        <div class="text-center text-black text-card-top font-size-12 pt-2 d-sm-inline-block" style="line-height: 150%;">
-                            Borongan
-                        </div>
-                    </a>
-                    <a href="">
-                        <div class="rounded-circle border-2 circle--menu shadow-lg" style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <div class="text-success">
-                                <img src="{{ asset('images/icon/finish.png') }}" alt="" height="30" width="30">
-                            </div>
-                        </div>
-                        <div class="text-center text-black text-card-top font-size-12 pt-2 d-sm-inline-block" style="line-height: 150%;">
-                            Stuffing
-                        </div>
-                    </a>
-                </div>
+                    </div>
+                    <div class="text-center text-black text-card-top font-size-12 pt-2 d-sm-inline-block"
+                        style="line-height: 150%;">
+                        Stuffing
+                    </div>
+                </a>
             </div>
-        {{-- Mobile View End--}}
+        </div>
+        {{-- Mobile View End --}}
 
 
         <h4 class="font-weight-bold font-20 mt-5">Aktivitas Terbaru</h4>
@@ -214,12 +237,15 @@
                     <div class="font-weight-500 line-height-23 font-18px d-inline-block">
                         {{ $item->description }}
                     </div>
-                    <div class="d-inline-block font-14" style="color: #BBBBBB">{{ $item->created_at }}</div>
+                    <div class="d-inline-block font-14" style="color: #BBBBBB">Tanggal Borongan: {{ $item->created_at }}</div>
                 </div>
             </div>
         @endforeach
         <div class="d-flex justify-content-center py-3">
-            {{ $log->links('pagination::bootstrap-4') }}
+            {{-- {{ $log->links('pagination::bootstrap-4') }} --}}
+            <a href="{{ route('frontend.notification.index') }}" class="btn btn-sm btn-outline-secondary">Lihat Semua Aktivitas
+            <i class="fa fa-arrow-right"></i>
+            </a>
         </div>
 
     </div>
