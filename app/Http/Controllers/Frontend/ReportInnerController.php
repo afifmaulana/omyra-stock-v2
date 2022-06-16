@@ -7,18 +7,13 @@ use App\Models\Product;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 
-class ReportPlasticController extends Controller
+class ReportInnerController extends Controller
 {
     public function index()
     {
-        // // $data ['type'] = $type;
-    	// $data ['PARENTTAG'] = 'stock';
-    	// // $data ['CHILDTAG'] = $type;
-        // $data ['list_product'] = Product::all();
         $products = Product::orderBy('id', 'DESC')->get();
-        return view('ui.frontend.report.plastic', [
+        return view('ui.frontend.report.inner', [
             'products' => $products,
-            // 'data' => $data,
         ]);
     }
     public function data(Request $request)
@@ -28,7 +23,7 @@ class ReportPlasticController extends Controller
 		$productId = $request->product;
 
 		$query = Stock::query();
-        $query->whereRelation('material', 'type', 'plastic');
+        $query->whereRelation('material', 'type', 'inner');
 		$query->when($materialId , function($q) use($materialId){
 			$q->where('material_id', $materialId);
 		});
@@ -53,4 +48,3 @@ class ReportPlasticController extends Controller
     }
 
 }
-

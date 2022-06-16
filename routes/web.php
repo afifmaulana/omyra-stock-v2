@@ -18,6 +18,8 @@ use App\Http\Controllers\Frontend\MasterController;
 use App\Http\Controllers\Frontend\NotificationController;
 use App\Http\Controllers\Frontend\PlasticController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\ReportInnerController;
+use App\Http\Controllers\Frontend\ReportMasterController;
 use App\Http\Controllers\Frontend\ReportPlasticController;
 use App\Http\Controllers\Frontend\SemiFinishController as FrontendSemiFinishController;
 use Illuminate\Support\Facades\Route;
@@ -150,6 +152,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('report')->group(function () {
         Route::get('/plastic', [ReportPlasticController::class, 'index'])->name('frontend.report.plastic.index');
         Route::post('/plastic/data', [ReportPlasticController::class, 'data'])->name('frontend.report.plastic.data');
+
+        Route::get('/inner', [ReportInnerController::class, 'index'])->name('frontend.report.inner.index');
+        Route::post('/inner/data', [ReportInnerController::class, 'data'])->name('frontend.report.inner.data');
+
+        Route::get('/master', [ReportMasterController::class, 'index'])->name('frontend.report.master.index');
+        Route::post('/master/data', [ReportMasterController::class, 'data'])->name('frontend.report.master.data');
     });
 });
 

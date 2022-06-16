@@ -1,8 +1,6 @@
 @extends('ui.frontend.layouts.app')
 @push('styles')
-    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
-    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-multiselect/bootstrap-multiselect.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/multi-select/css/multi-select.css') }}"> --}}
+
     <style>
         .select2-container .select2-selection--single {
             height: 42px;
@@ -42,7 +40,7 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <div class="text-header font-size-18 text-active-pink font-weight-500">Laporan Stok Plastik</div>
+                <div class="text-header font-size-18 text-active-pink font-weight-500">Laporan Stok Master</div>
             </div>
         </div>
     </div>
@@ -54,7 +52,7 @@
                 <div class="form-group">
                     <label class="font-weight-500">Brand / Ukuran</label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra product-plastic {{ $errors->has('product') ? 'is-invalid' : '' }}"
+                        class="select2 form-control font-size-16 form-omyra product-master {{ $errors->has('product') ? 'is-invalid' : '' }}"
                         id="filter-product" name="product">
                         <option selected disabled>Pilih Brand / Ukuran</option>
                         @foreach ($products as $product)
@@ -72,7 +70,7 @@
                 <div class="form-group">
                     <label class="font-weight-500">Jenis</label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra material-plastic {{ $errors->has('material') ? 'is-invalid' : '' }}"
+                        class="select2 form-control font-size-16 form-omyra material-master {{ $errors->has('material') ? 'is-invalid' : '' }}"
                         id="filter-material" name="material">
                         <option selected="selected" disabled>-- Pilih Brand / Ukuran Dulu --</option>
                     </select>
@@ -99,16 +97,12 @@
 
 @push('scripts')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    {{-- <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
-    {{-- <script src="{{ asset('vendor/multi-select/js/jquery.multi-select.js') }}"></script><!-- Multi Select Plugin Js -->
-    <script src="{{ asset('vendor/bootstrap-multiselect/bootstrap-multiselect.js') }}"></script> --}}
+
     <script>
         $(function() {
             // $('#dataTable').DataTable();
 
-            let list_stock_plastic = [];
+            let list_stock_master = [];
 
 
             const table = $('#main-table').DataTable({
@@ -117,7 +111,7 @@
 				"processing": true,
 				"serverSide": true,
                 "ajax": {
-                    url: "{{ url('') }}/report/plastic/data",
+                    url: "{{ url('') }}/report/master/data",
 					headers: { 'X-CSRF-TOKEN': CSRF_TOKEN },
                     type: "post",
                     data: function(d) {
@@ -159,11 +153,11 @@
 
         });
 
-        $('.product-plastic').on('change', function() {
+        $('.product-master').on('change', function() {
             let productId = $(this).val();
             $.ajax({
                 type: "GET",
-                url: "{{ route('api.get_plastic.by.product_id', '') }}" + '/' + productId,
+                url: "{{ route('api.get_master.by.product_id', '') }}" + '/' + productId,
                 dataType: "json",
                 success: function(response) {
                     let html = ``;
@@ -178,7 +172,7 @@
             });
         });
 
-        $('.material-plastic').on('change', function() {
+        $('.material-master').on('change', function() {
             let materialId = $(this).val();
             $.ajax({
                 type: "GET",
