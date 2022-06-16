@@ -24,72 +24,94 @@ class ReportPlasticController extends Controller
     public function data(Request $request)
     {
         // $type = str_replace('-', ' ', $type);
-    	$orderBy = 'stocks.date';
-        switch($request->input('order.0.column')){
-            case "1":
-                $orderBy = 'stocks.date';
-                break;
-            case "2":
-                $orderBy = 'stocks.material_id';
-                break;
-            case "3":
-                $orderBy = 'stocks.total';
-                break;
-            case "4":
-                $orderBy = 'materials.name';
-                break;
-            case "5":
-                $orderBy = 'brands.name';
-                break;
-            case "6":
-                $orderBy = 'products.size';
-                break;
+    	// $orderBy = 'stocks.date';
+        // switch($request->input('order.0.column')){
+        //     case "1":
+        //         $orderBy = 'stocks.date';
+        //         break;
+        //     case "2":
+        //         $orderBy = 'stocks.material_id';
+        //         break;
+        //     case "3":
+        //         $orderBy = 'stocks.total';
+        //         break;
+        //     case "4":
+        //         $orderBy = 'materials.name';
+        //         break;
+        //     case "5":
+        //         $orderBy = 'brands.name';
+        //         break;
+        //     case "6":
+        //         $orderBy = 'products.size';
+        //         break;
 
-        }
+        // }
 
-        $data = Stock::select([
-            'stocks.*',
-            // 'brands.name as brand',
-            // 'products.size as product',
-            'materials.name as material'
+        // $data = Stock::select([
+        //     'stocks.*',
+        //     // 'brands.name as brand',
+        //     // 'products.size as product',
+        //     'materials.name as material'
 
-        ])
+        // ])
         // ->where('status',$type)
         // ->join('brands','brands.id','=','products.brand_id')
         // ->join('products','products.id','=','materials.product_id')
-        ->join('materials','materials.id','=','stocks.material_id')
-        ;
+        // ->join('materials','materials.id','=','stocks.material_id');
 
-        if($request->input('search.value')!=null){
-            $data = $data->where(function($q)use($request){
-                $q->whereRaw('LOWER(stocks.date) like ? ',['%'.strtolower($request->input('search.value')).'%'])
-                ->orWhereRaw('LOWER(stocks.material_id) like ? ',['%'.strtolower($request->input('search.value')).'%'])
-                ->orWhereRaw('LOWER(materials.name) like ? ',['%'.strtolower($request->input('search.value')).'%'])
-                ->orWhereRaw('LOWER(products.size) like ? ',['%'.strtolower($request->input('search.value')).'%'])
-                ->orWhereRaw('LOWER(brands.name) like ? ',['%'.strtolower($request->input('search.value')).'%'])
-                ->orWhereRaw('LOWER(stocks.total) like ? ',['%'.strtolower($request->input('search.value')).'%'])
-                ;
-            });
-        }
-        if($request->input('brand')!=null){
-            $data = $data->where('brand_id',$request->brand);
-        }
-        if($request->input('product')!=null){
-            $data = $data->where('product_id',$request->product);
-        }
-        if($request->input('material')!=null){
-            $data = $data->where('material_id',$request->material);
-        }
 
-        $recordsFiltered = $data->get()->count();
-        if($request->input('length')!=-1) $data = $data->skip($request->input('start'))->take($request->input('length'));
-        $data = $data->orderBy($orderBy,$request->input('order.0.dir'))->get();
-        $recordsTotal = $data->count();
+
+        // if($request->input('search.value')!=null){
+        //     $data = $data->where(function($q)use($request){
+        //         $q->whereRaw('LOWER(stocks.date) like ? ',['%'.strtolower($request->input('search.value')).'%'])
+        //         ->orWhereRaw('LOWER(stocks.material_id) like ? ',['%'.strtolower($request->input('search.value')).'%'])
+        //         ->orWhereRaw('LOWER(materials.name) like ? ',['%'.strtolower($request->input('search.value')).'%'])
+        //         ->orWhereRaw('LOWER(products.size) like ? ',['%'.strtolower($request->input('search.value')).'%'])
+        //         ->orWhereRaw('LOWER(brands.name) like ? ',['%'.strtolower($request->input('search.value')).'%'])
+        //         ->orWhereRaw('LOWER(stocks.total) like ? ',['%'.strtolower($request->input('search.value')).'%'])
+        //         ;
+        //     });
+        // }
+        // if($request->input('brand')!=null){
+        //     $data = $data->where('brand_id',$request->brand);
+        // }
+        // if($request->input('product')!=null){
+        //     $data = $data->where('product_id',$request->product);
+        // }
+        // if($request->input('material')!=null){
+        //     $data = $data->where('material_id',$request->material);
+        // }
+
+
+        // $recordsFiltered = $data->get()->count();
+        // if($request->input('length')!=-1) $data = $data->skip($request->input('start'))->take($request->input('length'));
+        // $data = $data->orderBy($orderBy,$request->input('order.0.dir'))->get();
+
+
+		$materialId = $request->material;
+		$productId = $request->product;
+
+		$query = Stock::query();
+		$query->when($materialId , function($q) use($materialId){
+			$q->where('material_id', $materialId);
+		});
+		$query->when($productId , function($q) use($productId){
+			$q->whereRelation('material', 'product_id', $productId);
+		});
+		$query->with('material:id,product_id,name,stock');
+		$query->with('material.product:id,brand_id,size');
+		$query->with('material.product.brand:id,name');
+		
+		$data = $query->get();
+
+        $recordsTotal = $query->count();
+		$recordsFiltered = $data->count();
         return response()->json([
-            'draw'=>$request->input('draw'),
-            'recordsTotal'=>$recordsTotal,
-            'recordsFiltered'=>$recordsFiltered,
-            'data'=>$data
+            'draw' => $request->input('draw'),
+            'recordsTotal' => $recordsTotal,
+            'recordsFiltered' => $recordsFiltered,
+            'data' => $data,
+			'sql' => $query->toSql()
         ]);
     }
 

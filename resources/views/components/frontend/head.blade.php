@@ -12,4 +12,28 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/swiper@7/swiper-bundle.min.css') }}" />
     <title>Omyra Stock System</title>
+
+	<script>
+		const CSRF_TOKEN = "{{ csrf_token() }}";
+	</script>
+
+	<script>
+		function formatRupiah(angka, prefix = ''){
+			var number_string = angka.replace(/[^,\d]/g, '').toString(),
+			split   		= number_string.split(','),
+			sisa     		= split[0].length % 3,
+			rupiah     		= split[0].substr(0, sisa),
+			ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+
+			// tambahkan titik jika yang di input sudah menjadi angka ribuan
+			if(ribuan){
+				separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+
+			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+			// return `${prefix}${rupiah}`
+			return prefix == '' ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
+		}
+	</script>
   </head>

@@ -149,7 +149,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('report')->group(function () {
         Route::get('/plastic', [ReportPlasticController::class, 'index'])->name('frontend.report.plastic.index');
-        Route::any('/plastic/data', [ReportPlasticController::class, 'data'])->name('frontend.report.plastic.data');
+        Route::post('/plastic/data', [ReportPlasticController::class, 'data'])->name('frontend.report.plastic.data');
     });
 });
 
