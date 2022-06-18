@@ -52,20 +52,24 @@
 
             <div class="swiper">
                 <div class="swiper-wrapper">
-                    @foreach ($semifinish as $item)
+                    @foreach ($reminders as $item)
                         <div class="swiper-slide">
                             <div class="card card-home">
-                                <div class="card-body shadow text-center" style="height: 150px">
-                                    {{-- <h6>Total Stok Barang 1/2 Jadi</h6> --}}
-                                    <h6>{{ $item->product->brand->name . ' / ' . $item->product->size . ' / ' . $item->material->name }}
+
+                                <div class="card-body shadow text-center bg-image-card" style="height: 150px; background-image: url('{{ asset('images/bg-card-home-2.svg') }}'), linear-gradient(180deg, #fff 0%, #a1e9ff69 100%);">
+                                    <div class="buble buble4" style="background: #fff"></div>
+                                    <h6 class="text-red">--> Reminder <--</h6>
+                                    <h6 class="pt-2">{{ $item->product->brand->name . ' / ' . $item->product->size . ' / ' . $item->material->name }}
                                     </h6>
-                                    <div class="row justify-content-center mb-2">
+
+                                    {{-- <div class="row justify-content-center mb-2">
                                         <div class="col-auto">
                                             <div class="text-red px-2 font-40px font-weight-bold border border-danger">
                                                 {{ $stock_semifinish }}</div>
                                         </div>
-                                    </div>
-                                    <p>{{ \Carbon\Carbon::parse($item->date)->format('d-m-Y') }}</p>
+                                    </div> --}}
+                                    <p>Tanggal: {{ \Carbon\Carbon::parse($item->date)->format('d-m-Y') }}</p>
+                                    <p class="text-blue">Total: {{ $item->total }}</p>
                                     {{-- <p class="text-red text-card-top d-sm-inline-block" style="line-height: 150%">Jumlah
                                         stok
                                         otomatis akan
@@ -128,7 +132,7 @@
                 <div class="col-sm">
                     <div class="card mb-1px shadow-lg"
                         style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                        <a href="">
+                        <a href="{{ route('frontend.report.semifinish.index') }}">
                             <div class="card-body">
                                 <div class="d-flex justify-content-center">
                                     <img src="{{ asset('images/icon/semifinish.png') }}" alt="" height="50" width="50">
@@ -141,7 +145,7 @@
                 <div class="col-sm">
                     <div class="card mb-1px shadow-lg"
                         style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                        <a href="">
+                        <a href="{{ route('frontend.report.finish.index') }}">
                             <div class="card-body">
                                 <div class="d-flex justify-content-center">
                                     <img src="{{ asset('images/icon/finish.png') }}" alt="" height="50" width="50">
@@ -183,7 +187,7 @@
                         Inner
                     </div>
                 </a>
-                <a href="{{ route('frontend.report.master.data') }}">
+                <a href="{{ route('frontend.report.master.index') }}">
                     <div class="rounded-circle border-2 circle--menu shadow-lg"
                         style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
                         <div class="text-success">
@@ -195,7 +199,7 @@
                         Master
                     </div>
                 </a>
-                <a href="">
+                <a href="{{ route('frontend.report.semifinish.index') }}">
                     <div class="rounded-circle border-2 circle--menu shadow-lg"
                         style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
                         <div class="text-success">
@@ -207,7 +211,7 @@
                         Borongan
                     </div>
                 </a>
-                <a href="">
+                <a href="{{ route('frontend.report.finish.index') }}">
                     <div class="rounded-circle border-2 circle--menu shadow-lg"
                         style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
                         <div class="text-success">

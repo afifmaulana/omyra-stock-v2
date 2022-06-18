@@ -5,18 +5,19 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Semifinish;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 
-class ReportInnerController extends Controller
+class ReportSemifinishController extends Controller
 {
     public function index()
     {
         $brands = Brand::orderBy('id', 'DESC')->get();
         $products = Product::orderBy('id', 'DESC')->get();
-        return view('ui.frontend.report.inner', [
-            'brands' => $brands,
+        return view('ui.frontend.report.semifinish', [
             'products' => $products,
+            'brands' => $brands,
         ]);
     }
     public function data(Request $request)
@@ -24,10 +25,10 @@ class ReportInnerController extends Controller
 
 		$materialId = $request->material;
 		$productId = $request->product;
-		$brandId = $request->brand;
+        $brandId = $request->brand;
 
-		$query = Stock::query();
-        $query->whereRelation('material', 'type', 'inner');
+		$query = Semifinish::query();
+        $query->whereRelation('material', 'type', 'plastic');
 		$query->when($materialId , function($q) use($materialId){
 			$q->where('material_id', $materialId);
 		});

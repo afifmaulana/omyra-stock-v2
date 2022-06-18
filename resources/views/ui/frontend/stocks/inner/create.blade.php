@@ -37,14 +37,14 @@
                     @endif
                 </div>
                 <div class="form-group">
-                    <label class="font-weight-500">Brand / Ukuran</label>
+                    <label class="font-weight-500">Brand</label>
                     <select
                         class="select2 form-control font-size-16 form-omyra {{ $errors->has('product') ? 'is-invalid' : '' }}"
                         id="product" name="product">
-                        <option selected disabled>Pilih Brand / Ukuran</option>
+                        <option selected disabled>-- Pilih Brand --</option>
                         @foreach ($products as $product)
                             <option value="{{ $product->id }}">
-                                {{ $product->brand->name . ' / ' . $product->size }}
+                                {{ $product->brand->name }}
                             </option>
                         @endforeach
                         @if ($errors->has('product'))
@@ -55,11 +55,11 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="font-weight-500">Jenis</label>
+                    <label class="font-weight-500">Jenis / Ukuran</label>
                     <select
                         class="select2 form-control font-size-16 form-omyra {{ $errors->has('material') ? 'is-invalid' : '' }}"
                         id="material" name="material">
-                        <option selected="selected" disabled>-- Pilih Brand / Ukuran Dulu --</option>
+                        <option selected="selected" disabled>-- Pilih Brand Dulu --</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -143,7 +143,7 @@
                             `<option selected="selected" disabled>-- Pilih Jenis Inner --</option>`;
                         response.materials.forEach(material => {
                             html +=
-                                `<option value="${ material.id }">${ material.name }</option>`;
+                                `<option value="${ material.id }">${ material.name } / ${material.product.size}</option>`;
                         });
                         $('#material').html(html);
                     }

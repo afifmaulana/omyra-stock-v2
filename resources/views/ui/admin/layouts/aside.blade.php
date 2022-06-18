@@ -80,6 +80,15 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.reminder.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.reminder.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-boxes"></i>
+                        <p>
+                            Reminder
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-header pt-4">PENYETOKAN MATERIAL</li>
                 <li class="nav-item">
                     <a href="{{ route('admin.stock.plastic.index') }}"

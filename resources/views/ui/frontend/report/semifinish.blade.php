@@ -42,7 +42,7 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <div class="text-header font-size-18 text-active-pink font-weight-500">Laporan Stok Inner</div>
+                <div class="text-header font-size-18 text-active-pink font-weight-500">Laporan Stok Barang 1/2 Jadi</div>
             </div>
         </div>
     </div>
@@ -54,7 +54,7 @@
                 <div class="form-group">
                     <label class="font-weight-500">Brand</label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra brand-inner {{ $errors->has('brand') ? 'is-invalid' : '' }}"
+                        class="select2 form-control font-size-16 form-omyra brand-plastic {{ $errors->has('brand') ? 'is-invalid' : '' }}"
                         id="filter-brand" name="brand">
                         <option selected disabled>-- Pilih Brand --</option>
                         @foreach ($brands as $brand)
@@ -70,14 +70,14 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="font-weight-500">Pilih Ukuran</label>
+                    <label class="font-weight-500"> Ukuran</label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra product-inner {{ $errors->has('product') ? 'is-invalid' : '' }}"
+                        class="select2 form-control font-size-16 form-omyra product-plastic {{ $errors->has('product') ? 'is-invalid' : '' }}"
                         id="filter-product" name="product">
-                        <option selected disabled>Pilih Brand Dulu</option>
+                        <option selected disabled>-- Pilih Brand Dulu --</option>
                         {{-- @foreach ($products as $product)
                             <option value="{{ $product->id }}">
-                                {{ $product->brand->name }}
+                                {{ $product->brand->name . ' / ' . $product->size }}
                             </option>
                         @endforeach
                         @if ($errors->has('product'))
@@ -90,7 +90,7 @@
                 <div class="form-group">
                     <label class="font-weight-500">Jenis</label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra material-inner {{ $errors->has('material') ? 'is-invalid' : '' }}"
+                        class="select2 form-control font-size-16 form-omyra material-plastic {{ $errors->has('material') ? 'is-invalid' : '' }}"
                         id="filter-material" name="material">
                         <option selected="selected" disabled>-- Pilih Ukuran Dulu --</option>
                     </select>
@@ -117,12 +117,16 @@
 
 @push('scripts')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+    {{-- <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script> --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
+    {{-- <script src="{{ asset('vendor/multi-select/js/jquery.multi-select.js') }}"></script><!-- Multi Select Plugin Js -->
+    <script src="{{ asset('vendor/bootstrap-multiselect/bootstrap-multiselect.js') }}"></script> --}}
     <script>
         $(function() {
             // $('#dataTable').DataTable();
 
-            let list_stock_inner = [];
+            let list_stock_plastic = [];
 
 
             const table = $('#main-table').DataTable({
@@ -131,7 +135,7 @@
 				"processing": true,
 				"serverSide": true,
                 "ajax": {
-                    url: "{{ url('') }}/report/inner/data",
+                    url: "{{ url('') }}/report/semifinish/data",
 					headers: { 'X-CSRF-TOKEN': CSRF_TOKEN },
                     type: "post",
                     data: function(d) {
@@ -173,11 +177,11 @@
             });
 
         });
-        $('.brand-inner').on('change', function() {
+        $('.brand-plastic').on('change', function() {
             let brandId = $(this).val();
             $.ajax({
                 type: "GET",
-                url: "{{ route('api.get_inner.by.brand_id', '') }}" + '/' + brandId,
+                url: "{{ route('api.get_plastic.by.brand_id', '') }}" + '/' + brandId,
                 dataType: "json",
                 success: function(response) {
                     let html = ``;
@@ -192,26 +196,26 @@
             });
         });
 
-        $('.product-inner').on('change', function() {
+        $('.product-plastic').on('change', function() {
             let productId = $(this).val();
             $.ajax({
                 type: "GET",
-                url: "{{ route('api.get_inner.by.product_id', '') }}" + '/' + productId,
+                url: "{{ route('api.get_plastic.by.product_id', '') }}" + '/' + productId,
                 dataType: "json",
                 success: function(response) {
                     let html = ``;
                     html +=
-                        `<option selected="selected" disabled>-- Pilih Jenis Inner --</option>`;
+                        `<option selected="selected" disabled>-- Pilih Jenis Plastik --</option>`;
                     response.materials.forEach(material => {
                         html +=
-                            `<option value="${ material.id }">${ material.name }</option>`;
+                            `<option value="${ material.id }">${ material.name } | stock: ${material.stock}</option>`;
                     });
                     $('#filter-material').html(html);
                 }
             });
         });
 
-        $('.material-inner').on('change', function() {
+        $('.material-plastic').on('change', function() {
             let materialId = $(this).val();
             $.ajax({
                 type: "GET",

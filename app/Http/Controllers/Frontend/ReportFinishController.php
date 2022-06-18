@@ -4,19 +4,19 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Finish;
 use App\Models\Product;
-use App\Models\Stock;
 use Illuminate\Http\Request;
 
-class ReportInnerController extends Controller
+class ReportFinishController extends Controller
 {
     public function index()
     {
         $brands = Brand::orderBy('id', 'DESC')->get();
         $products = Product::orderBy('id', 'DESC')->get();
-        return view('ui.frontend.report.inner', [
-            'brands' => $brands,
+        return view('ui.frontend.report.finish', [
             'products' => $products,
+            'brands' => $brands,
         ]);
     }
     public function data(Request $request)
@@ -24,15 +24,15 @@ class ReportInnerController extends Controller
 
 		$materialId = $request->material;
 		$productId = $request->product;
-		$brandId = $request->brand;
+        $brandId = $request->brand;
 
-		$query = Stock::query();
-        $query->whereRelation('material', 'type', 'inner');
+		$query = Finish::query();
+        $query->whereRelation('material', 'type', 'master');
 		$query->when($materialId , function($q) use($materialId){
 			$q->where('material_id', $materialId);
 		});
 		$query->when($productId , function($q) use($productId){
-			$q->whereRelation('material', 'product_id', $productId);
+			$q->whereRelation('product_id', $productId);
 		});
         $query->when($brandId , function($q) use($brandId){
 			$q->whereRelation('product', 'brand_id', $brandId);

@@ -50,21 +50,30 @@
             <form action="#" method="POST" enctype="multipart/form-data" id="form-filter">
                 @csrf
                 <div class="form-group">
-                    <label class="font-weight-500">Brand / Ukuran</label>
+                    <label class="font-weight-500">Brand</label>
+                    <select
+                        class="select2 form-control font-size-16 form-omyra brand-master {{ $errors->has('brand') ? 'is-invalid' : '' }}"
+                        id="filter-brand" name="brand">
+                        <option selected disabled>-- Pilih Brand --</option>
+                        @foreach ($brands as $brand)
+                            <option value="{{ $brand->id }}">
+                                {{ $brand->name }}
+                            </option>
+                        @endforeach
+                        @if ($errors->has('brand'))
+                            <span class="invalid-feedback" role="alert">
+                                <p><b>{{ $errors->first('brand') }}</b></p>
+                            </span>
+                        @endif
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-500">Ukuran</label>
                     <select
                         class="select2 form-control font-size-16 form-omyra product-master {{ $errors->has('product') ? 'is-invalid' : '' }}"
                         id="filter-product" name="product">
-                        <option selected disabled>Pilih Brand / Ukuran</option>
-                        @foreach ($products as $product)
-                            <option value="{{ $product->id }}">
-                                {{ $product->brand->name . ' / ' . $product->size }}
-                            </option>
-                        @endforeach
-                        @if ($errors->has('product'))
-                            <span class="invalid-feedback" role="alert">
-                                <p><b>{{ $errors->first('product') }}</b></p>
-                            </span>
-                        @endif
+                        <option selected disabled>-- Pilih Brand Dulu --</option>
+
                     </select>
                 </div>
                 <div class="form-group">
@@ -72,7 +81,7 @@
                     <select
                         class="select2 form-control font-size-16 form-omyra material-master {{ $errors->has('material') ? 'is-invalid' : '' }}"
                         id="filter-material" name="material">
-                        <option selected="selected" disabled>-- Pilih Brand / Ukuran Dulu --</option>
+                        <option selected="selected" disabled>-- Pilih Ukuran Dulu --</option>
                     </select>
                 </div>
                 <button class="btn btn-sm btn-info float-right" type="submit">Submit</button>
@@ -115,6 +124,7 @@
 					headers: { 'X-CSRF-TOKEN': CSRF_TOKEN },
                     type: "post",
                     data: function(d) {
+                        d.brand = $("#filter-brand").val()
                         d.product = $("#filter-product").val()
                         d.material = $("#filter-material").val()
                     }
@@ -153,6 +163,25 @@
 
         });
 
+        $('.brand-master').on('change', function() {
+            let brandId = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "{{ route('api.get_master.by.brand_id', '') }}" + '/' + brandId,
+                dataType: "json",
+                success: function(response) {
+                    let html = ``;
+                    html +=
+                        `<option selected="selected" disabled>-- Pilih Ukuran --</option>`;
+                    response.products.forEach(product => {
+                        html +=
+                            `<option value="${ product.id }">${ product.size }</option>`;
+                    });
+                    $('#filter-product').html(html);
+                }
+            });
+        });
+
         $('.product-master').on('change', function() {
             let productId = $(this).val();
             $.ajax({
@@ -162,7 +191,7 @@
                 success: function(response) {
                     let html = ``;
                     html +=
-                        `<option selected="selected" disabled>-- Pilih Jenis Plastik --</option>`;
+                        `<option selected="selected" disabled>-- Pilih Jenis Master --</option>`;
                     response.materials.forEach(material => {
                         html +=
                             `<option value="${ material.id }">${ material.name } | stock: ${material.stock}</option>`;

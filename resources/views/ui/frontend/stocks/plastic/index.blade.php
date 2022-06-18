@@ -4,7 +4,7 @@
 @endpush
 @section('content')
     <div class="box-shadow">
-        <div class="col-12 shadow shadow-lg">
+        <div class="col-12 shadow-lg">
             <div class="py-3">
                 <a href="#">
                     <img src="{{ asset('images/icon/back.png') }}" width="18" height="18">
