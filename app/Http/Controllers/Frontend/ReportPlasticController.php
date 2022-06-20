@@ -12,7 +12,7 @@ class ReportPlasticController extends Controller
 {
     public function index()
     {
-        $brands = Brand::orderBy('id', 'DESC')->get();
+        $brands = Brand::orderBy('name', 'ASC')->get();
         $products = Product::orderBy('id', 'DESC')->get();
         return view('ui.frontend.report.plastic', [
             'products' => $products,
@@ -35,7 +35,7 @@ class ReportPlasticController extends Controller
 			$q->whereRelation('material', 'product_id', $productId);
 		});
         $query->when($brandId , function($q) use($brandId){
-			$q->whereRelation('product', 'brand_id', $brandId);
+			$q->whereRelation('material.product', 'brand_id', $brandId);
 		});
 		$query->with('material:id,product_id,name,stock');
 		$query->with('material.product:id,brand_id,size');

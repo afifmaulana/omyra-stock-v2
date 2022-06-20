@@ -26,7 +26,7 @@ class InnerController extends Controller
 
     public function create()
     {
-        $brands = Brand::orderBy('id', 'DESC')->get();
+        $brands = Brand::orderBy('name', 'ASC')->get();
         $products = Product::orderBy('id', 'DESC')->get();
         return view('ui.frontend.stocks.inner.create', [
             'products' => $products,

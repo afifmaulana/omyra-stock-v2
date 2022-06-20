@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\LogActivity;
 use App\Models\Materials;
 use App\Models\Product;
@@ -25,8 +26,10 @@ class MasterController extends Controller
 
     public function create()
     {
+        $brands = Brand::orderBy('name', 'ASC')->get();
         $products = Product::orderBy('id', 'DESC')->get();
         return view('ui.frontend.stocks.master.create', [
+            'brands' => $brands,
             'products' => $products,
         ]);
     }

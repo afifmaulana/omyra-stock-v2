@@ -12,21 +12,34 @@ class MasterController extends Controller
 {
     public function getMaster($id)
     {
-        $product = Product::find($id);
-        $materials = Materials::whereHas('product', function ($query) {
-            $query->where('type', 'master');
-        })->where('product_id', $product->id)->get();
+        // $product = Product::find($id);
+        // $materials = Materials::whereHas('product', function ($query) {
+        //     $query->where('type', 'master');
+        // })->where('product_id', $product->id)->get();
+        // return response()->json([
+        //     'materials' => $materials,
+        // ]);
+        $brand = Brand::find($id);
+        $query = Materials::query();
+        $query->where('type', 'master');
+        $query->whereRelation('product', 'brand_id', $brand->id);
+        $query->with('product');
+        $data = $query->get();
         return response()->json([
-            'materials' => $materials,
+            'data' => $data,
         ]);
     }
 
     public function getProduct($id)
     {
         $brand = Brand::find($id);
-        $products = Product::whereHas('brand')->where('brand_id', $brand->id)->get();
+        $query = Materials::query();
+        $query->where('type', 'master');
+        $query->whereRelation('product', 'brand_id', $brand->id);
+        $query->with('product');
+        $data = $query->get();
         return response()->json([
-            'products' => $products,
+            'data' => $data,
         ]);
     }
 }

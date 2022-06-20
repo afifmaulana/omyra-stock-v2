@@ -70,36 +70,26 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="font-weight-500"> Ukuran</label>
+                    <label class="font-weight-500">Jenis / Ukuran </label>
                     <select
                         class="select2 form-control font-size-16 form-omyra product-plastic {{ $errors->has('product') ? 'is-invalid' : '' }}"
-                        id="filter-product" name="product">
+                        id="filter-material" name="product">
                         <option selected disabled>-- Pilih Brand Dulu --</option>
-                        {{-- @foreach ($products as $product)
-                            <option value="{{ $product->id }}">
-                                {{ $product->brand->name . ' / ' . $product->size }}
-                            </option>
-                        @endforeach
-                        @if ($errors->has('product'))
-                            <span class="invalid-feedback" role="alert">
-                                <p><b>{{ $errors->first('product') }}</b></p>
-                            </span>
-                        @endif --}}
                     </select>
                 </div>
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label class="font-weight-500">Jenis</label>
                     <select
                         class="select2 form-control font-size-16 form-omyra material-plastic {{ $errors->has('material') ? 'is-invalid' : '' }}"
                         id="filter-material" name="material">
                         <option selected="selected" disabled>-- Pilih Ukuran Dulu --</option>
                     </select>
-                </div>
-                <button class="btn btn-sm btn-info float-right" type="submit">Submit</button>
+                </div> --}}
+                <button class="btn btn-sm btn-info float-right mb-5" type="submit">Submit</button>
                 {{-- <a class="btn btn-sm btn-outline-secondary reset-btn" href="#">Reset</a> --}}
             </form>
             {{-- <h5 class="py-3"></h5> --}}
-            <hr>
+            {{-- <hr>
             <div class="py-3 d-flex justify-content-center">
                 <a href="#" class="btn btn-sm btn-success mr-3">
                     <i class="fas fa-download"></i>
@@ -109,7 +99,7 @@
                     <i class="fa fa-print"></i>
                     Print
                 </button>
-            </div>
+            </div> --}}
             <table id="main-table" class="table table-striped table-bordered" style="width:100%"></table>
         </div>
     </div>
@@ -186,34 +176,34 @@
                 success: function(response) {
                     let html = ``;
                     html +=
-                        `<option selected="selected" disabled>-- Pilih Ukuran --</option>`;
-                    response.products.forEach(product => {
+                        `<option selected="selected" disabled>-- Pilih Jenis / Ukuran --</option>`;
+                    response.data.forEach(item => {
                         html +=
-                            `<option value="${ product.id }">${ product.size }</option>`;
-                    });
-                    $('#filter-product').html(html);
-                }
-            });
-        });
-
-        $('.product-plastic').on('change', function() {
-            let productId = $(this).val();
-            $.ajax({
-                type: "GET",
-                url: "{{ route('api.get_plastic.by.product_id', '') }}" + '/' + productId,
-                dataType: "json",
-                success: function(response) {
-                    let html = ``;
-                    html +=
-                        `<option selected="selected" disabled>-- Pilih Jenis Plastik --</option>`;
-                    response.materials.forEach(material => {
-                        html +=
-                            `<option value="${ material.id }">${ material.name } | stock: ${material.stock}</option>`;
+                            `<option value="${ item.id }">${item.name} / ${ item.product.size }</option>`;
                     });
                     $('#filter-material').html(html);
                 }
             });
         });
+
+        // $('.product-plastic').on('change', function() {
+        //     let productId = $(this).val();
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "{{ route('api.get_plastic.by.product_id', '') }}" + '/' + productId,
+        //         dataType: "json",
+        //         success: function(response) {
+        //             let html = ``;
+        //             html +=
+        //                 `<option selected="selected" disabled>-- Pilih Jenis Plastik --</option>`;
+        //             response.materials.forEach(material => {
+        //                 html +=
+        //                     `<option value="${ material.id }">${ material.name } | stock: ${material.stock}</option>`;
+        //             });
+        //             $('#filter-material').html(html);
+        //         }
+        //     });
+        // });
 
         $('.material-plastic').on('change', function() {
             let materialId = $(this).val();

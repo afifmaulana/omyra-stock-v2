@@ -15,7 +15,7 @@ class CreateSemifinishesTable extends Migration
     {
         Schema::create('semifinishes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->unsigned();
+            $table->foreignId('product_id')->unsigned()->nullable();
             $table->foreignId('material_id')->unsigned();
             $table->date('date');
             $table->date('unloading_date');

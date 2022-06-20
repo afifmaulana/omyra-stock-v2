@@ -30,7 +30,7 @@
                     <label class="font-weight-500">Tanggal</label>
                     <input type="text" name="date" id="date"
                         class="datepicker form-control font-size-16 form-omyra {{ $errors->has('date') ? 'is-invalid' : '' }}"
-                        placeholder="Masukkan Tanggal Borongan">
+                        placeholder="Masukkan Tanggal Borongan" autocomplete="off">
                     @if ($errors->has('date'))
                         <span class="invalid-feedback" role="alert">
                             <p><b>{{ $errors->first('date') }}</b></p>
@@ -41,7 +41,7 @@
                     <label class="font-weight-500">Tanggal</label>
                     <input type="text" name="unloading_date" id="unloading_date"
                         class="datepicker form-control font-size-16 form-omyra {{ $errors->has('unloading_date') ? 'is-invalid' : '' }}"
-                        placeholder="Masukkan Tanggal Bongkar Oven">
+                        placeholder="Masukkan Tanggal Bongkar Oven" autocomplete="off">
                     @if ($errors->has('unloading_date'))
                         <span class="invalid-feedback" role="alert">
                             <p><b>{{ $errors->first('unloading_date') }}</b></p>
@@ -49,29 +49,29 @@
                     @endif
                 </div>
                 <div class="form-group">
-                    <label class="font-weight-500">Brand / Ukuran</label>
+                    <label class="font-weight-500">Brand</label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra {{ $errors->has('product') ? 'is-invalid' : '' }}"
-                        id="product" name="product">
-                        <option selected disabled>Pilih Brand / Ukuran</option>
-                        @foreach ($products as $product)
-                            <option value="{{ $product->id }}">
-                                {{ $product->brand->name . ' / ' . $product->size }}
+                        class="select2 form-control font-size-16 form-omyra brand-plastic {{ $errors->has('brand') ? 'is-invalid' : '' }}"
+                        id="filter-brand" name="product">
+                        <option selected disabled>-- Pilih Brand --</option>
+                        @foreach ($brands as $brand)
+                            <option value="{{ $brand->id }}">
+                                {{ $brand->name }}
                             </option>
                         @endforeach
-                        @if ($errors->has('product'))
+                        @if ($errors->has('brand'))
                             <span class="invalid-feedback" role="alert">
-                                <p><b>{{ $errors->first('product') }}</b></p>
+                                <p><b>{{ $errors->first('brand') }}</b></p>
                             </span>
                         @endif
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="font-weight-500">Jenis</label>
+                    <label class="font-weight-500">Jenis / Ukuran </label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra {{ $errors->has('material') ? 'is-invalid' : '' }}"
-                        id="material" name="material">
-                        <option selected="selected" disabled>-- Pilih Brand / Ukuran Dulu --</option>
+                        class="select2 form-control font-size-16 form-omyra product-plastic material-show {{ $errors->has('product') ? 'is-invalid' : '' }}"
+                        id="filter-material" name="material">
+                        <option selected disabled>-- Pilih Brand Dulu --</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -161,27 +161,45 @@
                     $(element).removeClass('is-invalid');
                 }
             });
-
-            $('#product').on('change', function() {
-                let productId = $(this).val();
+            $('.brand-plastic').on('change', function() {
+                let brandId = $(this).val();
                 $.ajax({
                     type: "GET",
-                    url: "{{ route('api.get_plastic.by.product_id', '') }}" + '/' + productId,
+                    url: "{{ route('api.get_plastic.by.brand_id', '') }}" + '/' + brandId,
                     dataType: "json",
                     success: function(response) {
                         let html = ``;
                         html +=
-                            `<option selected="selected" disabled>-- Pilih Jenis Plastik --</option>`;
-                        response.materials.forEach(material => {
+                            `<option selected="selected" disabled>-- Pilih Jenis / Ukuran --</option>`;
+                        response.data.forEach(item => {
                             html +=
-                                `<option value="${ material.id }">${ material.name } | stock: ${material.stock}</option>`;
+                                `<option value="${ item.id }">${item.name} / ${ item.product.size }</option>`;
                         });
-                        $('#material').html(html);
+                        $('#filter-material').html(html);
                     }
                 });
             });
 
-            $('#material').on('change', function() {
+            // $('#product').on('change', function() {
+            //     let productId = $(this).val();
+            //     $.ajax({
+            //         type: "GET",
+            //         url: "{{ route('api.get_plastic.by.product_id', '') }}" + '/' + productId,
+            //         dataType: "json",
+            //         success: function(response) {
+            //             let html = ``;
+            //             html +=
+            //                 `<option selected="selected" disabled>-- Pilih Jenis Plastik --</option>`;
+            //             response.materials.forEach(material => {
+            //                 html +=
+            //                     `<option value="${ material.id }">${ material.name } | stock: ${material.stock}</option>`;
+            //             });
+            //             $('#material').html(html);
+            //         }
+            //     });
+            // });
+
+            $('.material-show').on('change', function() {
                 let materialId = $(this).val();
                 $.ajax({
                     type: "GET",
@@ -191,7 +209,7 @@
                         let material = response.material;
                         console.log(typeof(material.stock));
                         if (material != null) {
-                            $('#max-label').html('Max: ' + material.stock);
+                            $('#max-label').html('Stok Plastik: ' + material.stock);
                             $('#total').attr('max', material.stock);
                         } else {
                             $('#max-label').html('');

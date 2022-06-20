@@ -29,7 +29,7 @@
                     <label class="font-weight-500">Tanggal</label>
                     <input type="text" name="date" id="date"
                         class="datepicker form-control font-size-16 form-omyra {{ $errors->has('date') ? 'is-invalid' : '' }}"
-                        placeholder="Masukkan Tanggal Inner Datang">
+                        placeholder="Masukkan Tanggal Inner Datang" autocomplete="off">
                     @if ($errors->has('date'))
                         <span class="invalid-feedback" role="alert">
                             <p><b>{{ $errors->first('date') }}</b></p>
@@ -39,27 +39,27 @@
                 <div class="form-group">
                     <label class="font-weight-500">Brand</label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra {{ $errors->has('product') ? 'is-invalid' : '' }}"
-                        id="product" name="product">
+                        class="select2 form-control font-size-16 form-omyra brand-inner {{ $errors->has('brand') ? 'is-invalid' : '' }}"
+                        id="filter-brand" name="product">
                         <option selected disabled>-- Pilih Brand --</option>
-                        @foreach ($products as $product)
-                            <option value="{{ $product->id }}">
-                                {{ $product->brand->name }}
+                        @foreach ($brands as $brand)
+                            <option value="{{ $brand->id }}">
+                                {{ $brand->name }}
                             </option>
                         @endforeach
-                        @if ($errors->has('product'))
+                        @if ($errors->has('brand'))
                             <span class="invalid-feedback" role="alert">
-                                <p><b>{{ $errors->first('product') }}</b></p>
+                                <p><b>{{ $errors->first('brand') }}</b></p>
                             </span>
                         @endif
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="font-weight-500">Jenis / Ukuran</label>
+                    <label class="font-weight-500">Jenis / Ukuran </label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra {{ $errors->has('material') ? 'is-invalid' : '' }}"
-                        id="material" name="material">
-                        <option selected="selected" disabled>-- Pilih Brand Dulu --</option>
+                        class="select2 form-control font-size-16 form-omyra product-inner {{ $errors->has('product') ? 'is-invalid' : '' }}"
+                        id="filter-material" name="material">
+                        <option selected disabled>-- Pilih Brand Dulu --</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -129,6 +129,25 @@
                 unhighlight: function(element, errorClass, validClass) {
                     $(element).removeClass('is-invalid');
                 }
+            });
+
+            $('.brand-inner').on('change', function() {
+                let brandId = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('api.get_inner.by.brand_id', '') }}" + '/' + brandId,
+                    dataType: "json",
+                    success: function(response) {
+                        let html = ``;
+                        html +=
+                            `<option selected="selected" disabled>-- Pilih Jenis / Ukuran --</option>`;
+                        response.data.forEach(item => {
+                            html +=
+                                `<option value="${ item.id }">${item.name} / ${ item.product.size }</option>`;
+                        });
+                        $('#filter-material').html(html);
+                    }
+                });
             });
 
             $('#product').on('change', function() {

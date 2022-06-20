@@ -12,7 +12,7 @@ class MaterialController extends Controller
 {
     public function index()
     {
-        $materials = Materials::orderBy('id', 'DESC')->paginate('10');
+        $materials = Materials::orderBy('id', 'DESC')->get();
         return view('ui.admin.material.index', [
             'materials' => $materials,
         ]);

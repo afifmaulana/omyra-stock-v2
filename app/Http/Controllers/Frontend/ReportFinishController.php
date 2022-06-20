@@ -12,7 +12,7 @@ class ReportFinishController extends Controller
 {
     public function index()
     {
-        $brands = Brand::orderBy('id', 'DESC')->get();
+        $brands = Brand::orderBy('name', 'ASC')->get();
         $products = Product::orderBy('id', 'DESC')->get();
         return view('ui.frontend.report.finish', [
             'products' => $products,
@@ -27,19 +27,19 @@ class ReportFinishController extends Controller
         $brandId = $request->brand;
 
 		$query = Finish::query();
-        $query->whereRelation('material', 'type', 'master');
+        $query->whereRelation('master', 'type', 'master');
 		$query->when($materialId , function($q) use($materialId){
-			$q->where('material_id', $materialId);
+			$q->where('master_id', $materialId);
 		});
 		$query->when($productId , function($q) use($productId){
-			$q->whereRelation('product_id', $productId);
+			$q->where('product_id', $productId);
 		});
         $query->when($brandId , function($q) use($brandId){
-			$q->whereRelation('product', 'brand_id', $brandId);
+			$q->whereRelation('master.product', 'brand_id', $brandId);
 		});
-		$query->with('material:id,product_id,name,stock');
-		$query->with('material.product:id,brand_id,size');
-		$query->with('material.product.brand:id,name');
+		$query->with('master:id,product_id,name,stock');
+		$query->with('master.product:id,brand_id,size');
+		$query->with('master.product.brand:id,name');
 
 		$data = $query->get();
 

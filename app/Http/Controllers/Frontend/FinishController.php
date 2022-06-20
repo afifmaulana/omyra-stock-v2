@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Finish;
 use App\Models\LogActivity;
 use App\Models\Materials;
@@ -23,8 +24,10 @@ class FinishController extends Controller
 
     public function create()
     {
+        $brands = Brand::orderBy('name', 'ASC')->get();
         $products = Product::orderBy('id', 'DESC')->get();
         return view('ui.frontend.finished.create', [
+            'brands' => $brands,
             'products' => $products,
         ]);
     }

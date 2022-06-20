@@ -4,7 +4,7 @@
 @endpush
 @section('content')
     <div class="box-shadow">
-        <div class="col-12 shadow shadow-lg">
+        <div class="col-12 shadow-lg">
             <div class="py-3">
                 <a href="#">
                     <img src="{{ asset('images/icon/back.png') }}" width="18" height="18">
@@ -34,8 +34,9 @@
                     <tr>
                         <th>No</th>
                         <th>Tanggal</th>
-                        <th>Brand / Ukuran</th>
-                        <th>Kebutuhan Plastik</th>
+                        <th>Bongkar Oven</th>
+                        <th>Brand</th>
+                        <th>Jenis / Ukuran</th>
                         <th>Jumlah Masuk</th>
                         <th>Action</th>
                     </tr>
@@ -44,9 +45,10 @@
                     @foreach ($semifinishes as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->product->brand->name . ' / ' . $item->product->size }}</td>
-                            <td>{{ $item->unloading_date }}</td>
-                            <td>{{ $item->material->name }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->date)->format('d-m-Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->unloading_date)->format('d-m-Y') }}</td>
+                            <td>{{ $item->material->product->brand->name }}</td>
+                            <td>{{ $item->material->name . ' / ' . $item->material->product->size }}</td>
                             <td>{{ $item->total }}</td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>

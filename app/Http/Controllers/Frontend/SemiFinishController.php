@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\LogActivity;
 use App\Models\Materials;
 use App\Models\Product;
@@ -23,8 +24,10 @@ class SemiFinishController extends Controller
 
     public function create()
     {
+        $brands = Brand::orderBy('name', 'ASC')->get();
         $products = Product::orderBy('id', 'DESC')->get();
         return view('ui.frontend.semi-finished.create', [
+            'brands' => $brands,
             'products' => $products,
         ]);
     }
@@ -34,7 +37,7 @@ class SemiFinishController extends Controller
         // dd(Carbon::createFromFormat('d/m/Y', $request->unloading_date)->format('Y-m-d'));
         // dd($request->all());
         $semifinish = new Semifinish();
-        $semifinish->product_id = $request->product;
+        // $semifinish->product_id = $request->product;
         $semifinish->material_id = $request->material;
         $semifinish->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
         $semifinish->unloading_date = Carbon::createFromFormat('d-m-Y', $request->unloading_date)->format('Y-m-d');
