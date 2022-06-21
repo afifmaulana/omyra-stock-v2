@@ -86,7 +86,7 @@
                     </select>
                 </div> --}}
                 <button class="btn btn-sm btn-info float-right mb-5" type="submit">Submit</button>
-                {{-- <a class="btn btn-sm btn-outline-secondary reset-btn" href="#">Reset</a> --}}
+                <button type="reset" class="btn btn-sm btn-outline-secondary btn-reset">Reset</button>
             </form>
             {{-- <h5 class="py-3"></h5> --}}
             {{-- <hr>
@@ -165,6 +165,13 @@
 					// {title : "Action", searchable: false, orderable : false},
 				]
             });
+
+            $(document).on('click', '.btn-reset', function(e) {
+                e.preventDefault()
+                $('#filter-brand').val('')
+                $('#filter-material').val('')
+                table.ajax.reload()
+            })
 
         });
         $('.brand-plastic').on('change', function() {
