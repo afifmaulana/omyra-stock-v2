@@ -44,11 +44,13 @@ class FinishController extends Controller
         $finish->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
         $finish->user_id = Auth::user()->id;
 
-        $product = Product::find($request->product);
+        // $product = Product::find($request->product);
         $inner = Materials::find($request->inner);
         $master = Materials::find($request->master);
+        $product = $inner->product;
+        $finish->product_id = $product->id;
 
-        $product->stock_semifinish -= $request->total;
+        $product->stock_semifinish -= $request->need_inner;
         $product->stock_finish += $request->total;
 
         $inner->stock -= $request->need_inner;

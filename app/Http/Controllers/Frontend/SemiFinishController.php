@@ -45,7 +45,9 @@ class SemiFinishController extends Controller
         $semifinish->user_id = Auth::user()->id;
 
         $material = Materials::find($request->material);
-        $product = Product::find($request->product);
+        $product = $material->product;
+        $semifinish->product_id = $product->id;
+         // $product = Product::find($request->product);
 
         // PROSES PENGURANGAN STOK MATERIAL PLASTIC
         $material->stock -= $request->total;

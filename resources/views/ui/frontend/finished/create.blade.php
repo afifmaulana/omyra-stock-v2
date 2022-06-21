@@ -42,10 +42,19 @@
                     <select
                         class="select2 form-control font-size-16 form-omyra {{ $errors->has('product') ? 'is-invalid' : '' }}"
                         id="product" name="product">
-                        <option value="" selected="selected" disabled>-- Pilih Brand/Ukuran/Stock
-                            Barang 1/2 Jadi --
+                        <option value="" selected="selected" disabled>-- Pilih Brand --
                         </option>
-                        @foreach ($products as $product)
+                        @foreach ($brands as $brand)
+                            <option value="{{ $brand->id }}">
+                                {{ $brand->name }}
+                            </option>
+                        @endforeach
+                        @if ($errors->has('brand'))
+                            <span class="invalid-feedback" role="alert">
+                                <p><b>{{ $errors->first('brand') }}</b></p>
+                            </span>
+                        @endif
+                        {{-- @foreach ($products as $product)
                             <option value="{{ $product->id }}">
                                 {{ $product->brand->name . ' / ' . $product->size . ' / barang 1/2 jadi: ' . $product->stock_semifinish }}
                             </option>
@@ -54,13 +63,13 @@
                             <span class="invalid-feedback" role="alert">
                                 <p><b>{{ $errors->first('product') }}</b></p>
                             </span>
-                        @endif
+                        @endif --}}
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="font-weight-500">Jumlah inner yang digunakan</label>
                     <select class="select2 form-control font-size-16 form-omyra" id="inner" name="inner">
-                        <option selected="selected" disabled>-- Pilih Brand / Ukuran Dulu --</option>
+                        <option selected="selected" disabled>-- Pilih Brand Dulu --</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -204,10 +213,10 @@
                     success: function(response) {
                         let html = ``;
                         html +=
-                            `<option value="" selected="selected" disabled>-- Pilih Material Inner --</option>`;
-                        response.materials.forEach(material => {
+                            `<option value="" selected="selected" disabled>-- Pilih Jenis/Ukuran Inner --</option>`;
+                        response.data.forEach(material => {
                             html +=
-                                `<option value="${ material.id }">${ material.name } | stock: ${material.stock}</option>`;
+                                `<option value="${ material.id }">${ material.name } / ${material.product.size} | stok Inner: ${material.stock} | barang 1/2 jadi: ${material.product.stock_semifinish}</option>`;
                         });
                         $('#inner').html(html);
                     }
@@ -232,10 +241,10 @@
                     success: function(response) {
                         let html = ``;
                         html +=
-                            `<option value="" selected="selected" disabled>-- Pilih Material Master --</option>`;
-                        response.materials.forEach(material => {
+                            `<option value="" selected="selected" disabled>-- Pilih Jenis/Ukuran Master --</option>`;
+                        response.data.forEach(material => {
                             html +=
-                                `<option value="${ material.id }">${ material.name } | stock: ${material.stock}</option>`;
+                                `<option value="${ material.id }">${ material.name } / ${material.product.size} | stock: ${material.stock}</option>`;
                         });
                         $('#master').html(html);
                     }

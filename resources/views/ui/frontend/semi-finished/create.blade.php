@@ -52,7 +52,7 @@
                     <label class="font-weight-500">Brand</label>
                     <select
                         class="select2 form-control font-size-16 form-omyra brand-plastic {{ $errors->has('brand') ? 'is-invalid' : '' }}"
-                        id="filter-brand" name="product">
+                        id="filter-brand" name="brand">
                         <option selected disabled>-- Pilih Brand --</option>
                         @foreach ($brands as $brand)
                             <option value="{{ $brand->id }}">

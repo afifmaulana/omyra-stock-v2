@@ -49,7 +49,7 @@
     <div class="bg-grey pt-23 mt-1" style="max-height: 86vh; overflow: scroll;">
         {{-- @include('components.frontend.flashmessage') --}}
         <div class="container-omyra" style="margin-bottom: 90px;">
-            <form action="#" method="POST" enctype="multipart/form-data" id="form-filter">
+            <form action="#" method="POST" enctype="multipart/form-data" class="myform" id="form-filter">
                 @csrf
                 <div class="form-group">
                     <label class="font-weight-500">Brand</label>
@@ -86,7 +86,7 @@
                     </select>
                 </div> --}}
                 <button class="btn btn-sm btn-info float-right mb-5" type="submit">Submit</button>
-                {{-- <a class="btn btn-sm btn-outline-secondary reset-btn" href="#">Reset</a> --}}
+                <button type="reset" class="btn btn-sm btn-outline-secondary btn-reset">Reset</button>
             </form>
             {{-- <h5 class="py-3"></h5> --}}
             {{-- <hr>
@@ -100,7 +100,7 @@
                     Print
                 </button>
             </div> --}}
-            <table id="main-table" class="table table-striped table-bordered" style="width:100%"></table>
+            <table id="main-table" class="table table-striped table-bordered table-responsive" style="width:100%"></table>
         </div>
     </div>
 @endsection
@@ -165,6 +165,13 @@
 					// {title : "Action", searchable: false, orderable : false},
 				]
             });
+
+            $(document).on('click', '.btn-reset', function(e) {
+                e.preventDefault()
+                $('#filter-brand').val('')
+                $('#filter-material').val('')
+                table.ajax.reload()
+            })
 
         });
         $('.brand-plastic').on('change', function() {
