@@ -83,8 +83,8 @@
                         <option selected="selected" disabled>-- Pilih Ukuran Dulu --</option>
                     </select>
                 </div> --}}
-                <button class="btn btn-sm btn-info float-right" type="submit">Submit</button>
-                <button type="reset" class="btn btn-sm btn-outline-secondary btn-reset">Reset</button>
+                <button class="btn btn-sm btn-info float-right mb-3" type="submit">Submit</button>
+                <button type="reset" class="btn btn-sm btn-outline-secondary btn-reset mb-3">Reset</button>
             </form>
             {{-- <h5 class="py-3"></h5> --}}
             {{-- <hr>

@@ -86,7 +86,7 @@
                     </select>
                 </div> --}}
                 <button class="btn btn-sm btn-info float-right mb-5" type="submit">Submit</button>
-                <button type="reset" class="btn btn-sm btn-outline-secondary btn-reset">Reset</button>
+                <button type="reset" class="btn btn-sm btn-outline-secondary btn-reset mb-3">Reset</button>
             </form>
             {{-- <h5 class="py-3"></h5> --}}
             {{-- <hr>
@@ -146,14 +146,14 @@
 							if (!data.material || !data.material.product || !data.material.product.brand) {
 								return '-'
 							}
-							return `${data.material.product.brand.name} / ${data.material.product.size}`
+							return `${data.material.product.brand.name}`
 						}
 					},
 					{
-						title : "Jenis", name : "type", data : null,
+						title : "Jenis / Ukuran", name : "type", data : null,
 						render : (data) => {
 							if (data.material) {
-								return data.material.name
+								return `${data.material.name} / ${data.material.product.size}`
 							}
 							return '-'
 						}
