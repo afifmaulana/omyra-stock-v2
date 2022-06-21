@@ -100,7 +100,9 @@
                     Print
                 </button>
             </div> --}}
-            <table id="main-table" class="table table-striped table-bordered table-responsive" style="width:100%"></table>
+            <table id="main-table" class="table table-striped table-bordered table-responsive" style="width:100%">
+            
+            </table>
         </div>
     </div>
 @endsection
@@ -157,6 +159,15 @@
 					{
 						title : "Jumlah Masuk", name: "count", data : 'total',
 						render : (data) => data ? formatRupiah(data.toString()) : 0
+					},
+                    {
+						title : "Sisa Stok", name : "stock", data : null,
+						render : (data) => {
+							if (data.material) {
+								return  ` ${data.material.stock}`
+							}
+							return '-'
+						}
 					},
 					// {title : "Action", searchable: false, orderable : false},
 				]

@@ -162,6 +162,15 @@
 						title : "Jumlah Masuk", name: "count", data : 'total',
 						render : (data) => data ? formatRupiah(data.toString()) : 0
 					},
+                    {
+						title : "Total Stok", name : "stock", data : null,
+						render : (data) => {
+							if (data.material) {
+								return  ` ${data.material.stock}`
+							}
+							return '-'
+						}
+					},
 					// {title : "Action", searchable: false, orderable : false},
 				]
             });

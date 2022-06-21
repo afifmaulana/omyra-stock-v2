@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">email</label>
-                    <input type="email" name="email" id=""
+                    <input type="email" name="email" id="" readonly
                     class="form-control font-size-16 form-omyra {{ $errors->has('email') ? 'is-invalid' : '' }}"
                         value="{{ $user->email }}">
                     {{-- <input type="hidden" name="email" id="" disabled
