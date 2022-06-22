@@ -72,7 +72,7 @@
                 <div class="form-group">
                     <label class="font-weight-500">Jenis / Ukuran </label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra product-plastic material-show {{ $errors->has('product') ? 'is-invalid' : '' }}"
+                        class="select2 form-control font-size-16 form-omyra product-plastic product-show {{ $errors->has('product') ? 'is-invalid' : '' }}"
                         id="filter-material" name="product">
                         <option selected disabled>-- Pilih Brand Dulu --</option>
                     </select>
@@ -91,7 +91,7 @@
             <hr>
             <div class="row justify-content-center mb-2">
                 <div class="col-auto">
-                    <div id="max-label" class="text-red px-2 font-30px font-weight-bold border border-danger"></div>
+                    <div id="max-label" class="text-red px-2 font-40px font-weight-bold border border-danger"></div>
                 </div>
             </div>
             {{-- <h5 class="py-3"></h5> --}}
@@ -228,17 +228,17 @@
         //     });
         // });
 
-        $('.material-show').on('change', function() {
-            let materialId = $(this).val();
+        $('.product-show').on('change', function() {
+            let productId = $(this).val();
             $.ajax({
                 type: "GET",
-                url: "{{ route('api.show.material', '') }}" + '/' + materialId,
+                url: "{{ route('api.show.product', '') }}" + '/' + productId,
                 dataType: "json",
                 success: function(response) {
-                    let material = response.material;
-                    // console.log(typeof(material.stock));
-                    if (material != null) {
-                        $('#max-label').html('Sisa stok: ' + material.product.stock_semifinish);
+                    let product = response.product;
+                    // console.log(typeof(product.stock));
+                    if (product != null) {
+                        $('#max-label').html('Sisa stok: ' + product.stock_semifinish);
                         // $('#total').attr('max', material.stock);
                     } else {
                         $('#max-label').html('');
