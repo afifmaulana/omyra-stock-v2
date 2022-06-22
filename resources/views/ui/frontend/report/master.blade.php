@@ -70,7 +70,7 @@
                 <div class="form-group">
                     <label class="font-weight-500">Jenis / Ukuran </label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra product-plastic {{ $errors->has('product') ? 'is-invalid' : '' }}"
+                        class="select2 form-control font-size-16 form-omyra product-plastic material-show {{ $errors->has('product') ? 'is-invalid' : '' }}"
                         id="filter-material" name="product">
                         <option selected disabled>-- Pilih Brand Dulu --</option>
                     </select>
@@ -86,6 +86,12 @@
                 <button class="btn btn-sm btn-info float-right mb-3" type="submit">Submit</button>
                 <button type="reset" class="btn btn-sm btn-outline-secondary btn-reset mb-3">Reset</button>
             </form>
+            <hr>
+            <div class="row justify-content-center mb-2">
+                <div class="col-auto">
+                    <div id="max-label" class="text-red px-2 font-30px font-weight-bold border border-danger"></div>
+                </div>
+            </div>
             {{-- <h5 class="py-3"></h5> --}}
             {{-- <hr>
             <div class="py-3 d-flex justify-content-center">
@@ -156,15 +162,16 @@
 						title : "Jumlah Masuk", name: "count", data : 'total',
 						render : (data) => data ? formatRupiah(data.toString()) : 0
 					},
-                    {
-						title : "Sisa Stok", name : "stock", data : null,
-						render : (data) => {
-							if (data.material) {
-								return  ` ${data.material.stock}`
-							}
-							return '-'
-						}
-					},
+                    // {
+						// title : "Sisa Stok", name : "stock", data : null,
+                        // render : (data) => data ? formatRupiah(data.material.stock.toString()) : 0
+						// render : (data) => {
+						// 	if (data.material) {
+						// 		return  ` ${data.material.stock}`
+						// 	}
+						// 	return '-'
+						// }
+					// },
 					// {title : "Action", searchable: false, orderable : false},
 				]
             });
@@ -214,7 +221,7 @@
         //     });
         // });
 
-        $('.material-master').on('change', function() {
+        $('.material-show').on('change', function() {
             let materialId = $(this).val();
             $.ajax({
                 type: "GET",
@@ -224,8 +231,8 @@
                     let material = response.material;
                     // console.log(typeof(material.stock));
                     if (material != null) {
-                        $('#max-label').html('Max: ' + material.stock);
-                        $('#total').attr('max', material.stock);
+                        $('#max-label').html('Sisa Stok: ' + material.stock);
+                        // $('#total').attr('max', material.stock);
                     } else {
                         $('#max-label').html('');
                     }
