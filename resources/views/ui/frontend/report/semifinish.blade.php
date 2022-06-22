@@ -238,7 +238,7 @@
                     let material = response.material;
                     // console.log(typeof(material.stock));
                     if (material != null) {
-                        $('#max-label').html('Sisa stok: ' + material.stock);
+                        $('#max-label').html('Sisa stok: ' + material.product.stock_semifinish);
                         // $('#total').attr('max', material.stock);
                     } else {
                         $('#max-label').html('');
