@@ -92,7 +92,7 @@
             <hr>
             <div class="row justify-content-center mb-2">
                 <div class="col-auto">
-                    <div id="max-label" class="text-red px-2 font-40px font-weight-bold border border-danger"></div>
+                    <div id="max-label" class="text-red px-2 font-30px font-weight-bold border border-danger"></div>
                 </div>
             </div>
             {{-- <h5 class="py-3"></h5> --}}
