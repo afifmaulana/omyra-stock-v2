@@ -68,9 +68,9 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="font-weight-500">Jenis / Ukuran </label>
+                    <label class="font-weight-500">Jenis  Master/ Ukuran </label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra product-plastic material-show {{ $errors->has('product') ? 'is-invalid' : '' }}"
+                        class="select2 form-control font-size-16 form-omyra product-plastic finish-show {{ $errors->has('product') ? 'is-invalid' : '' }}"
                         id="filter-material" name="product">
                         <option selected disabled>-- Pilih Brand Dulu --</option>
                     </select>
@@ -177,7 +177,7 @@
             let brandId = $(this).val();
             $.ajax({
                 type: "GET",
-                url: "{{ route('api.get_master.by.brand_id', '') }}" + '/' + brandId,
+                url: "{{ route('api.get_inner.by.brand_id', '') }}" + '/' + brandId,
                 dataType: "json",
                 success: function(response) {
                     let html = ``;
@@ -211,7 +211,7 @@
         //     });
         // });
 
-        $('.material-show').on('change', function() {
+        $('.finish-show').on('change', function() {
             let materialId = $(this).val();
             $.ajax({
                 type: "GET",
@@ -219,10 +219,8 @@
                 dataType: "json",
                 success: function(response) {
                     let material = response.material;
-                    // console.log(typeof(material.stock));
                     if (material != null) {
-                        $('#max-label').html('Sisa stok: ' + material.stock);
-                        // $('#total').attr('max', material.stock);
+                        $('#max-label').html('Sisa stok: ' +  material ? 'Sisa stok: ' +  formatRupiah(material.product.stock_finish.toString()) : 0);
                     } else {
                         $('#max-label').html('');
                     }

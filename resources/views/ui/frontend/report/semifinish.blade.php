@@ -72,7 +72,7 @@
                 <div class="form-group">
                     <label class="font-weight-500">Jenis / Ukuran </label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra product-plastic product-show {{ $errors->has('product') ? 'is-invalid' : '' }}"
+                        class="select2 form-control font-size-16 form-omyra product-plastic semifinish-show {{ $errors->has('product') ? 'is-invalid' : '' }}"
                         id="filter-material" name="product">
                         <option selected disabled>-- Pilih Brand Dulu --</option>
                     </select>
@@ -228,18 +228,16 @@
         //     });
         // });
 
-        $('.product-show').on('change', function() {
-            let productId = $(this).val();
+        $('.semifinish-show').on('change', function() {
+            let materialId = $(this).val();
             $.ajax({
                 type: "GET",
-                url: "{{ route('api.show.product', '') }}" + '/' + productId,
+                url: "{{ route('api.show.material', '') }}" + '/' + materialId,
                 dataType: "json",
                 success: function(response) {
-                    let product = response.product;
-                    // console.log(typeof(product.stock));
-                    if (product != null) {
-                        $('#max-label').html('Sisa stok: ' + product.stock_semifinish);
-                        // $('#total').attr('max', material.stock);
+                    let material = response.material;
+                    if (material != null) {
+                        $('#max-label').html('Sisa stok: ' +  material ? 'Sisa stok: ' +  formatRupiah(material.product.stock_semifinish.toString()) : 0);
                     } else {
                         $('#max-label').html('');
                     }

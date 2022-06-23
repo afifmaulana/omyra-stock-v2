@@ -30,7 +30,7 @@
                     <label class="font-weight-500">Tanggal</label>
                     <input type="text" name="date" id="date"
                         class="datepicker form-control font-size-16 form-omyra {{ $errors->has('date') ? 'is-invalid' : '' }}"
-                        placeholder="Masukkan Tanggal Borongan">
+                        placeholder="Masukkan Tanggal Borongan" autocomplete="off">
                     @if ($errors->has('date'))
                         <span class="invalid-feedback" role="alert">
                             <p><b>{{ $errors->first('date') }}</b></p>

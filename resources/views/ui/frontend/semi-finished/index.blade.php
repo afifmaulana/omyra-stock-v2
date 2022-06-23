@@ -68,8 +68,9 @@
                     <tr>
                         <th>No</th>
                         <th>Tanggal</th>
-                        <th>Brand / Ukuran</th>
-                        <th>Kebutuhan Plastik</th>
+                        <th>Bongkar Oven</th>
+                        <th>Brand</th>
+                        <th>Jenis / Ukuran</th>
                         <th>Jumlah Masuk</th>
                         <th>Action</th>
                     </tr>

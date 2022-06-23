@@ -4,7 +4,7 @@
 @endpush
 @section('content')
     <div class="box-shadow">
-        <div class="col-12 shadow shadow-lg">
+        <div class="col-12 shadow-lg">
             <div class="py-3">
                 <a href="#">
                     <img src="{{ asset('images/icon/back.png') }}" width="18" height="18">
@@ -33,8 +33,8 @@
                     <tr>
                         <th>No</th>
                         <th>Tanggal</th>
-                        <th>Brand / Ukuran</th>
-                        <th>Jenis</th>
+                        <th>Brand</th>
+                        <th>Jenis / Ukuran</th>
                         <th>Jumlah Masuk</th>
                         <th>Action</th>
                     </tr>
@@ -45,9 +45,9 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ \Carbon\Carbon::parse($stock->date)->format('d-m-Y') }}</td>
                             <td>
-                                {{ $stock->material->product->brand->name . ' / ' . $stock->material->product->size }}
+                                {{ $stock->material->product->brand->name }}
                             </td>
-                            <td>{{ $stock->material->name }}</td>
+                            <td>{{ $stock->material->name . ' / ' . $stock->material->product->size }}</td>
                             <td>{{ $stock->total }}</td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
@@ -66,8 +66,8 @@
                     <tr>
                         <th>No</th>
                         <th>Tanggal</th>
-                        <th>Brand / Ukuran</th>
-                        <th>Jenis</th>
+                        <th>Brand</th>
+                        <th>Jenis / Ukuran</th>
                         <th>Jumlah Masuk</th>
                         <th>Action</th>
                     </tr>

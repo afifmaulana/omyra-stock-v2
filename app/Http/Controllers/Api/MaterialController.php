@@ -11,6 +11,7 @@ class MaterialController extends Controller
     public function show($id)
     {
         $material = Materials::find($id);
+        $material->load('product');
         return response()->json([
             'material' => $material,
         ]);

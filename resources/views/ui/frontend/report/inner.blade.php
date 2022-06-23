@@ -234,7 +234,7 @@
                     let material = response.material;
                     // console.log(typeof(material.stock));
                     if (material != null) {
-                        $('#max-label').html('Sisa Stok: ' + material.stock);
+                        $('#max-label').html(material ? 'Sisa stok: ' +  formatRupiah(material.stock.toString()) : 0);
                         // $('#total').attr('max', material.stock);
                     } else {
                         $('#max-label').html('');
