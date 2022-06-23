@@ -48,7 +48,7 @@
                             <td>{{ $item->product->brand->name . ' / ' . $item->product->size }}</td>
                             <td>{{ $item->inner->name . ' / ' . $item->need_inner }}</td>
                             <td>{{ $item->master->name . ' / ' . $item->total }}</td>
-                            <td>{{ $item->total }}</td>
+                            <td>{{ number_format($item->total,0,',','.') }}</td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                                 <form id="delete-finish" action="{{ route('frontend.finish.delete', $item->id) }}"

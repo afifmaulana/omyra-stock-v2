@@ -49,7 +49,7 @@
                             <td>{{ \Carbon\Carbon::parse($item->unloading_date)->format('d-m-Y') }}</td>
                             <td>{{ $item->material->product->brand->name }}</td>
                             <td>{{ $item->material->name . ' / ' . $item->material->product->size }}</td>
-                            <td>{{ $item->total }}</td>
+                            <td>{{ number_format($item->total,0,',','.') }}</td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                                 <form id="delete-semi-finish"

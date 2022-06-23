@@ -8,41 +8,37 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class ProfileController extends Controller
 {
     public function edit()
     {
         $user = Auth::user();
+        $roles = Role::all();
         return view('ui.frontend.profile.profile', [
-            'user' => $user
+            'user' => $user,
+            'roles' => $roles,
         ]);
     }
 
     public function update(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'role' => 'required',
+        // dd($request->all());
+        // $this->validate($request, [
+        //     'name' => 'required',
+        //     'email' => 'required',
+        //     'password' => 'required',
+        //     'role' => 'required',
+        // ]);
+        $user = Auth::user()->id;
+        $role = Role::where('id', $request->role)->first();
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
-
-        $user = User::get()->first();
-        DB::beginTransaction();
-        try {
-
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->role = $request->role;
-            $user->update();
-
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            dd($th->getMessage());
-        }
+        $user->assignRole($role->name);
 
         return redirect()->route('frontend.profile.edit')->with('success', 'Berhasil mengubah data Barang Jadi');
     }

@@ -10,7 +10,7 @@
 @endpush
 @section('content')
     <div class="box-shadow">
-        <div class="col-12 shadow shadow-lg">
+        <div class="col-12 shadow-lg">
             <div class="py-3">
                 <a href="{{ route('frontend.dashboard.index') }}">
                     <img src="{{ asset('images/icon/back.png') }}" width="18" height="18">
@@ -63,7 +63,9 @@
                         class="select2 form-control font-size-16 form-omyra {{ $errors->has('role') ? 'is-invalid' : '' }}"
                         name="role">
                         <option value="" selected disabled>---- Pilih Jabatan ----</option>
-                        <option value="3" {{ $user->role == '3' ? 'selected' : '' }}>Mandor</option>
+                        @foreach ($roles as $item)
+                        <option value="{{$item->id}}"@if($item->id == $user->roles->id){{"selected"}}@endif>{{ Str::upper($item->name) }}</option>
+                        @endforeach
                         @if ($errors->has('role'))
                             <span class="invalid-feedback" role="alert">
                                 <p><b>{{ $errors->first('role') }}</b></p>
@@ -79,7 +81,9 @@
                         class="select2 form-control font-size-16 form-omyra {{ $errors->has('role') ? 'is-invalid' : '' }}"
                         name="role">
                         <option value="" selected disabled>---- Pilih Jabatan ----</option>
-                        <option value="1" {{ $user->roles->pluck('name')[0] == 'warehouse' ? 'selected' : '' }}>Staff Gudang</option>
+                        @foreach ($roles as $item)
+                        <option value="{{$item->id}}"@if($item->id){{"selected"}}@endif>{{ Str::upper($item->name) }}</option>
+                        @endforeach
                         @if ($errors->has('role'))
                             <span class="invalid-feedback" role="alert">
                                 <p><b>{{ $errors->first('role') }}</b></p>

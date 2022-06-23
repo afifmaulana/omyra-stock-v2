@@ -48,7 +48,7 @@
                                 {{ $stock->material->product->brand->name }}
                             </td>
                             <td>{{ $stock->material->name . ' / ' . $stock->material->product->size }}</td>
-                            <td>{{ $stock->total }}</td>
+                            <td>{{ number_format($stock->total,0,',','.') }}</td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                                 <form id="delete-master" action="{{ route('frontend.master.delete', $stock->id) }}"
