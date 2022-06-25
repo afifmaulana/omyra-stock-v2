@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Sql;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Materials;
@@ -38,9 +39,18 @@ class PlasticController extends Controller
         $query->whereRelation('product', 'brand_id', $brand->id);
         $query->with('product');
         $data = $query->get();
-        // $products = Product::whereHas('brand')
-        // ->whereRelation('materials', 'type', 'plastic')
-        // ->where('brand_id', $brand->id)->get();
+        return response()->json([
+            'data' => $data,
+        ]);
+    }
+    public function getMaterial(Request $request, $id)
+    {
+        $brand = Brand::find($id);
+        $query = Materials::query();
+        $query->where('type', 'plastic');
+        $query->whereRelation('product', 'brand_id', $brand->id);
+        $query->with('product');
+        $data = $query->get();
         return response()->json([
             'data' => $data,
         ]);

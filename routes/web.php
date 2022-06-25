@@ -127,6 +127,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('index', [PlasticController::class, 'index'])->name('frontend.plastic.index');
             Route::get('create', [PlasticController::class, 'create'])->name('frontend.plastic.create');
             Route::post('create', [PlasticController::class, 'store'])->name('frontend.plastic.store');
+            Route::get('edit/{id}', [PlasticController::class, 'edit'])->name('frontend.plastic.edit');
+            Route::put('edit/{id}', [PlasticController::class, 'update'])->name('frontend.plastic.update');
             Route::delete('{id}', [PlasticController::class, 'destroy'])->name('frontend.plastic.delete');
         });
         Route::prefix('inner')->group(function () {

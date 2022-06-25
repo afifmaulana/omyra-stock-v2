@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('product/plastic/{id}', [PlasticController::class, 'getPlastic'])->name('api.get_plastic.by.product_id');
+Route::get('material/plastic/{id}', [PlasticController::class, 'getMaterial'])->name('api.get_plastic.by.material_id');
 Route::get('/brand/product/plastic/{id}', [PlasticController::class, 'getProduct'])->name('api.get_plastic.by.brand_id');
 Route::get('product/inner/{id}', [InnerController::class, 'getInner'])->name('api.get_inner.by.product_id');
 Route::get('/brand/product/inner/{id}', [InnerController::class, 'getProduct'])->name('api.get_inner.by.brand_id');
