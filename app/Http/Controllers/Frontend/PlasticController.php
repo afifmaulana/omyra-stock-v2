@@ -19,6 +19,7 @@ class PlasticController extends Controller
     {
         $stocks = Stock::whereHas('material', function ($query) {
             $query->where('type', 'plastic');
+            $query->with('semifinishes');
         })->orderBy('id', 'DESC')->get();
         return view('ui.frontend.stocks.plastic.index', [
             'stocks' => $stocks,

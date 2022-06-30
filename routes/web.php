@@ -19,6 +19,7 @@ use App\Http\Controllers\Frontend\MasterController;
 use App\Http\Controllers\Frontend\NotificationController;
 use App\Http\Controllers\Frontend\PlasticController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\RejectController;
 use App\Http\Controllers\Frontend\ReportFinishController;
 use App\Http\Controllers\Frontend\ReportInnerController;
 use App\Http\Controllers\Frontend\ReportMasterController;
@@ -121,6 +122,11 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin'], func
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [FrontendDashboardController::class, 'index'])->name('frontend.dashboard.index');
     Route::get('/notification', [NotificationController::class, 'index'])->name('frontend.notification.index');
+    Route::prefix('reject')->group(function () {
+        Route::prefix('plastic')->group(function () {
+            Route::get('index', [RejectController::class, 'index'])->name('frontend.reject.index');
+        });
+    });
 
     Route::prefix('stock')->group(function () {
         Route::prefix('plastic')->group(function () {

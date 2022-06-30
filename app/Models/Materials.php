@@ -15,4 +15,9 @@ class Materials extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function semifinishes()
+    {
+        return $this->hasMany(Semifinish::class);
+    }
 }

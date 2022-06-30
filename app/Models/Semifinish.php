@@ -20,4 +20,9 @@ class Semifinish extends Model
     {
         return $this->belongsTo(Materials::class);
     }
+    
+    public function materials()
+    {
+        return $this->hasMany(Materials::class);
+    }
 }
