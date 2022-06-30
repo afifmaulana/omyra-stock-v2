@@ -40,6 +40,10 @@ class ReportPlasticController extends Controller
 		$query->with('material:id,product_id,name,stock');
 		$query->with('material.product:id,brand_id,size');
 		$query->with('material.product.brand:id,name');
+		$query->with('material.semifinishes');
+		$query->with('material.semifinishes.material');
+		$query->with('material.semifinishes.product');
+
 
 		$data = $query->get();
 

@@ -31,6 +31,15 @@
         tfoot {
             background: white;
         }
+
+		tbody .dt-control{
+			background: "images/datatables/details_open.png") no-repeat center center;
+			cursor:pointer;
+		}
+		tbody .dt-control.shown{
+			background: "images/datatables/details_close.png") no-repeat center center;
+			cursor:pointer;
+		}
     </style>
 @endpush
 @section('content')
@@ -143,23 +152,28 @@
                         d.material = $("#filter-material").val()
                     }
                 },
-                "columns": [{
-                        title: "No",
-                        width: "5%",
-                        searchable: false,
-                        orderable: false,
-                        data: null,
-                        render: (data, type, full, meta) => meta.row + 1
-                    },
+				select: {
+					selector: 'td:not(:first-child)',
+					style: 'os'
+				},
+                "columns": [
+					{
+						"className": 'dt-control',
+						"orderable": false,
+						"data": null,
+						"defaultContent": ''
+					},
+					// {
+                    //     title: "No",
+                    //     width: "5%",
+                    //     searchable: false,
+                    //     orderable: false,
+                    //     data: null,
+                    //     render: (data, type, full, meta) => meta.row + 1
+                    // },
+                    { title: "Tanggal", name: "date", data: 'date' },
                     {
-                        title: "Tanggal",
-                        name: "date",
-                        data: 'date'
-                    },
-                    {
-                        title: "Brand",
-                        name: "brand",
-                        data: null,
+                        title: "Brand", name: "brand", data: null,
                         render: (data) => {
                             if (!data.material || !data.material.product || !data.material.product
                                 .brand) {
@@ -169,9 +183,7 @@
                         }
                     },
                     {
-                        title: "Jenis / Ukuran",
-                        name: "type",
-                        data: null,
+                        title: "Jenis / Ukuran", name: "type", data: null,
                         render: (data) => {
                             if (data.material) {
                                 return `${data.material.name} / ${data.material.product.size}`
@@ -180,9 +192,7 @@
                         }
                     },
                     {
-                        title: "Jumlah Masuk",
-                        name: "count",
-                        data: 'total',
+                        title: "Jumlah Masuk", name: "count", data: 'total',
                         render: (data) => data ? formatRupiah(data.toString()) : 0
                     },
                     // {
@@ -200,6 +210,60 @@
                     // {title : "Action", searchable: false, orderable : false},
                 ]
             });
+
+			table.on('click', 'td.dt-control', function () {
+				const tr = $(this).closest('tr');
+				const row = table.row(tr);
+				if (row.child.isShown()) {
+					row.child.hide();
+					tr.removeClass('shown');
+					$(this).removeClass('shown');
+				}
+				else {
+					row.child(showChildren(row.data())).show();
+					tr.addClass('shown');
+					$(this).addClass('shown');
+				}
+			});
+
+
+			function showChildren(data) {
+				let total = 0
+				html = ''
+				html += `<table style="width:100%" class="table">`
+				html += `	<thead>`
+				html += `		<tr>`
+				html += `			<th>No</th>`
+				html += `			<th>Material</th>`
+				html += `			<th>Date</th>`
+				html += `			<th>Total</th>`
+				html += `		</tr>`
+				html += `	</thead>`
+				html += `	<tbody>`
+					data.material.semifinishes.forEach((item, key) => {
+						html += `		<tr>`
+						html += `			<td>${key+1}</td>`
+						html += `			<td>${item.material.name} / ${item.material.type}</td>`
+						html += `			<td>${item.date}</td>`
+						html += `			<td>${item.total}</td>`
+						html += `		</tr>`
+						total += item.total
+					})
+				html += `	</tbody>`
+				html += `	<tfoot>`
+				html += `		<tr>`
+				html += `			<th colspan="3">Jumlah</th>`
+				html += `			<th>${total}</th>`
+				html += `		</tr>`
+				html += `		<tr>`
+				html += `			<th colspan="3">Total Pengurangan</th>`
+				// html += `			<th colspan="3">${data.total} - ${total}</th>`
+				html += `			<th>${data.total - total}</th>`
+				html += `		</tr>`
+				html += `	</tfoot>`
+				html += `</table>`
+				return html
+			}
 
             $(document).on('click', '.btn-reset', function(e) {
                 e.preventDefault()

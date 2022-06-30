@@ -18,7 +18,7 @@ class Semifinish extends Model
 
     public function material()
     {
-        return $this->belongsTo(Materials::class);
+        return $this->belongsTo(Materials::class, 'material_id');
     }
     
     public function materials()

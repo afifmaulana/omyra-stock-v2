@@ -18,6 +18,6 @@ class Materials extends Model
 
     public function semifinishes()
     {
-        return $this->hasMany(Semifinish::class);
+        return $this->hasMany(Semifinish::class, 'material_id', 'id');
     }
 }
