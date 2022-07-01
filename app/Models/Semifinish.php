@@ -13,14 +13,14 @@ class Semifinish extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'product_id');
     }
 
     public function material()
     {
         return $this->belongsTo(Materials::class, 'material_id');
     }
-    
+
     public function materials()
     {
         return $this->hasMany(Materials::class);
