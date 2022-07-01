@@ -66,7 +66,7 @@
                                     </form>
                                 </td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td colspan="12" class="hiddenRow">
                                     <div class="accordian-body collapse" id="demo1">
                                         <table class="table table-striped">
@@ -95,7 +95,7 @@
 
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> --}}
                         {{-- @endforeach --}}
                     @endforeach
                 </tbody>
