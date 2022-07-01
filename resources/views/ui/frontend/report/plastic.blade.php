@@ -234,7 +234,8 @@
 				html += `	<thead>`
 				html += `		<tr>`
 				html += `			<th>No</th>`
-				html += `			<th>Material</th>`
+				// html += `			<th>Brand</th>`
+				html += `			<th>Jenis/Ukuran</th>`
 				html += `			<th>Date</th>`
 				html += `			<th>Total</th>`
 				html += `		</tr>`
@@ -243,7 +244,8 @@
 					data.material.semifinishes.forEach((item, key) => {
 						html += `		<tr style="color: red">`
 						html += `			<td>${key+1}</td>`
-						html += `			<td>${item.material.name} / ${item.material.type}</td>`
+						// html += `			<td>${item.product.brand.name}</td>`
+						html += `			<td>${item.material.name} / ${item.product.size}</td>`
 						html += `			<td>${item.date}</td>`
 						html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
 						html += `		</tr>`
