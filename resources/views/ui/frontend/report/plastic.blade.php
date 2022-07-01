@@ -247,7 +247,7 @@
 						// html += `			<td>${item.product.brand.name}</td>`
 						html += `			<td>${item.material.name} / ${item.product.size}</td>`
 						html += `			<td>${item.date}</td>`
-						html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
+						html += `			<td>${item.total}</td>`
 						html += `		</tr>`
 						total += item.total
 					})
