@@ -29,16 +29,4 @@ class Stock extends Model
     {
         return ['January', 'February', 'March', 'April', 'May', 'June', 'July ', 'August', 'September', 'October', 'November', 'December'];
     }
-    public function semifinishes()
-    {
-        return $this->hasMany(Semifinish::class);
-    }
-    public function materials()
-    {
-        return $this->hasMany(Materials::class);
-    }
-    public function logActivities()
-    {
-        return $this->hasMany(LogActivity::class);
-    }
 }

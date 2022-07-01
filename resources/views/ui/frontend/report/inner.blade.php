@@ -31,6 +31,14 @@
         tfoot {
             background: white;
         }
+        tbody .dt-control{
+			background: "images/datatables/details_open.png" no-repeat center center;
+			cursor:pointer;
+		}
+		tbody .dt-control.shown{
+			background: "images/datatables/details_close.png" no-repeat center center;
+			cursor:pointer;
+		}
     </style>
 @endpush
 @section('content')
@@ -138,7 +146,17 @@
                         d.material = $("#filter-material").val()
                     }
                 },
+                select: {
+					selector: 'td:not(:first-child)',
+					style: 'os'
+				},
 				"columns": [
+                    {
+						"className": 'dt-control',
+						"orderable": false,
+						"data": null,
+						"defaultContent": ''
+					},
 					{
 						title : "No", width: "5%", searchable: false, orderable : false,
 						data : null, render: (data, type, full, meta) => meta.row + 1
@@ -179,6 +197,61 @@
 					// {title : "Action", searchable: false, orderable : false},
 				]
             });
+
+            table.on('click', 'td.dt-control', function () {
+				const tr = $(this).closest('tr');
+				const row = table.row(tr);
+				if (row.child.isShown()) {
+					row.child.hide();
+					tr.removeClass('shown');
+					$(this).removeClass('shown');
+				}
+				else {
+					row.child(showChildren(row.data())).show();
+					tr.addClass('shown');
+					$(this).addClass('shown');
+				}
+			});
+
+
+			function showChildren(data) {
+				let total = 0
+				html = ''
+				html += `<table style="width:100%" class="table">`
+				html += `	<thead>`
+				html += `		<tr>`
+				html += `			<th>No</th>`
+				html += `			<th>Date</th>`
+				html += `			<th>Jenis</th>`
+				html += `			<th>Total</th>`
+				html += `		</tr>`
+				html += `	</thead>`
+				html += `	<tbody>`
+					data.material.inners.forEach((item, key) => {
+						html += `		<tr style="color: red">`
+						html += `			<td>${key+1}</td>`
+						html += `			<td>${item.date}</td>`
+						html += `			<td>${item.inner.name} / ${item.product.size}</td>`
+						html += `			<td>${item.need_inner ? formatRupiah(item.need_inner.toString()) : 0}</td>`
+						html += `		</tr>`
+						total += item.need_inner
+					})
+				html += `	</tbody>`
+				html += `	<tfoot style="color: red">`
+				html += `		<tr>`
+				html += `			<th colspan="3">Jumlah</th>`
+				html += `			<th>${total ? formatRupiah(total.toString()) : 0}</th>`
+				html += `		</tr>`
+				html += `		<tr>`
+				html += `			<th colspan="3">Total Pengurangan</th>`
+				// html += `			<th colspan="3">${data.total} - ${total}</th>`
+				html += `			<th>${data.total - total}</th>`
+				html += `		</tr>`
+				html += `	</tfoot>`
+				html += `</table>`
+				return html
+			}
+
             $(document).on('click', '.btn-reset', function(e) {
                 e.preventDefault()
                 $('#filter-brand').val('')

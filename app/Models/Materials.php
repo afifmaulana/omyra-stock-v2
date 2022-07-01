@@ -20,4 +20,9 @@ class Materials extends Model
     {
         return $this->hasMany(Semifinish::class, 'material_id', 'id');
     }
+
+    public function inners()
+    {
+        return $this->hasMany(Finish::class, 'inner_id', 'id');
+    }
 }

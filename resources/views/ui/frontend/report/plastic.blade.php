@@ -241,19 +241,19 @@
 				html += `	</thead>`
 				html += `	<tbody>`
 					data.material.semifinishes.forEach((item, key) => {
-						html += `		<tr>`
+						html += `		<tr style="color: red">`
 						html += `			<td>${key+1}</td>`
 						html += `			<td>${item.material.name} / ${item.material.type}</td>`
 						html += `			<td>${item.date}</td>`
-						html += `			<td>${item.total}</td>`
+						html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
 						html += `		</tr>`
 						total += item.total
 					})
 				html += `	</tbody>`
-				html += `	<tfoot>`
+				html += `	<tfoot style="color: red">`
 				html += `		<tr>`
 				html += `			<th colspan="3">Jumlah</th>`
-				html += `			<th>${total}</th>`
+				html += `			<th>${total ? formatRupiah(total.toString()) : 0}</th>`
 				html += `		</tr>`
 				html += `		<tr>`
 				html += `			<th colspan="3">Total Pengurangan</th>`
