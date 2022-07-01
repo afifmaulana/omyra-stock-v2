@@ -255,7 +255,7 @@
 				html += `	<tfoot style="color: red">`
 				html += `		<tr>`
 				html += `			<th colspan="3">Jumlah</th>`
-				html += `			<th>${total ? formatRupiah(total.toString()) : 0}</th>`
+				html += `			<th>${total}</th>`
 				html += `		</tr>`
 				html += `		<tr>`
 				html += `			<th colspan="3">Total Pengurangan</th>`
