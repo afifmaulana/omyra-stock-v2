@@ -44,9 +44,11 @@
                 <tbody>
                     @foreach ($stocks as $stock)
                         {{-- @foreach ($stock->semifinishes as $semifinish) --}}
-                            <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
-                                <td style="width: 100px">{{ $loop->iteration }} <button class="btn btn-default rounded btn-sm"><span
-                                            class="fa fa-plus-circle" style="color: green"></span></button></td>
+                            {{-- <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle"> --}}
+                            <tr>
+                                <td style="width: 100px">{{ $loop->iteration }}
+                                    {{-- <button class="btn btn-default rounded btn-sm"><span lass="fa fa-plus-circle" style="color: green"></span></button> --}}
+                                </td>
                                 <td>{{ \Carbon\Carbon::parse($stock->date)->format('d-m-Y') }}</td>
 
                                 <td>
