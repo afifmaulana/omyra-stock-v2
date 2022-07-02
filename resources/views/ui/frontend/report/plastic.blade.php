@@ -97,6 +97,9 @@
                 <button class="btn btn-sm btn-info float-right mb-3" type="submit">Submit</button>
                 <button type="reset" class="btn btn-sm btn-outline-secondary btn-reset mb-3">Reset</button>
             </form>
+            <div class="row justify-content-center mb-2">
+                <a href="{{ route('frontend.report.record.plastic') }}" class="btn btn-sm btn-outline-primary">Riwayat <i class="fa fa-eye"></i></a>
+            </div>
 
             <hr>
             <div class="row justify-content-center mb-2">
@@ -208,6 +211,7 @@
                         // }
                     // },
                     // {title : "Action", searchable: false, orderable : false},
+
                 ]
             });
 

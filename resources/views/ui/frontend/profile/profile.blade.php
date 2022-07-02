@@ -64,7 +64,7 @@
                         name="role">
                         <option value="" selected disabled>---- Pilih Jabatan ----</option>
                         @foreach ($roles as $item)
-                        <option value="{{$item->id}}"@if($item->id == $user->roles->id){{"selected"}}@endif>{{ Str::upper($item->name) }}</option>
+                        {{-- <option value="{{$item->id}}"@if($item->id == $user->roles->id){{"selected"}}@endif>{{ Str::upper($item->name) }}</option> --}}
                         @endforeach
                         @if ($errors->has('role'))
                             <span class="invalid-feedback" role="alert">

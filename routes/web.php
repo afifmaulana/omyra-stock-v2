@@ -19,6 +19,7 @@ use App\Http\Controllers\Frontend\MasterController;
 use App\Http\Controllers\Frontend\NotificationController;
 use App\Http\Controllers\Frontend\PlasticController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\RecordController;
 use App\Http\Controllers\Frontend\RejectController;
 use App\Http\Controllers\Frontend\ReportFinishController;
 use App\Http\Controllers\Frontend\ReportInnerController;
@@ -183,6 +184,11 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/finish', [ReportFinishController::class, 'index'])->name('frontend.report.finish.index');
         Route::post('/finish/data', [ReportFinishController::class, 'data'])->name('frontend.report.finish.data');
+
+        Route::prefix('record')->group(function () {
+            Route::get('/plastic', [RecordController::class, 'recordPlastic'])->name('frontend.report.record.plastic');
+        });
+
     });
 });
 

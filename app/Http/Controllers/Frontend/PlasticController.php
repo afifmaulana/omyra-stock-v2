@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\LogActivity;
 use App\Models\Materials;
 use App\Models\Product;
+use App\Models\RecordLog;
 use App\Models\Stock;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -38,21 +39,39 @@ class PlasticController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-        $stock = new Stock();
-        $stock->material_id = $request->material;
-        $stock->total = $request->total;
-        $stock->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
-        $stock->user_id = Auth::user()->id;
-        $stock->save();
+        DB::beginTransaction();
+        try {
+            // dd($request->all());
+            $stock = new Stock();
+            $stock->material_id = $request->material;
+            $stock->total = $request->total;
+            $stock->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
+            $stock->user_id = Auth::user()->id;
+            $stock->save();
 
-        $material = Materials::find($stock->material_id);
-        $material->stock += $stock->total;
-        $material->update();
+            $material = Materials::find($stock->material_id);
+            $stock_before = $material->stock;
+            $material->stock += $stock->total;
+            $material->update();
 
-            $title = $description = Auth::user()->name . ' telah menambahkan stok plastik '.
-                                    $material->product->brand->name . '/' . $material->product->size . ' ' .
-                                    $material->name . ' sebanyak ' . $stock->total;
+            $data = [
+                'brand_id' => $material->product->brand_id,
+                'product_id' => $material->product_id,
+                'material_id' => $material->id,
+                'modelable_id' => $stock->id,
+                'modelable_type' => Stock::class,
+                'type' => 'Stok Plastik',
+                'date' => $stock->date,
+                'stock_before' => $stock_before,
+                'total' => $stock->total,
+                'stock_now' => $stock_before + $stock->total,
+            ];
+            RecordLog::saveRecord($data);
+
+
+            $title = $description = Auth::user()->name . ' telah menambahkan stok plastik ' .
+                $material->product->brand->name . '/' . $material->product->size . ' ' .
+                $material->name . ' sebanyak ' . $stock->total;
             $log = new LogActivity();
             $log->user_id = Auth::user()->id;
             $log->source_id = $stock->id;
@@ -60,8 +79,14 @@ class PlasticController extends Controller
             $log->title = $title;
             $log->description = $description;
             $log->save();
+            
+            DB::commit();
 
-        return redirect()->route('frontend.plastic.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
+            return redirect()->route('frontend.plastic.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th->getMessage());
+        }
     }
 
     public function edit($id)
@@ -98,9 +123,9 @@ class PlasticController extends Controller
             $stock->total = $request->total;
             $stock->update();
 
-                $material = Materials::find($stock->material_id);
-                $material->stock += $stock->total;
-                $material->update();
+            $material = Materials::find($stock->material_id);
+            $material->stock += $stock->total;
+            $material->update();
 
             DB::commit();
         } catch (\Throwable $th) {
@@ -117,14 +142,14 @@ class PlasticController extends Controller
         // dd($stock);
         $stock->delete();
 
-            $title = $description = Auth::user()->name . ' telah menghapus stok plastik dengan ID #'. $stock->id;
-            $log = new LogActivity();
-            $log->user_id = Auth::user()->id;
-            $log->source_id = $stock->id;
-            $log->source_type = '\App\Stock';
-            $log->title = $title;
-            $log->description = $description;
-            $log->save();
+        $title = $description = Auth::user()->name . ' telah menghapus stok plastik dengan ID #' . $stock->id;
+        $log = new LogActivity();
+        $log->user_id = Auth::user()->id;
+        $log->source_id = $stock->id;
+        $log->source_type = '\App\Stock';
+        $log->title = $title;
+        $log->description = $description;
+        $log->save();
         return redirect()->route('frontend.plastic.index')->with(['success' => 'Berhasil menghapus data.']);
     }
 }
