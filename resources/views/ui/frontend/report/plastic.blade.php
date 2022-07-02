@@ -249,7 +249,7 @@
 						html += `			<td>${item.date}</td>`
 						html += `			<td>${item.total}</td>`
 						html += `		</tr>`
-						total += item.total
+						total += parseInt(item.total)
 					})
 				html += `	</tbody>`
 				html += `	<tfoot style="color: red">`
@@ -260,7 +260,7 @@
 				html += `		<tr>`
 				html += `			<th colspan="3">Total Pengurangan</th>`
 				// html += `			<th colspan="3">${data.total} - ${total}</th>`
-				html += `			<th>${data.total - total}</th>`
+				html += `			<th>${parseInt(data.total) - parseInt(total)}</th>`
 				html += `		</tr>`
 				html += `	</tfoot>`
 				html += `</table>`
