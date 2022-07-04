@@ -9,4 +9,9 @@ class Reject extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function material()
+    {
+        return $this->belongsTo(Materials::class, 'material_id', 'id');
+    }
 }

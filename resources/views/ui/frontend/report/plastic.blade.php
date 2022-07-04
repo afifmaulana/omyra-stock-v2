@@ -198,6 +198,11 @@
                         title: "Jumlah Masuk", name: "count", data: 'total',
                         render: (data) => data ? formatRupiah(data.toString()) : 0
                     },
+                    {
+						title : "Action",
+                        data : null,
+					    render: (data) => `<a href="{{ route('frontend.report.record.plastic') }}" class="btn btn-sm btn-outline-warning"><i class="fa fa-history"></i></a>`,
+					},
                     // {
                     //     title: "Sisa Stok",
                     //     name: "stock",

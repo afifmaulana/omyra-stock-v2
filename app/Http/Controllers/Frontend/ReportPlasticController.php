@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Product;
+use App\Models\RecordLog;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 
@@ -55,6 +56,19 @@ class ReportPlasticController extends Controller
             'recordsFiltered' => $recordsFiltered,
             'data' => $data,
 			'sql' => $query->toSql()
+        ]);
+    }
+
+    public function history($id)
+    {
+        $stock = Stock::where('id', $id)->first();
+        $records = RecordLog::whereHas('material', function ($query) {
+            $query->where('type', 'plastic');
+            $query->where('modelable_type', 'App\Models\Stock');
+        })->orderBy('id', 'DESC')->get();
+        return view('ui.frontend.report.record.plastic', [
+            'stock' => $stock,
+            'records' => $records,
         ]);
     }
 

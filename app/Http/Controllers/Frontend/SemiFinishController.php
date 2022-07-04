@@ -13,6 +13,7 @@ use App\Models\Stock;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SemiFinishController extends Controller
 {
@@ -36,82 +37,90 @@ class SemiFinishController extends Controller
 
     public function store(Request $request)
     {
-        // dd(Carbon::createFromFormat('d/m/Y', $request->unloading_date)->format('Y-m-d'));
-        // dd($request->all());
-        $semifinish = new Semifinish();
-        // $semifinish->product_id = $request->product;
-        $semifinish->material_id = $request->material;
-        $semifinish->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
-        $semifinish->unloading_date = Carbon::createFromFormat('d-m-Y', $request->unloading_date)->format('Y-m-d');
-        $semifinish->total = $request->total;
-        $semifinish->user_id = Auth::user()->id;
+        DB::beginTransaction();
+        try {
+            // dd(Carbon::createFromFormat('d/m/Y', $request->unloading_date)->format('Y-m-d'));
+            // dd($request->all());
+            $semifinish = new Semifinish();
+            // $semifinish->product_id = $request->product;
+            $semifinish->material_id = $request->material;
+            $semifinish->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
+            $semifinish->unloading_date = Carbon::createFromFormat('d-m-Y', $request->unloading_date)->format('Y-m-d');
+            $semifinish->total = $request->total;
+            $semifinish->user_id = Auth::user()->id;
 
-        $material = Materials::find($request->material);
-        $product = $material->product;
-        $semifinish->product_id = $product->id;
-         // $product = Product::find($request->product);
+            $material = Materials::find($request->material);
+            $product = $material->product;
+            $semifinish->product_id = $product->id;
+            // $product = Product::find($request->product);
 
-         $stock_before = $material->stock; //Mengambil stok sebelum dikurangi
+            $stock_before = $material->stock; //Mengambil stok sebelum dikurangi
 
-        // PROSES PENGURANGAN STOK MATERIAL PLASTIC
-        $material->stock -= $request->total;
+            // PROSES PENGURANGAN STOK MATERIAL PLASTIC
+            $material->stock -= $request->total;
 
-        //Mengambil stok barang 1/2 jadi sebelum ditambah
-        $stock_semifinish_before = $product->stock_semifinish;
+            //Mengambil stok barang 1/2 jadi sebelum ditambah
+            $stock_semifinish_before = $product->stock_semifinish;
 
-        // PROSES PENAMBAHAN STOK SEMIFINISH PADA PRODUK
-        $product->stock_semifinish += $request->total;
+            // PROSES PENAMBAHAN STOK SEMIFINISH PADA PRODUK
+            $product->stock_semifinish += $request->total;
 
-        $semifinish->save();
-        $material->update();
-        $product->update();
+            $semifinish->save();
+            $material->update();
+            $product->update();
 
-        //Proses penyimpanan log/history pengurangan stok plastik
-        $dataStock = [
-            'brand_id' => $material->product->brand_id,
-            'product_id' => $material->product_id,
-            'material_id' => $material->id,
-            'modelable_id' => $semifinish->id,
-            'modelable_type' => 'App\Models\Stock',
-            'type' => 'Barang Dipakai',
-            'type_calculation' => '-',
-            'date' => $semifinish->date,
-            'stock_before' => $stock_before,
-            'total' => $semifinish->total,
-            'stock_now' => $stock_before -= $semifinish->total,
-        ];
-        RecordLog::saveRecord($dataStock);
-
-
-        //Proses penyimpanan log/history penambahan stok barang 1/2 jadi
-        $dataSemifinish = [
-            'brand_id' => $material->product->brand_id,
-            'product_id' => $material->product_id,
-            'material_id' => $material->id,
-            'modelable_id' => $semifinish->id,
-            'modelable_type' => 'App\Models\Semifinish',
-            'type' => 'Barang Masuk',
-            'type_calculation' => '+',
-            'date' => $semifinish->date,
-            'stock_before' => $stock_semifinish_before,
-            'total' => $semifinish->total,
-            'stock_now' => $stock_semifinish_before += $semifinish->total,
-        ];
-        RecordLog::saveRecord($dataSemifinish);
+            //Proses penyimpanan log/history pengurangan stok plastik
+            $dataStock = [
+                'brand_id' => $material->product->brand_id,
+                'product_id' => $material->product_id,
+                'material_id' => $material->id,
+                'modelable_id' => $semifinish->id,
+                'modelable_type' => 'App\Models\Stock',
+                'type' => 'Barang Dipakai',
+                'type_calculation' => '-',
+                'date' => $semifinish->date,
+                'stock_before' => $stock_before,
+                'total' => $semifinish->total,
+                'stock_now' => $stock_before -= $semifinish->total,
+            ];
+            RecordLog::saveRecord($dataStock);
 
 
-        //Log Aktivitas
-        $title = $description = Auth::user()->name . ' telah menambahkan data barang 1/2 jadi '.
-                                    $material->product->brand->name . '/' . $material->product->size . ' ' .
-                                    $material->name . ' sebanyak ' . $semifinish->total;
-            $log = new LogActivity();
-            $log->user_id = Auth::user()->id;
-            $log->source_id = $semifinish->id;
-            $log->source_type = '\App\Semifinish';
-            $log->title = $title;
-            $log->description = $description;
-            $log->save();
+            //Proses penyimpanan log/history penambahan stok barang 1/2 jadi
+            $dataSemifinish = [
+                'brand_id' => $material->product->brand_id,
+                'product_id' => $material->product_id,
+                'material_id' => $material->id,
+                'modelable_id' => $semifinish->id,
+                'modelable_type' => 'App\Models\Semifinish',
+                'type' => 'Barang Masuk',
+                'type_calculation' => '+',
+                'date' => $semifinish->date,
+                'stock_before' => $stock_semifinish_before,
+                'total' => $semifinish->total,
+                'stock_now' => $stock_semifinish_before += $semifinish->total,
+            ];
+            RecordLog::saveRecord($dataSemifinish);
 
-        return redirect()->route('frontend.semi-finish.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
+
+            //Log Aktivitas
+            $title = $description = Auth::user()->name . ' telah menambahkan data barang 1/2 jadi '.
+                                        $material->product->brand->name . '/' . $material->product->size . ' ' .
+                                        $material->name . ' sebanyak ' . $semifinish->total;
+                $log = new LogActivity();
+                $log->user_id = Auth::user()->id;
+                $log->source_id = $semifinish->id;
+                $log->source_type = '\App\Semifinish';
+                $log->title = $title;
+                $log->description = $description;
+                $log->save();
+
+                DB::commit();
+
+                return redirect()->route('frontend.semi-finish.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                dd($th->getMessage());
+            }
     }
 }

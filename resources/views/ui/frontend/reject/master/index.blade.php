@@ -6,37 +6,33 @@
     <div class="box-shadow">
         <div class="col-12 shadow-lg">
             <div class="py-3">
-                <a href="#">
+                <a href="{{ route('frontend.master.index') }}">
                     <img src="{{ asset('images/icon/back.png') }}" width="18" height="18">
                 </a>
             </div>
             <div class="row justify-content-center">
-                <div class="text-header font-size-18 text-active-pink font-weight-500">Data Stok Master Box</div>
+                <div class="text-header font-size-18 text-active-pink font-weight-500">Data master reject</div>
             </div>
         </div>
     </div>
     <div class="bg-grey pt-23 mt-1" style="max-height: 86vh; overflow: scroll;">
         {{-- @include('components.frontend.flashmessage') --}}
         <div class="container-omyra" style="margin-bottom: 90px;">
-            <a href="{{ route('frontend.master.create') }}" class="float"
-                data-bs-toggle="tooltip" data-bs-placement="left" title="Tambah Data">
+            <a href="{{ route('frontend.reject.master.create') }}" class="float" data-bs-toggle="tooltip"
+                data-bs-placement="left" title="Tambah Data">
                 <i class="fa fa-plus my-float"></i>
             </a>
-            <div class="float-right">
-                <a href="{{ route('frontend.reject.master.index') }}" class="btn btn-sm btn-danger"
+            {{-- <div class="float-right">
+                <a href="{{ route('frontend.reject.create') }}" class="btn btn-sm btn-primary"
                     style="border-radius: 30px">
-                    <i class="fa fa-plus"></i>
-                    Reject
-                </a>
-                {{-- <a href="{{ route('frontend.master.create') }}" class="btn btn-sm btn-primary" style="border-radius: 30px">
-                    <i class="fa fa-plus"></i> Tambah</a> --}}
-            </div>
+                    <i class="fa fa-plus"></i> Tambah</a>
+            </div> --}}
             <h5 class="py-3"></h5>
 
-            <table id="dataTable" class="table table-striped table-bordered table-responsive" style="width:100%">
+            <table id="dataTable" class="table table-striped table-bordered table-responsive table-condensed">
                 <thead>
                     <tr>
-                        <th>No</th>
+                        <th style="width: 100px">No</th>
                         <th>Tanggal</th>
                         <th>Brand</th>
                         <th>Jenis / Ukuran</th>
@@ -45,26 +41,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($stocks as $stock)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ \Carbon\Carbon::parse($stock->date)->format('d-m-Y') }}</td>
-                            <td>
-                                {{ $stock->material->product->brand->name }}
-                            </td>
-                            <td>{{ $stock->material->name . ' / ' . $stock->material->product->size }}</td>
-                            <td>{{ number_format($stock->total,0,',','.') }}</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
-                                <form id="delete-master" action="{{ route('frontend.master.delete', $stock->id) }}"
-                                    class="d-inline" method="POST">
-                                    @csrf
-                                    @method('delete')
-                                    <button id="btn-delete" class="btn btn-sm btn-danger"><i
-                                            class="fa fa-trash"></i></button>
-                                </form>
-                            </td>
-                        </tr>
+                    @foreach ($rejects as $reject)
+                            <tr>
+                                <td style="width: 100px">{{ $loop->iteration }}</td>
+                                <td>{{ \Carbon\Carbon::parse($reject->date)->format('d-m-Y') }}</td>
+
+                                <td>
+                                    {{ $reject->material->product->brand->name }}
+                                </td>
+                                <td>{{ $reject->material->name . ' / ' . $reject->material->product->size }}</td>
+                                <td>{{ number_format($reject->total, 0, ',', '.') }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-info"><i
+                                            class="fa fa-edit"></i></a>
+                                    <form id="delete-reject" action="{{ route('frontend.reject.master.delete', $reject->id) }}"
+                                        class="d-inline" method="POST">
+                                        @csrf
+                                        @method('delete')
+                                        <button id="btn-delete" class="btn btn-sm btn-danger"><i
+                                                class="fa fa-trash"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
@@ -84,8 +82,9 @@
 
 @push('scripts')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    {{-- <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
@@ -93,18 +92,9 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         $(function() {
-            $('#dataTable').DataTable({
-                dom: 'Bfrtip',
-                // buttons: [
-                //         { extend: 'copyHtml5', className: 'rounded btn btn-sm btn-secondary mb-3' },
-                //         { extend: 'excelHtml5', className: 'rounded btn btn-sm btn-success mb-3' },
-                //         { extend: 'csvHtml5', className: 'rounded btn btn-sm btn-primary mb-3' },
-                //         { extend: 'pdfHtml5', className: 'rounded btn btn-sm btn-danger mb-3' },
-                //         { extend: 'print', className: 'rounded btn btn-sm btn-outline-primary mb-3' },
-                //             // 'copyHtml5',
-                //         ]
+             $('#dataTable').DataTable({
+                // dom: 'Bfrtip',
             });
-
             $('#btn-delete').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
@@ -117,7 +107,7 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $('form#delete-master').submit();
+                        $('form#delete-reject').submit();
                     }
                 })
             });

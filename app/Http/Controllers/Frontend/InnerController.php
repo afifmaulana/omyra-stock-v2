@@ -7,10 +7,12 @@ use App\Models\Brand;
 use App\Models\LogActivity;
 use App\Models\Materials;
 use App\Models\Product;
+use App\Models\RecordLog;
 use App\Models\Stock;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class InnerController extends Controller
 {
@@ -36,17 +38,39 @@ class InnerController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-        $stock = new Stock();
-        $stock->material_id = $request->material;
-        $stock->total = $request->total;
-        $stock->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
-        $stock->user_id = Auth::user()->id;
-        $stock->save();
+        DB::beginTransaction();
+        try {
+            // dd($request->all());
+            $stock = new Stock();
+            $stock->material_id = $request->material;
+            $stock->total = $request->total;
+            $stock->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
+            $stock->user_id = Auth::user()->id;
+            $stock->save();
 
-        $material = Materials::find($stock->material_id);
-        $material->stock += $stock->total;
-        $material->update();
+            $material = Materials::find($stock->material_id);
+
+            //mengambil stok sebelumnya
+            $stock_before = $material->stock;
+
+            //penambahan stok
+            $material->stock += $stock->total;
+            $material->update();
+
+            $data = [
+                'brand_id' => $material->product->brand_id,
+                'product_id' => $material->product_id,
+                'material_id' => $material->id,
+                'modelable_id' => $stock->id,
+                'modelable_type' => Stock::class,
+                'type' => 'Barang Masuk',
+                'type_calculation' => '+',
+                'date' => $stock->date,
+                'stock_before' => $stock_before,
+                'total' => $stock->total,
+                'stock_now' => $stock_before += $stock->total,
+            ];
+            RecordLog::saveRecord($data);
 
             $title = $description = Auth::user()->name . ' telah menambahkan stok inner '.
                                     $material->product->brand->name . '/' . $material->product->size . ' ' .
@@ -59,7 +83,13 @@ class InnerController extends Controller
             $log->description = $description;
             $log->save();
 
-        return redirect()->route('frontend.inner.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
+            DB::commit();
+
+            return redirect()->route('frontend.inner.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th->getMessage());
+        }
     }
 
     public function destroy($id)

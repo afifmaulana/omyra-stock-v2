@@ -11,7 +11,7 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <div class="text-header font-size-18 text-active-pink font-weight-500">Riwayat Plastik</div>
+                <div class="text-header font-size-18 text-active-pink font-weight-500">Riwayat Barang 1/2 Jadi</div>
             </div>
         </div>
     </div>
@@ -37,20 +37,6 @@
                 </thead>
                 <tbody>
                     @foreach ($records as $item)
-                        @if ($item->type == 'Barang Reject')
-                            <tr style="color: red; font-style: italic; font-weight: 600">
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ \Carbon\Carbon::parse($item->date)->format('d-m-Y') }}</td>
-                                <td>{{ $item->brand->name }}</td>
-                                <td>{{ $item->material->name . ' / ' . $item->product->size }}</td>
-                                <td>{{ number_format($item->stock_before, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ $item->type_calculation }}</td>
-                                <td>{{ number_format($item->total, 0, ',', '.') }}</td>
-                                <td>= {{ number_format($item->stock_now, 0, ',', '.') }}</td>
-                                <td>{{ $item->type }}</td>
-
-                            </tr>
-                        @endif
 
                         @if ($item->type == 'Barang Dipakai')
                             <tr style="color: red">

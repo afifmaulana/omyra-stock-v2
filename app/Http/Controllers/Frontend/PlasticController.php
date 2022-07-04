@@ -50,7 +50,11 @@ class PlasticController extends Controller
             $stock->save();
 
             $material = Materials::find($stock->material_id);
+
+            //mengambil stok sebelumnya
             $stock_before = $material->stock;
+
+            //penambahan stok
             $material->stock += $stock->total;
             $material->update();
 

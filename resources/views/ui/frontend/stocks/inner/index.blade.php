@@ -23,10 +23,15 @@
                 <i class="fa fa-plus my-float"></i>
             </a>
 
-            {{-- <div class="float-right">
-                <a href="{{ route('frontend.inner.create') }}" class="btn btn-sm btn-primary" style="border-radius: 30px">
-                    <i class="fa fa-plus"></i> Tambah</a>
-            </div> --}}
+            <div class="float-right">
+                <a href="{{ route('frontend.reject.inner.index') }}" class="btn btn-sm btn-danger"
+                    style="border-radius: 30px">
+                    <i class="fa fa-plus"></i>
+                    Reject
+                </a>
+                {{-- <a href="{{ route('frontend.inner.create') }}" class="btn btn-sm btn-primary" style="border-radius: 30px">
+                    <i class="fa fa-plus"></i> Tambah</a> --}}
+            </div>
             <h5 class="py-3"></h5>
 
             <table id="dataTable" class="table table-striped table-bordered table-responsive" style="width:100%">
@@ -80,25 +85,25 @@
 
 @push('scripts')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         $(function() {
             $('#dataTable').DataTable({
                 dom: 'Bfrtip',
-                buttons: [
-                        { extend: 'copyHtml5', className: 'rounded btn btn-sm btn-secondary mb-3' },
-                        { extend: 'excelHtml5', className: 'rounded btn btn-sm btn-success mb-3' },
-                        { extend: 'csvHtml5', className: 'rounded btn btn-sm btn-primary mb-3' },
-                        { extend: 'pdfHtml5', className: 'rounded btn btn-sm btn-danger mb-3' },
-                        { extend: 'print', className: 'rounded btn btn-sm btn-outline-primary mb-3' },
-                            // 'copyHtml5',
-                        ]
+                // buttons: [
+                //         { extend: 'copyHtml5', className: 'rounded btn btn-sm btn-secondary mb-3' },
+                //         { extend: 'excelHtml5', className: 'rounded btn btn-sm btn-success mb-3' },
+                //         { extend: 'csvHtml5', className: 'rounded btn btn-sm btn-primary mb-3' },
+                //         { extend: 'pdfHtml5', className: 'rounded btn btn-sm btn-danger mb-3' },
+                //         { extend: 'print', className: 'rounded btn btn-sm btn-outline-primary mb-3' },
+                //             // 'copyHtml5',
+                //         ]
             });
 
             $('#btn-delete').on('click', function(e) {

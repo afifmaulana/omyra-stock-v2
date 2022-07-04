@@ -21,6 +21,9 @@ use App\Http\Controllers\Frontend\PlasticController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\RecordController;
 use App\Http\Controllers\Frontend\RejectController;
+use App\Http\Controllers\Frontend\RejectInnerController;
+use App\Http\Controllers\Frontend\RejectMasterController;
+use App\Http\Controllers\Frontend\RejectPlasticController;
 use App\Http\Controllers\Frontend\ReportFinishController;
 use App\Http\Controllers\Frontend\ReportInnerController;
 use App\Http\Controllers\Frontend\ReportMasterController;
@@ -123,11 +126,7 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin'], func
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [FrontendDashboardController::class, 'index'])->name('frontend.dashboard.index');
     Route::get('/notification', [NotificationController::class, 'index'])->name('frontend.notification.index');
-    Route::prefix('reject')->group(function () {
-        Route::prefix('plastic')->group(function () {
-            Route::get('index', [RejectController::class, 'index'])->name('frontend.reject.index');
-        });
-    });
+
 
     Route::prefix('stock')->group(function () {
         Route::prefix('plastic')->group(function () {
@@ -185,8 +184,36 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/finish', [ReportFinishController::class, 'index'])->name('frontend.report.finish.index');
         Route::post('/finish/data', [ReportFinishController::class, 'data'])->name('frontend.report.finish.data');
 
+        Route::prefix('reject')->group(function () {
+            Route::prefix('plastic')->group(function () {
+                Route::get('index', [RejectPlasticController::class, 'index'])->name('frontend.reject.plastic.index');
+                Route::get('create', [RejectPlasticController::class, 'create'])->name('frontend.reject.plastic.create');
+                Route::post('create', [RejectPlasticController::class, 'store'])->name('frontend.reject.plastic.store');
+                Route::get('history/{id}', [RejectPlasticController::class, 'history'])->name('frontend.reject.plastic.history');
+                Route::delete('{id}', [RejectPlasticController::class, 'destroy'])->name('frontend.reject.plastic.delete');
+            });
+
+            Route::prefix('inner')->group(function () {
+                Route::get('index', [RejectInnerController::class, 'index'])->name('frontend.reject.inner.index');
+                Route::get('create', [RejectInnerController::class, 'create'])->name('frontend.reject.inner.create');
+                Route::post('create', [RejectInnerController::class, 'store'])->name('frontend.reject.inner.store');
+                Route::delete('{id}', [RejectInnerController::class, 'destroy'])->name('frontend.reject.inner.delete');
+            });
+
+            Route::prefix('master')->group(function () {
+                Route::get('index', [RejectMasterController::class, 'index'])->name('frontend.reject.master.index');
+                Route::get('create', [RejectMasterController::class, 'create'])->name('frontend.reject.master.create');
+                Route::post('create', [RejectMasterController::class, 'store'])->name('frontend.reject.master.store');
+                Route::delete('{id}', [RejectMasterController::class, 'destroy'])->name('frontend.reject.master.delete');
+            });
+        });
+
         Route::prefix('record')->group(function () {
             Route::get('/plastic', [RecordController::class, 'recordPlastic'])->name('frontend.report.record.plastic');
+            Route::get('/inner', [RecordController::class, 'recordInner'])->name('frontend.report.record.inner');
+            Route::get('/master', [RecordController::class, 'recordMaster'])->name('frontend.report.record.master');
+            Route::get('/semifinish', [RecordController::class, 'recordSemifinish'])->name('frontend.report.record.semifinish');
+            Route::get('/finish', [RecordController::class, 'recordFinish'])->name('frontend.report.record.finish');
         });
 
     });

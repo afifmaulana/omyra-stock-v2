@@ -22,18 +22,25 @@
                 data-bs-placement="left" title="Tambah Data">
                 <i class="fa fa-plus my-float"></i>
             </a>
-            {{-- <div class="float-right">
-                <a href="{{ route('frontend.plastic.create') }}" class="btn btn-sm btn-primary"
+            <div class="float-right">
+                <a href="{{ route('frontend.reject.plastic.index') }}" class="btn btn-sm btn-danger"
                     style="border-radius: 30px">
-                    <i class="fa fa-plus"></i> Tambah</a>
-            </div> --}}
+                    <i class="fa fa-plus"></i>
+                    Reject
+                </a>
+                {{-- <a href="{{ route('frontend.reject.plastic.index') }}" class="btn btn-sm btn-primary"
+                    style="border-radius: 30px">
+                    <i class="fa fa-plus"></i>
+                    Tambah
+                </a> --}}
+            </div>
             <h5 class="py-3"></h5>
 
             <table id="dataTable" class="table table-striped table-bordered table-responsive display table-condensed"
                 style="border-collapse:collapse;">
                 <thead>
                     <tr>
-                        <th style="width: 100px">No</th>
+                        <th>No</th>
                         <th>Tanggal</th>
                         <th>Brand</th>
                         <th>Jenis / Ukuran</th>
@@ -46,7 +53,7 @@
                         {{-- @foreach ($stock->semifinishes as $semifinish) --}}
                             {{-- <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle"> --}}
                             <tr>
-                                <td style="width: 100px">{{ $loop->iteration }}
+                                <td>{{ $loop->iteration }}
                                     {{-- <button class="btn btn-default rounded btn-sm"><span lass="fa fa-plus-circle" style="color: green"></span></button> --}}
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse($stock->date)->format('d-m-Y') }}</td>

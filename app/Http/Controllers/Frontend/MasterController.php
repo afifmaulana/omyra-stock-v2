@@ -7,10 +7,12 @@ use App\Models\Brand;
 use App\Models\LogActivity;
 use App\Models\Materials;
 use App\Models\Product;
+use App\Models\RecordLog;
 use App\Models\Stock;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MasterController extends Controller
 {
@@ -36,30 +38,58 @@ class MasterController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-        $stock = new Stock();
-        $stock->material_id = $request->material;
-        $stock->total = $request->total;
-        $stock->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
-        $stock->user_id = Auth::user()->id;
-        $stock->save();
+        DB::beginTransaction();
+        try {
+            // dd($request->all());
+            $stock = new Stock();
+            $stock->material_id = $request->material;
+            $stock->total = $request->total;
+            $stock->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
+            $stock->user_id = Auth::user()->id;
+            $stock->save();
 
-        $material = Materials::find($stock->material_id);
-        $material->stock += $stock->total;
-        $material->update();
+            $material = Materials::find($stock->material_id);
 
-            $title = $description = Auth::user()->name . ' telah menambahkan stok master '.
-                                    $material->product->brand->name . '/' . $material->product->size . ' ' .
-                                    $material->name . ' sebanyak ' . $stock->total;
-            $log = new LogActivity();
-            $log->user_id = Auth::user()->id;
-            $log->source_id = $stock->id;
-            $log->source_type = '\App\Stock';
-            $log->title = $title;
-            $log->description = $description;
-            $log->save();
+            //mengambil stok sebelumnya
+            $stock_before = $material->stock;
 
-        return redirect()->route('frontend.master.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
+            //penambahan stok
+            $material->stock += $stock->total;
+            $material->update();
+
+            $data = [
+                'brand_id' => $material->product->brand_id,
+                'product_id' => $material->product_id,
+                'material_id' => $material->id,
+                'modelable_id' => $stock->id,
+                'modelable_type' => Stock::class,
+                'type' => 'Barang Masuk',
+                'type_calculation' => '+',
+                'date' => $stock->date,
+                'stock_before' => $stock_before,
+                'total' => $stock->total,
+                'stock_now' => $stock_before += $stock->total,
+            ];
+            RecordLog::saveRecord($data);
+
+                $title = $description = Auth::user()->name . ' telah menambahkan stok master '.
+                                        $material->product->brand->name . '/' . $material->product->size . ' ' .
+                                        $material->name . ' sebanyak ' . $stock->total;
+                $log = new LogActivity();
+                $log->user_id = Auth::user()->id;
+                $log->source_id = $stock->id;
+                $log->source_type = '\App\Stock';
+                $log->title = $title;
+                $log->description = $description;
+                $log->save();
+
+            DB::commit();
+
+            return redirect()->route('frontend.master.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th->getMessage());
+        }
     }
 
     public function destroy($id)
