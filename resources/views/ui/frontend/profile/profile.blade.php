@@ -31,7 +31,7 @@
                     <label for="">Nama</label>
                     <input type="text" name="name" id=""
                         class="form-control font-size-16 form-omyra {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                        value="{{ $user->name }}">
+                        value="{{ $user->name }}" readonly>
                     @if ($errors->has('name'))
                         <span class="invalid-feedback" role="alert">
                             <p><b>{{ $errors->first('name') }}</b></p>
@@ -41,7 +41,7 @@
                 <div class="form-group">
                     <label for="">Password</label>
                     <input type="password" name="password" id="" class="form-control font-size-16 form-omyra"
-                        placeholder="*******">
+                        placeholder="*******" readonly>
                 </div>
                 <div class="form-group">
                     <label for="">email</label>
@@ -59,40 +59,45 @@
                 @if (Auth::user()->roles->pluck('name')[0] == 'staff')
                 <div class="form-group">
                     <label class="font-weight-500">Jabatan</label>
-                    <select
+                    <input type="text" name="" id=""
+                        class="form-control font-size-16 form-omyra" value="Mandor" readonly>
+                    {{-- <select
                         class="select2 form-control font-size-16 form-omyra {{ $errors->has('role') ? 'is-invalid' : '' }}"
-                        name="role">
-                        <option value="" selected disabled>---- Pilih Jabatan ----</option>
+                        name="role" aria-readonly="on">
+                        <option value="" selected disabled>Mandor</option>
                         @foreach ($roles as $item)
-                        {{-- <option value="{{$item->id}}"@if($item->id == $user->roles->id){{"selected"}}@endif>{{ Str::upper($item->name) }}</option> --}}
+                        <option value="{{$item->id}}"@if($item->id == $user->roles->id){{"selected"}}@endif>{{ Str::upper($item->name) }}</option>
                         @endforeach
                         @if ($errors->has('role'))
                             <span class="invalid-feedback" role="alert">
                                 <p><b>{{ $errors->first('role') }}</b></p>
                             </span>
                         @endif
-                    </select>
+                    </select> --}}
                 </div>
                 @endif
                 @if (Auth::user()->roles->pluck('name')[0] == 'warehouse')
                 <div class="form-group">
                     <label class="font-weight-500">Jabatan</label>
-                    <select
+                    <input type="text" name="" id=""
+                        class="form-control font-size-16 form-omyra" value="Staff Gudang" readonly>
+                    {{-- <select
                         class="select2 form-control font-size-16 form-omyra {{ $errors->has('role') ? 'is-invalid' : '' }}"
                         name="role">
                         <option value="" selected disabled>---- Pilih Jabatan ----</option>
                         @foreach ($roles as $item)
                         <option value="{{$item->id}}"@if($item->id){{"selected"}}@endif>{{ Str::upper($item->name) }}</option>
+                        <option value="" selected disabled>Staff Gudang</option>
                         @endforeach
                         @if ($errors->has('role'))
                             <span class="invalid-feedback" role="alert">
                                 <p><b>{{ $errors->first('role') }}</b></p>
                             </span>
                         @endif
-                    </select>
+                    </select> --}}
                 </div>
                 @endif
-                <button class="btn btn-block btn-omyra btn-pink text-white mt-3" type="submit">Simpan Perubahan</button>
+                {{-- <button class="btn btn-block btn-omyra btn-pink text-white mt-3" type="submit">Simpan Perubahan</button> --}}
                 <a class="btn btn-outline-secondary btn-block" href="{{ route('logout.submit') }}">Keluar</a>
             </form>
         </div>

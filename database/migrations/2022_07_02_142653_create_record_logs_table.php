@@ -21,6 +21,7 @@ class CreateRecordLogsTable extends Migration
             $table->morphs('modelable');
             $table->date('date');
             $table->string('type');
+            $table->string('type_calculation');
             $table->double('stock_before')->default(0);
             $table->double('stock_before_semifinish')->default(0);
             $table->double('stock_now')->default(0);

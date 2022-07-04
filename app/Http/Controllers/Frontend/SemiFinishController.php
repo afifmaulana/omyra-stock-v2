@@ -9,6 +9,7 @@ use App\Models\Materials;
 use App\Models\Product;
 use App\Models\RecordLog;
 use App\Models\Semifinish;
+use App\Models\Stock;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,9 +50,15 @@ class SemiFinishController extends Controller
         $product = $material->product;
         $semifinish->product_id = $product->id;
          // $product = Product::find($request->product);
-         $stock_before = $material->stock;
+
+         $stock_before = $material->stock; //Mengambil stok sebelum dikurangi
+
         // PROSES PENGURANGAN STOK MATERIAL PLASTIC
         $material->stock -= $request->total;
+
+        //Mengambil stok barang 1/2 jadi sebelum ditambah
+        $stock_semifinish_before = $product->stock_semifinish;
+
         // PROSES PENAMBAHAN STOK SEMIFINISH PADA PRODUK
         $product->stock_semifinish += $request->total;
 
@@ -59,20 +66,41 @@ class SemiFinishController extends Controller
         $material->update();
         $product->update();
 
-        $data = [
+        //Proses penyimpanan log/history pengurangan stok plastik
+        $dataStock = [
             'brand_id' => $material->product->brand_id,
             'product_id' => $material->product_id,
             'material_id' => $material->id,
             'modelable_id' => $semifinish->id,
-            'modelable_type' => Stock::class,
-            'type' => 'Stok Plastik',
+            'modelable_type' => 'App\Models\Stock',
+            'type' => 'Barang Dipakai',
+            'type_calculation' => '-',
             'date' => $semifinish->date,
             'stock_before' => $stock_before,
             'total' => $semifinish->total,
-            'stock_now' => $stock_before + $semifinish->total,
+            'stock_now' => $stock_before -= $semifinish->total,
         ];
-        RecordLog::saveRecord($data);
+        RecordLog::saveRecord($dataStock);
 
+
+        //Proses penyimpanan log/history penambahan stok barang 1/2 jadi
+        $dataSemifinish = [
+            'brand_id' => $material->product->brand_id,
+            'product_id' => $material->product_id,
+            'material_id' => $material->id,
+            'modelable_id' => $semifinish->id,
+            'modelable_type' => 'App\Models\Semifinish',
+            'type' => 'Barang Masuk',
+            'type_calculation' => '+',
+            'date' => $semifinish->date,
+            'stock_before' => $stock_semifinish_before,
+            'total' => $semifinish->total,
+            'stock_now' => $stock_semifinish_before += $semifinish->total,
+        ];
+        RecordLog::saveRecord($dataSemifinish);
+
+
+        //Log Aktivitas
         $title = $description = Auth::user()->name . ' telah menambahkan data barang 1/2 jadi '.
                                     $material->product->brand->name . '/' . $material->product->size . ' ' .
                                     $material->name . ' sebanyak ' . $semifinish->total;

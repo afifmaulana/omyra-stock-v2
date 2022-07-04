@@ -10,7 +10,7 @@ class RecordController extends Controller
 {
     public function recordPlastic()
     {
-        $records = RecordLog::orderBy('id', 'DESC')->get();
+        $records = RecordLog::where('modelable_type', 'App\Models\Stock')->orderBy('id', 'DESC')->get();
         return view('ui.frontend.report.record.plastic', [
             'records' => $records,
         ]);

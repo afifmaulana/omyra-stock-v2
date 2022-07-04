@@ -28,10 +28,11 @@
                         <th>Tanggal</th>
                         <th>Brand</th>
                         <th>Jenis / Ukuran</th>
-                        <th>Jumlah Masuk</th>
-                        <th>+/-</th>
                         <th>Stok Sebelumnya</th>
+                        <th>+/-</th>
+                        <th>Jumlah Masuk</th>
                         <th>Stok Sekarang</th>
+                        <th>Keterangan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,10 +43,11 @@
                                 <td>{{ \Carbon\Carbon::parse($item->date)->format('d-m-Y') }}</td>
                                 <td>{{ $item->brand->name }}</td>
                                 <td>{{ $item->material->name . ' / ' . $item->product->size }}</td>
-                                <td>{{ number_format($item->total, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ $item->type }}</td>
                                 <td>{{ number_format($item->stock_before, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ $item->type_calculation }}</td>
+                                <td>{{ number_format($item->total, 0, ',', '.') }}</td>
                                 <td>= {{ number_format($item->stock_now, 0, ',', '.') }}</td>
+                                <td>{{ $item->type }}</td>
 
                             </tr>
 
@@ -57,10 +59,11 @@
                         <th>Tanggal</th>
                         <th>Brand</th>
                         <th>Jenis / Ukuran</th>
-                        <th>Jumlah Masuk</th>
-                        <th>+/-</th>
                         <th>Stok Sebelumnya</th>
+                        <th>+/-</th>
+                        <th>Jumlah Masuk</th>
                         <th>Stok Sekarang</th>
+                        <th>Keterangan</th>
                     </tr>
                 </tfoot>
             </table>

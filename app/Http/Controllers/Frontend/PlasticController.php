@@ -60,11 +60,12 @@ class PlasticController extends Controller
                 'material_id' => $material->id,
                 'modelable_id' => $stock->id,
                 'modelable_type' => Stock::class,
-                'type' => 'Stok Plastik',
+                'type' => 'Barang Masuk',
+                'type_calculation' => '+',
                 'date' => $stock->date,
                 'stock_before' => $stock_before,
                 'total' => $stock->total,
-                'stock_now' => $stock_before + $stock->total,
+                'stock_now' => $stock_before += $stock->total,
             ];
             RecordLog::saveRecord($data);
 
@@ -79,7 +80,7 @@ class PlasticController extends Controller
             $log->title = $title;
             $log->description = $description;
             $log->save();
-            
+
             DB::commit();
 
             return redirect()->route('frontend.plastic.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
