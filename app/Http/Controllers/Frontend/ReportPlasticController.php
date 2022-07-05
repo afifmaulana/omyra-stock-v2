@@ -27,7 +27,7 @@ class ReportPlasticController extends Controller
 		$productId = $request->product;
         $brandId = $request->brand;
 
-		$query = Stock::query();
+		$query = Stock::query()->orderBy('id', 'DESC');
         $query->whereRelation('material', 'type', 'plastic');
 		$query->when($materialId , function($q) use($materialId){
 			$q->where('material_id', $materialId);
@@ -41,9 +41,13 @@ class ReportPlasticController extends Controller
 		$query->with('material:id,product_id,name,stock');
 		$query->with('material.product:id,brand_id,size');
 		$query->with('material.product.brand:id,name');
-		$query->with('material.semifinishes');
-		$query->with('material.semifinishes.material');
-		$query->with('material.semifinishes.product');
+		// $query->with('material.semifinishes');
+		// $query->with('material.semifinishes.material');
+		// $query->with('material.semifinishes.product');
+        $query->with('material.records');
+		$query->with('material.records.material');
+		$query->with('material.records.product');
+		$query->with('material.records.brand');
 
 
 		$data = $query->get();
@@ -59,9 +63,9 @@ class ReportPlasticController extends Controller
         ]);
     }
 
-    public function history($id)
+    public function history($materialId)
     {
-        $stock = Stock::where('id', $id)->first();
+        $stock = Stock::where('material_id', $materialId)->first();
         $records = RecordLog::whereHas('material', function ($query) {
             $query->where('type', 'plastic');
             $query->where('modelable_type', 'App\Models\Stock');

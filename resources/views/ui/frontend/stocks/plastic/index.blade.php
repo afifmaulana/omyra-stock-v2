@@ -137,7 +137,7 @@
         $(function() {
              $('#dataTable').DataTable({
 
-                dom: 'Bfrtip',
+                // dom: 'Bfrtip',
                 // select: {
                 //             selector:'td:not(:first-child)',
                 //             style:    'os'

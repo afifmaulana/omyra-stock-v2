@@ -1,6 +1,8 @@
 @extends('ui.frontend.layouts.app')
 @push('styles')
-
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-multiselect/bootstrap-multiselect.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/multi-select/css/multi-select.css') }}"> --}}
     <style>
         .select2-container .select2-selection--single {
             height: 42px;
@@ -29,6 +31,15 @@
         tfoot {
             background: white;
         }
+
+		tbody .dt-control{
+			background: "images/datatables/details_open.png" no-repeat center center;
+			cursor:pointer;
+		}
+		tbody .dt-control.shown{
+			background: "images/datatables/details_close.png" no-repeat center center;
+			cursor:pointer;
+		}
     </style>
 @endpush
 @section('content')
@@ -40,19 +51,19 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <div class="text-header font-size-18 text-active-pink font-weight-500">Laporan Stok Barang Jadi</div>
+                <div class="text-header font-size-18 text-active-pink font-weight-500">Laporan Barang Jadi</div>
             </div>
         </div>
     </div>
     <div class="bg-grey pt-23 mt-1" style="max-height: 86vh; overflow: scroll;">
         {{-- @include('components.frontend.flashmessage') --}}
         <div class="container-omyra" style="margin-bottom: 90px;">
-            <form action="#" method="POST" enctype="multipart/form-data" id="form-filter">
+            <form action="#" method="POST" enctype="multipart/form-data" class="myform" id="form-filter">
                 @csrf
                 <div class="form-group">
                     <label class="font-weight-500">Brand</label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra brand-master {{ $errors->has('brand') ? 'is-invalid' : '' }}"
+                        class="select2 form-control font-size-16 form-omyra brand-plastic {{ $errors->has('brand') ? 'is-invalid' : '' }}"
                         id="filter-brand" name="brand">
                         <option selected disabled>-- Pilih Brand --</option>
                         @foreach ($brands as $brand)
@@ -68,9 +79,9 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="font-weight-500">Jenis  Master/ Ukuran </label>
+                    <label class="font-weight-500">Jenis / Ukuran </label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra product-plastic finish-show {{ $errors->has('product') ? 'is-invalid' : '' }}"
+                        class="select2 form-control font-size-16 form-omyra product-plastic material-show {{ $errors->has('product') ? 'is-invalid' : '' }}"
                         id="filter-material" name="product">
                         <option selected disabled>-- Pilih Brand Dulu --</option>
                     </select>
@@ -78,7 +89,7 @@
                 {{-- <div class="form-group">
                     <label class="font-weight-500">Jenis</label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra material-master {{ $errors->has('material') ? 'is-invalid' : '' }}"
+                        class="select2 form-control font-size-16 form-omyra material-plastic {{ $errors->has('material') ? 'is-invalid' : '' }}"
                         id="filter-material" name="material">
                         <option selected="selected" disabled>-- Pilih Ukuran Dulu --</option>
                     </select>
@@ -86,6 +97,10 @@
                 <button class="btn btn-sm btn-info float-right mb-3" type="submit">Submit</button>
                 <button type="reset" class="btn btn-sm btn-outline-secondary btn-reset mb-3">Reset</button>
             </form>
+            {{-- <div class="row justify-content-center mb-2">
+                <a href="{{ route('frontend.report.record.plastic') }}" class="btn btn-sm btn-outline-primary">Riwayat <i class="fa fa-eye"></i></a>
+            </div> --}}
+
             <hr>
             <div class="row justify-content-center mb-2">
                 <div class="col-auto">
@@ -111,22 +126,31 @@
 
 @push('scripts')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+    {{-- <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script> --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
+    {{-- <script src="{{ asset('vendor/multi-select/js/jquery.multi-select.js') }}"></script><!-- Multi Select Plugin Js -->
+    <script src="{{ asset('vendor/bootstrap-multiselect/bootstrap-multiselect.js') }}"></script> --}}
     <script>
         $(function() {
             // $('#dataTable').DataTable();
+            $('.datepicker').datepicker({
+                autoclose: true,
+                format: 'dd-mm-yyyy'
+            });
 
-            let list_stock_master = [];
-
+            let list_stock_plastic = [];
 
             const table = $('#main-table').DataTable({
-				"destroy": true,
-				"pageLength": 10,
-				"processing": true,
-				"serverSide": true,
+                "destroy": true,
+                "pageLength": 10,
+                "processing": true,
+                "serverSide": true,
                 "ajax": {
                     url: "{{ url('') }}/report/finish/data",
-					headers: { 'X-CSRF-TOKEN': CSRF_TOKEN },
+                    headers: {
+                        'X-CSRF-TOKEN': CSRF_TOKEN
+                    },
                     type: "post",
                     data: function(d) {
                         d.brand = $("#filter-brand").val()
@@ -134,55 +158,182 @@
                         d.material = $("#filter-material").val()
                     }
                 },
-				"columns": [
+				select: {
+					selector: 'td:not(:first-child)',
+					style: 'os'
+				},
+                "columns": [
 					{
-						title : "No", width: "5%", searchable: false, orderable : false,
-						data : null, render: (data, type, full, meta) => meta.row + 1
+						"className": 'dt-control',
+						"orderable": false,
+						"data": null,
+						"defaultContent": ''
 					},
-					{title : "Tanggal", name: "date", data : 'date'},
-					{
-						title : "Brand", name: "brand", data : null,
-						render : (data) => {
-							if (!data.master || !data.master.product || !data.master.product.brand) {
-								return '-'
-							}
-							return `${data.master.product.brand.name}`
-						}
-					},
-					{
-						title : "Jenis / Ukuran", name : "type", data : null,
-						render : (data) => {
-							if (data.master) {
-								return `${data.master.name} / ${data.master.product.size}`
-							}
-							return '-'
-						}
-					},
-					{
-						title : "Jumlah Masuk", name: "count", data : 'total',
-						render : (data) => data ? formatRupiah(data.toString()) : 0
-					},
+					// {
+                    //     title: "No",
+                    //     width: "5%",
+                    //     searchable: false,
+                    //     orderable: false,
+                    //     data: null,
+                    //     render: (data, type, full, meta) => meta.row + 1
+                    // },
+                    { title: "Tanggal", name: "date", data: 'date' },
+                    {
+                        title: "Brand", name: "brand", data: null,
+                        render: (data) => {
+                            if (!data.master || !data.master.product || !data.master.product
+                                .brand) {
+                                return '-'
+                            }
+                            return `${data.master.product.brand.name}`
+                        }
+                    },
+                    {
+                        title: "Jenis / Ukuran", name: "type", data: null,
+                        render: (data) => {
+                            if (data.master) {
+                                return `${data.master.name} / ${data.master.product.size}`
+                            }
+                            return '-'
+                        }
+                    },
+                    {
+                        title: "Jumlah Masuk", name: "count", data: 'total',
+                        render: (data) => data ? formatRupiah(data.toString()) : 0
+                    },
                     {
 						title : "Action",
                         data : null,
-					    render: (data) => `<a href="{{ route('frontend.report.record.semifinish') }}" class="btn btn-sm btn-outline-warning"><i class="fa fa-history"></i></a>`,
+					    render: (data) => `<a href="{{ route('frontend.report.record.finish') }}" class="btn btn-sm btn-outline-warning"><i class="fa fa-history"></i></a>`,
 					},
-					// {title : "Action", searchable: false, orderable : false},
-				]
+                    // {
+                    //     title: "Sisa Stok",
+                    //     name: "stock",
+                    //     data: null,
+                    //     render: (data) => data ? formatRupiah(data.material.stock.toString()) : 0
+                        // render : (data) => {
+                        // 	if (data.material) {
+                        // 		return  formatRupiah( data.material.stock.toString()) : 0
+                        // 	}
+                        // 	return '-'
+                        // }
+                    // },
+                    // {title : "Action", searchable: false, orderable : false},
+
+                ]
             });
+
+			table.on('click', 'td.dt-control', function () {
+				const tr = $(this).closest('tr');
+				const row = table.row(tr);
+				if (row.child.isShown()) {
+					row.child.hide();
+					tr.removeClass('shown');
+					$(this).removeClass('shown');
+				}
+				else {
+					row.child(showChildren(row.data())).show();
+					tr.addClass('shown');
+					$(this).addClass('shown');
+				}
+			});
+
+
+			function showChildren(data) {
+				let total = 0
+				html = ''
+				html += `<table style="width:100%" class="table child-table">`
+				html += `	<thead>`
+				html += `		<tr class="text-center">`
+				html += `			<th>No</th>`
+				html += `			<th>Tangga</th>`
+				html += `			<th>Brand</th>`
+				html += `			<th>Jenis/Ukuran</th>`
+				html += `			<th>Stok Sebelumnya</th>`
+				html += `			<th>+/-</th>`
+				html += `			<th>Jumlah</th>`
+				html += `			<th>Stok Sekarang</th>`
+				html += `			<th>Keterangan</th>`
+				html += `		</tr>`
+				html += `	</thead>`
+				html += `	<tbody>`
+					data.master.recordfinishes.forEach((item, key) => {
+
+                        if(item.type == 'Barang Masuk')
+                        {
+                            html += `		<tr style="color: green" class="text-center">`
+                            html += `			<td>${key+1}</td>`
+                            html += `			<td class="datepicker">${item.date}</td>`
+                            html += `			<td>${item.brand.name}</td>`
+                            html += `			<td>${item.master.name} / ${item.product.size}</td>`
+                            html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
+                            html += `			<td>${item.type_calculation}</td>`
+                            html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
+                            html += `			<td>${item.stock_now ? formatRupiah(item.stock_now.toString()) : 0}</td>`
+                            html += `			<td>${item.type}</td>`
+                            html += `		</tr>`
+                        }
+                        if(item.type == 'Barang Dipakai') {
+                            html += `		<tr style="color: orange" class="text-center">`
+                            html += `			<td>${key+1}</td>`
+                            html += `			<td class="datepicker">${item.date}</td>`
+                            html += `			<td>${item.brand.name}</td>`
+                            html += `			<td>${item.master.name} / ${item.product.size}</td>`
+                            html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
+                            html += `			<td>${item.type_calculation}</td>`
+                            html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
+                            html += `			<td>${item.stock_now ? formatRupiah(item.stock_now.toString()) : 0}</td>`
+                            html += `			<td>${item.type}</td>`
+                            html += `		</tr>`
+                        }
+
+
+						// total += parseInt(item.total)
+					})
+				html += `	</tbody>`
+
+				html += `	<tfoot>`
+                html += `		<tr class="text-center">`
+				html += `			<th>No</th>`
+				html += `			<th>Tanggal</th>`
+				html += `			<th>Brand</th>`
+				html += `			<th>Jenis/Ukuran</th>`
+				html += `			<th>Stok Sebelumnya</th>`
+				html += `			<th>+/-</th>`
+				html += `			<th>Jumlah</th>`
+				html += `			<th>Stok Sekarang</th>`
+				html += `			<th>Keterangan</th>`
+				html += `		</tr>`
+                html += `	</tfoot>`
+
+				// html += `	<tfoot style="color: red">`
+				// html += `		<tr>`
+				// html += `			<th colspan="3">Jumlah</th>`
+				// html += `			<th>${total}</th>`
+				// html += `		</tr>`
+				// html += `		<tr>`
+				// html += `			<th colspan="3">Total Pengurangan</th>`
+				// html += `			<th colspan="3">${data.total} - ${total}</th>`
+				// html += `			<th>${parseInt(data.total) - parseInt(total)}</th>`
+				// html += `		</tr>`
+				// html += `	</tfoot>`
+				html += `</table>`
+				return html
+			}
+
             $(document).on('click', '.btn-reset', function(e) {
                 e.preventDefault()
                 $('#filter-brand').val('')
                 $('#filter-material').val('')
                 table.ajax.reload()
             })
-        });
 
-        $('.brand-master').on('change', function() {
+        });
+        $('.brand-plastic').on('change', function() {
             let brandId = $(this).val();
             $.ajax({
                 type: "GET",
-                url: "{{ route('api.get_inner.by.brand_id', '') }}" + '/' + brandId,
+                url: "{{ route('api.get_plastic.by.brand_id', '') }}" + '/' + brandId,
                 dataType: "json",
                 success: function(response) {
                     let html = ``;
@@ -197,16 +348,16 @@
             });
         });
 
-        // $('.product-master').on('change', function() {
+        // $('.product-plastic').on('change', function() {
         //     let productId = $(this).val();
         //     $.ajax({
         //         type: "GET",
-        //         url: "{{ route('api.get_master.by.product_id', '') }}" + '/' + productId,
+        //         url: "{{ route('api.get_plastic.by.product_id', '') }}" + '/' + productId,
         //         dataType: "json",
         //         success: function(response) {
         //             let html = ``;
         //             html +=
-        //                 `<option selected="selected" disabled>-- Pilih Jenis Master --</option>`;
+        //                 `<option selected="selected" disabled>-- Pilih Jenis Plastik --</option>`;
         //             response.materials.forEach(material => {
         //                 html +=
         //                     `<option value="${ material.id }">${ material.name } | stock: ${material.stock}</option>`;
@@ -216,7 +367,7 @@
         //     });
         // });
 
-        $('.finish-show').on('change', function() {
+        $('.material-show').on('change', function() {
             let materialId = $(this).val();
             $.ajax({
                 type: "GET",
@@ -224,8 +375,10 @@
                 dataType: "json",
                 success: function(response) {
                     let material = response.material;
+                    // console.log(typeof(material.stock));
                     if (material != null) {
-                        $('#max-label').html('Sisa stok: ' +  material ? 'Sisa stok: ' +  formatRupiah(material.product.stock_finish.toString()) : 0);
+                        $('#max-label').html(material ? 'Sisa stok: ' +  formatRupiah(material.product.stock_finish.toString()) : 0);
+                        // $('#total').attr('max', material.stock);
                     } else {
                         $('#max-label').html('');
                     }
@@ -234,9 +387,9 @@
         });
 
 
-		$(document).on('submit', '#form-filter', function (e) {
-			e.preventDefault()
-			$("#main-table").DataTable().ajax.reload( null, false );
-		})
+        $(document).on('submit', '#form-filter', function(e) {
+            e.preventDefault()
+            $("#main-table").DataTable().ajax.reload(null, false);
+        })
     </script>
 @endpush

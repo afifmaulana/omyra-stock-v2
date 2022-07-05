@@ -40,9 +40,13 @@ class ReportInnerController extends Controller
 		$query->with('material:id,product_id,name,stock');
 		$query->with('material.product:id,brand_id,size');
 		$query->with('material.product.brand:id,name');
-        $query->with('material.inners');
-		$query->with('material.inners.inner');
-		$query->with('material.inners.product');
+        // $query->with('material.inners');
+		// $query->with('material.inners.inner');
+		// $query->with('material.inners.product');
+        $query->with('material.records');
+		$query->with('material.records.material');
+		$query->with('material.records.product');
+		$query->with('material.records.brand');
 
 		$data = $query->get();
 

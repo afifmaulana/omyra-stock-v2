@@ -95,7 +95,7 @@
     <script>
         $(function() {
             $('#dataTable').DataTable({
-                dom: 'Bfrtip',
+                // dom: 'Bfrtip',
                 // buttons: [
                 //         { extend: 'copyHtml5', className: 'rounded btn btn-sm btn-secondary mb-3' },
                 //         { extend: 'excelHtml5', className: 'rounded btn btn-sm btn-success mb-3' },

@@ -40,6 +40,10 @@ class ReportFinishController extends Controller
 		$query->with('master:id,product_id,name,stock');
 		$query->with('master.product:id,brand_id,size');
 		$query->with('master.product.brand:id,name');
+        $query->with('master.recordfinishes');
+		$query->with('master.recordfinishes.master');
+		$query->with('master.recordfinishes.product');
+		$query->with('master.recordfinishes.brand');
 
 		$data = $query->get();
 

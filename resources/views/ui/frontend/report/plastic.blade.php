@@ -33,11 +33,11 @@
         }
 
 		tbody .dt-control{
-			background: "images/datatables/details_open.png") no-repeat center center;
+			background: "images/datatables/details_open.png" no-repeat center center;
 			cursor:pointer;
 		}
 		tbody .dt-control.shown{
-			background: "images/datatables/details_close.png") no-repeat center center;
+			background: "images/datatables/details_close.png" no-repeat center center;
 			cursor:pointer;
 		}
     </style>
@@ -51,7 +51,7 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <div class="text-header font-size-18 text-active-pink font-weight-500">Laporan Stok Plastik</div>
+                <div class="text-header font-size-18 text-active-pink font-weight-500">Laporan Stok Plastic</div>
             </div>
         </div>
     </div>
@@ -97,9 +97,9 @@
                 <button class="btn btn-sm btn-info float-right mb-3" type="submit">Submit</button>
                 <button type="reset" class="btn btn-sm btn-outline-secondary btn-reset mb-3">Reset</button>
             </form>
-            <div class="row justify-content-center mb-2">
+            {{-- <div class="row justify-content-center mb-2">
                 <a href="{{ route('frontend.report.record.plastic') }}" class="btn btn-sm btn-outline-primary">Riwayat <i class="fa fa-eye"></i></a>
-            </div>
+            </div> --}}
 
             <hr>
             <div class="row justify-content-center mb-2">
@@ -134,9 +134,12 @@
     <script>
         $(function() {
             // $('#dataTable').DataTable();
+            $('.datepicker').datepicker({
+                autoclose: true,
+                format: 'dd-mm-yyyy'
+            });
 
             let list_stock_plastic = [];
-
 
             const table = $('#main-table').DataTable({
                 "destroy": true,
@@ -239,39 +242,93 @@
 			function showChildren(data) {
 				let total = 0
 				html = ''
-				html += `<table style="width:100%" class="table">`
+				html += `<table style="width:100%" class="table child-table">`
 				html += `	<thead>`
-				html += `		<tr>`
+				html += `		<tr class="text-center">`
 				html += `			<th>No</th>`
-				// html += `			<th>Brand</th>`
+				html += `			<th>Tangga</th>`
+				html += `			<th>Brand</th>`
 				html += `			<th>Jenis/Ukuran</th>`
-				html += `			<th>Date</th>`
-				html += `			<th>Total</th>`
+				html += `			<th>Stok Sebelumnya</th>`
+				html += `			<th>+/-</th>`
+				html += `			<th>Jumlah</th>`
+				html += `			<th>Stok Sekarang</th>`
+				html += `			<th>Keterangan</th>`
 				html += `		</tr>`
 				html += `	</thead>`
 				html += `	<tbody>`
-					data.material.semifinishes.forEach((item, key) => {
-						html += `		<tr style="color: red">`
-						html += `			<td>${key+1}</td>`
-						// html += `			<td>${item.product.brand.name}</td>`
-						html += `			<td>${item.material.name} / ${item.product.size}</td>`
-						html += `			<td>${item.date}</td>`
-						html += `			<td>${item.total}</td>`
-						html += `		</tr>`
-						total += parseInt(item.total)
+					data.material.records.forEach((item, key) => {
+                        if(item.type == 'Barang Dipakai') {
+                            html += `		<tr style="color: orange" class="text-center">`
+                            html += `			<td>${key+1}</td>`
+                            html += `			<td class="datepicker">${item.date}</td>`
+                            html += `			<td>${item.brand.name}</td>`
+                            html += `			<td>${item.material.name} / ${item.product.size}</td>`
+                            html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
+                            html += `			<td>${item.type_calculation}</td>`
+                            html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
+                            html += `			<td>${item.stock_now ? formatRupiah(item.stock_now.toString()) : 0}</td>`
+                            html += `			<td>${item.type}</td>`
+                            html += `		</tr>`
+                        }
+                        if(item.type == 'Barang Masuk')
+                        {
+                            html += `		<tr style="color: green" class="text-center">`
+                            html += `			<td>${key+1}</td>`
+                            html += `			<td>${item.date}</td>`
+                            html += `			<td>${item.brand.name}</td>`
+                            html += `			<td>${item.material.name} / ${item.product.size}</td>`
+                            html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
+                            html += `			<td>${item.type_calculation}</td>`
+                            html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
+                            html += `			<td>${item.stock_now ? formatRupiah(item.stock_now.toString()) : 0}</td>`
+                            html += `			<td>${item.type}</td>`
+                            html += `		</tr>`
+                        }
+                        if(item.type == 'Barang Reject')
+                        {
+                            html += `		<tr style="color: red; font-weight: 700; font-style: italic;" class="text-center">`
+                            html += `			<td>${key+1}</td>`
+                            html += `			<td>${item.date}</td>`
+                            html += `			<td>${item.brand.name}</td>`
+                            html += `			<td>${item.material.name} / ${item.product.size}</td>`
+                            html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
+                            html += `			<td>${item.type_calculation}</td>`
+                            html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
+                            html += `			<td>${item.stock_now ? formatRupiah(item.stock_now.toString()) : 0}</td>`
+                            html += `			<td>${item.type}</td>`
+                            html += `		</tr>`
+                        }
+
+						// total += parseInt(item.total)
 					})
 				html += `	</tbody>`
-				html += `	<tfoot style="color: red">`
-				html += `		<tr>`
-				html += `			<th colspan="3">Jumlah</th>`
-				html += `			<th>${total}</th>`
+
+				html += `	<tfoot>`
+                html += `		<tr class="text-center">`
+				html += `			<th>No</th>`
+				html += `			<th>Tanggal</th>`
+				html += `			<th>Brand</th>`
+				html += `			<th>Jenis/Ukuran</th>`
+				html += `			<th>Stok Sebelumnya</th>`
+				html += `			<th>+/-</th>`
+				html += `			<th>Jumlah</th>`
+				html += `			<th>Stok Sekarang</th>`
+				html += `			<th>Keterangan</th>`
 				html += `		</tr>`
-				html += `		<tr>`
-				html += `			<th colspan="3">Total Pengurangan</th>`
+                html += `	</tfoot>`
+
+				// html += `	<tfoot style="color: red">`
+				// html += `		<tr>`
+				// html += `			<th colspan="3">Jumlah</th>`
+				// html += `			<th>${total}</th>`
+				// html += `		</tr>`
+				// html += `		<tr>`
+				// html += `			<th colspan="3">Total Pengurangan</th>`
 				// html += `			<th colspan="3">${data.total} - ${total}</th>`
-				html += `			<th>${parseInt(data.total) - parseInt(total)}</th>`
-				html += `		</tr>`
-				html += `	</tfoot>`
+				// html += `			<th>${parseInt(data.total) - parseInt(total)}</th>`
+				// html += `		</tr>`
+				// html += `	</tfoot>`
 				html += `</table>`
 				return html
 			}

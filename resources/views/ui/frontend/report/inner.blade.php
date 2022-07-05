@@ -31,7 +31,8 @@
         tfoot {
             background: white;
         }
-        tbody .dt-control{
+
+		tbody .dt-control{
 			background: "images/datatables/details_open.png" no-repeat center center;
 			cursor:pointer;
 		}
@@ -57,7 +58,7 @@
     <div class="bg-grey pt-23 mt-1" style="max-height: 86vh; overflow: scroll;">
         {{-- @include('components.frontend.flashmessage') --}}
         <div class="container-omyra" style="margin-bottom: 90px;">
-            <form action="#" method="POST" enctype="multipart/form-data" id="form-filter">
+            <form action="#" method="POST" enctype="multipart/form-data" class="myform" id="form-filter">
                 @csrf
                 <div class="form-group">
                     <label class="font-weight-500">Brand</label>
@@ -80,7 +81,7 @@
                 <div class="form-group">
                     <label class="font-weight-500">Jenis / Ukuran </label>
                     <select
-                        class="select2 form-control font-size-16 form-omyra product-plastic material-show {{ $errors->has('product') ? 'is-invalid' : '' }}"
+                        class="select2 form-control font-size-16 form-omyra product-inner material-show {{ $errors->has('product') ? 'is-invalid' : '' }}"
                         id="filter-material" name="product">
                         <option selected disabled>-- Pilih Brand Dulu --</option>
                     </select>
@@ -96,6 +97,10 @@
                 <button class="btn btn-sm btn-info float-right mb-3" type="submit">Submit</button>
                 <button type="reset" class="btn btn-sm btn-outline-secondary btn-reset mb-3">Reset</button>
             </form>
+            {{-- <div class="row justify-content-center mb-2">
+                <a href="{{ route('frontend.report.record.inner') }}" class="btn btn-sm btn-outline-primary">Riwayat <i class="fa fa-eye"></i></a>
+            </div> --}}
+
             <hr>
             <div class="row justify-content-center mb-2">
                 <div class="col-auto">
@@ -114,31 +119,38 @@
                     Print
                 </button>
             </div> --}}
-            <table id="main-table" class="table table-striped table-bordered table-responsive" style="width:100%">
-
-            </table>
+            <table id="main-table" class="table table-striped table-bordered table-responsive" style="width:100%"></table>
         </div>
     </div>
 @endsection
 
 @push('scripts')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+    {{-- <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script> --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
+    {{-- <script src="{{ asset('vendor/multi-select/js/jquery.multi-select.js') }}"></script><!-- Multi Select Plugin Js -->
+    <script src="{{ asset('vendor/bootstrap-multiselect/bootstrap-multiselect.js') }}"></script> --}}
     <script>
         $(function() {
             // $('#dataTable').DataTable();
+            $('.datepicker').datepicker({
+                autoclose: true,
+                format: 'dd-mm-yyyy'
+            });
 
             let list_stock_inner = [];
 
-
             const table = $('#main-table').DataTable({
-				"destroy": true,
-				"pageLength": 10,
-				"processing": true,
-				"serverSide": true,
+                "destroy": true,
+                "pageLength": 10,
+                "processing": true,
+                "serverSide": true,
                 "ajax": {
                     url: "{{ url('') }}/report/inner/data",
-					headers: { 'X-CSRF-TOKEN': CSRF_TOKEN },
+                    headers: {
+                        'X-CSRF-TOKEN': CSRF_TOKEN
+                    },
                     type: "post",
                     data: function(d) {
                         d.brand = $("#filter-brand").val()
@@ -146,64 +158,72 @@
                         d.material = $("#filter-material").val()
                     }
                 },
-                select: {
+				select: {
 					selector: 'td:not(:first-child)',
 					style: 'os'
 				},
-				"columns": [
-                    {
+                "columns": [
+					{
 						"className": 'dt-control',
 						"orderable": false,
 						"data": null,
 						"defaultContent": ''
 					},
-					{
-						title : "No", width: "5%", searchable: false, orderable : false,
-						data : null, render: (data, type, full, meta) => meta.row + 1
-					},
-					{title : "Tanggal", name: "date", data : 'date'},
-					{
-						title : "Brand", name: "brand", data : null,
-						render : (data) => {
-							if (!data.material || !data.material.product || !data.material.product.brand) {
-								return '-'
-							}
-							return `${data.material.product.brand.name}`
-						}
-					},
-					{
-						title : "Jenis / Ukuran", name : "type", data : null,
-						render : (data) => {
-							if (data.material) {
-								return `${data.material.name} / ${data.material.product.size}`
-							}
-							return '-'
-						}
-					},
-					{
-						title : "Jumlah Masuk", name: "count", data : 'total',
-						render : (data) => data ? formatRupiah(data.toString()) : 0
-					},
+					// {
+                    //     title: "No",
+                    //     width: "5%",
+                    //     searchable: false,
+                    //     orderable: false,
+                    //     data: null,
+                    //     render: (data, type, full, meta) => meta.row + 1
+                    // },
+                    { title: "Tanggal", name: "date", data: 'date' },
+                    {
+                        title: "Brand", name: "brand", data: null,
+                        render: (data) => {
+                            if (!data.material || !data.material.product || !data.material.product
+                                .brand) {
+                                return '-'
+                            }
+                            return `${data.material.product.brand.name}`
+                        }
+                    },
+                    {
+                        title: "Jenis / Ukuran", name: "type", data: null,
+                        render: (data) => {
+                            if (data.material) {
+                                return `${data.material.name} / ${data.material.product.size}`
+                            }
+                            return '-'
+                        }
+                    },
+                    {
+                        title: "Jumlah Masuk", name: "count", data: 'total',
+                        render: (data) => data ? formatRupiah(data.toString()) : 0
+                    },
                     {
 						title : "Action",
                         data : null,
 					    render: (data) => `<a href="{{ route('frontend.report.record.inner') }}" class="btn btn-sm btn-outline-warning"><i class="fa fa-history"></i></a>`,
 					},
                     // {
-					// 	title : "Sisa Stok", name : "stock", data : null,
-                    //     render : (data) => data ? formatRupiah(data.material.stock.toString()) : 0
-						// render : (data) => {
-						// 	if (data.material) {
-						// 		return  ` ${data.material.stock}`
-						// 	}
-						// 	return '-'
-						// }
-					// },
-					// {title : "Action", searchable: false, orderable : false},
-				]
+                    //     title: "Sisa Stok",
+                    //     name: "stock",
+                    //     data: null,
+                    //     render: (data) => data ? formatRupiah(data.material.stock.toString()) : 0
+                        // render : (data) => {
+                        // 	if (data.material) {
+                        // 		return  formatRupiah( data.material.stock.toString()) : 0
+                        // 	}
+                        // 	return '-'
+                        // }
+                    // },
+                    // {title : "Action", searchable: false, orderable : false},
+
+                ]
             });
 
-            table.on('click', 'td.dt-control', function () {
+			table.on('click', 'td.dt-control', function () {
 				const tr = $(this).closest('tr');
 				const row = table.row(tr);
 				if (row.child.isShown()) {
@@ -222,37 +242,93 @@
 			function showChildren(data) {
 				let total = 0
 				html = ''
-				html += `<table style="width:100%" class="table">`
+				html += `<table style="width:100%" class="table child-table">`
 				html += `	<thead>`
-				html += `		<tr>`
+				html += `		<tr class="text-center">`
 				html += `			<th>No</th>`
-				html += `			<th>Date</th>`
-				html += `			<th>Jenis</th>`
-				html += `			<th>Total</th>`
+				html += `			<th>Tangga</th>`
+				html += `			<th>Brand</th>`
+				html += `			<th>Jenis/Ukuran</th>`
+				html += `			<th>Stok Sebelumnya</th>`
+				html += `			<th>+/-</th>`
+				html += `			<th>Jumlah</th>`
+				html += `			<th>Stok Sekarang</th>`
+				html += `			<th>Keterangan</th>`
 				html += `		</tr>`
 				html += `	</thead>`
 				html += `	<tbody>`
-					data.material.inners.forEach((item, key) => {
-						html += `		<tr style="color: red">`
-						html += `			<td>${key+1}</td>`
-						html += `			<td>${item.date}</td>`
-						html += `			<td>${item.inner.name} / ${item.product.size}</td>`
-						html += `			<td>${item.need_inner ? formatRupiah(item.need_inner.toString()) : 0}</td>`
-						html += `		</tr>`
-						total += item.need_inner
+					data.material.records.forEach((item, key) => {
+                        if(item.type == 'Barang Dipakai') {
+                            html += `		<tr style="color: orange" class="text-center">`
+                            html += `			<td>${key+1}</td>`
+                            html += `			<td class="datepicker">${item.date}</td>`
+                            html += `			<td>${item.brand.name}</td>`
+                            html += `			<td>${item.material.name} / ${item.product.size}</td>`
+                            html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
+                            html += `			<td>${item.type_calculation}</td>`
+                            html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
+                            html += `			<td>${item.stock_now ? formatRupiah(item.stock_now.toString()) : 0}</td>`
+                            html += `			<td>${item.type}</td>`
+                            html += `		</tr>`
+                        }
+                        if(item.type == 'Barang Masuk')
+                        {
+                            html += `		<tr style="color: green" class="text-center">`
+                            html += `			<td>${key+1}</td>`
+                            html += `			<td>${item.date}</td>`
+                            html += `			<td>${item.brand.name}</td>`
+                            html += `			<td>${item.material.name} / ${item.product.size}</td>`
+                            html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
+                            html += `			<td>${item.type_calculation}</td>`
+                            html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
+                            html += `			<td>${item.stock_now ? formatRupiah(item.stock_now.toString()) : 0}</td>`
+                            html += `			<td>${item.type}</td>`
+                            html += `		</tr>`
+                        }
+                        if(item.type == 'Barang Reject')
+                        {
+                            html += `		<tr style="color: red; font-weight: 700; font-style: italic;" class="text-center">`
+                            html += `			<td>${key+1}</td>`
+                            html += `			<td>${item.date}</td>`
+                            html += `			<td>${item.brand.name}</td>`
+                            html += `			<td>${item.material.name} / ${item.product.size}</td>`
+                            html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
+                            html += `			<td>${item.type_calculation}</td>`
+                            html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
+                            html += `			<td>${item.stock_now ? formatRupiah(item.stock_now.toString()) : 0}</td>`
+                            html += `			<td>${item.type}</td>`
+                            html += `		</tr>`
+                        }
+
+						// total += parseInt(item.total)
 					})
 				html += `	</tbody>`
-				html += `	<tfoot style="color: red">`
-				html += `		<tr>`
-				html += `			<th colspan="3">Jumlah</th>`
-				html += `			<th>${total ? formatRupiah(total.toString()) : 0}</th>`
+
+				html += `	<tfoot>`
+                html += `		<tr class="text-center">`
+				html += `			<th>No</th>`
+				html += `			<th>Tanggal</th>`
+				html += `			<th>Brand</th>`
+				html += `			<th>Jenis/Ukuran</th>`
+				html += `			<th>Stok Sebelumnya</th>`
+				html += `			<th>+/-</th>`
+				html += `			<th>Jumlah</th>`
+				html += `			<th>Stok Sekarang</th>`
+				html += `			<th>Keterangan</th>`
 				html += `		</tr>`
-				html += `		<tr>`
-				html += `			<th colspan="3">Total Pengurangan</th>`
+                html += `	</tfoot>`
+
+				// html += `	<tfoot style="color: red">`
+				// html += `		<tr>`
+				// html += `			<th colspan="3">Jumlah</th>`
+				// html += `			<th>${total}</th>`
+				// html += `		</tr>`
+				// html += `		<tr>`
+				// html += `			<th colspan="3">Total Pengurangan</th>`
 				// html += `			<th colspan="3">${data.total} - ${total}</th>`
-				html += `			<th>${data.total - total}</th>`
-				html += `		</tr>`
-				html += `	</tfoot>`
+				// html += `			<th>${parseInt(data.total) - parseInt(total)}</th>`
+				// html += `		</tr>`
+				// html += `	</tfoot>`
 				html += `</table>`
 				return html
 			}
@@ -263,6 +339,7 @@
                 $('#filter-material').val('')
                 table.ajax.reload()
             })
+
         });
         $('.brand-inner').on('change', function() {
             let brandId = $(this).val();
@@ -292,10 +369,10 @@
         //         success: function(response) {
         //             let html = ``;
         //             html +=
-        //                 `<option selected="selected" disabled>-- Pilih Jenis Inner --</option>`;
+        //                 `<option selected="selected" disabled>-- Pilih Jenis Plastik --</option>`;
         //             response.materials.forEach(material => {
         //                 html +=
-        //                     `<option value="${ material.id }">${ material.name }</option>`;
+        //                     `<option value="${ material.id }">${ material.name } | stock: ${material.stock}</option>`;
         //             });
         //             $('#filter-material').html(html);
         //         }
@@ -322,9 +399,9 @@
         });
 
 
-		$(document).on('submit', '#form-filter', function (e) {
-			e.preventDefault()
-			$("#main-table").DataTable().ajax.reload( null, false );
-		})
+        $(document).on('submit', '#form-filter', function(e) {
+            e.preventDefault()
+            $("#main-table").DataTable().ajax.reload(null, false);
+        })
     </script>
 @endpush

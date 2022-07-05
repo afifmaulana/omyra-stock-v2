@@ -189,7 +189,7 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::get('index', [RejectPlasticController::class, 'index'])->name('frontend.reject.plastic.index');
                 Route::get('create', [RejectPlasticController::class, 'create'])->name('frontend.reject.plastic.create');
                 Route::post('create', [RejectPlasticController::class, 'store'])->name('frontend.reject.plastic.store');
-                Route::get('history/{id}', [RejectPlasticController::class, 'history'])->name('frontend.reject.plastic.history');
+                Route::get('history/{materialId}', [RejectPlasticController::class, 'history'])->name('frontend.reject.plastic.history');
                 Route::delete('{id}', [RejectPlasticController::class, 'destroy'])->name('frontend.reject.plastic.delete');
             });
 
