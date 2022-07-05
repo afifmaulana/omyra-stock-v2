@@ -17,13 +17,13 @@
             <div class="text-light-pink {{ request()->routeIs(['frontend.inner.index', 'frontend.inner.create']) ? 'text-active-pink' : '' }}">
                 <i class="fa fa-cubes h-40 p-0 m-0"></i>
             </div>
-            <p class="font-xs text-light-pink p-0 m-0 text-center {{ request()->routeIs(['frontend.inner.index', 'frontend.inner.create']) ? 'text-active-pink' : '' }}">Inner <br>Box</p>
+            <p class="font-xs text-light-pink p-0 m-0 text-center {{ request()->routeIs(['frontend.inner.index', 'frontend.inner.create']) ? 'text-active-pink' : '' }}">Inner</p>
         </a>
         <a class="text-center py-2 m-0 {{ request()->routeIs(['frontend.master.index', 'frontend.master.create']) ? 'active' : '' }}" href="{{ route('frontend.master.index') }}">
             <div class="text-light-pink {{ request()->routeIs(['frontend.master.index', 'frontend.master.create']) ? 'text-active-pink' : '' }}">
                 <i class="fa fa-cube h-40 p-0 m-0"></i>
             </div>
-            <p class="font-xs text-light-pink p-0 m-0 text-center {{ request()->routeIs(['frontend.master.index', 'frontend.master.create']) ? 'text-active-pink' : '' }}">Master <br>Carton</p>
+            <p class="font-xs text-light-pink p-0 m-0 text-center {{ request()->routeIs(['frontend.master.index', 'frontend.master.create']) ? 'text-active-pink' : '' }}">Master</p>
         </a>
         @endif
 
