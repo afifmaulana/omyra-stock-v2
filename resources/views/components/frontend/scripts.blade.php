@@ -19,6 +19,9 @@ crossorigin="anonymous"></script>
 
 <script>
     $(document).ready(function() {
+        $('.dataTable').DataTable({
+                lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]]
+            });
         $('.select2').select2();
         $('#preloader-active').delay(300).fadeOut('slow');
         $('body').delay(300).css({

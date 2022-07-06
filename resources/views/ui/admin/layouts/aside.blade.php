@@ -52,7 +52,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-header pt-4">MASTER</li>
+                <li class="nav-header pt-4">DATA</li>
                 <li class="nav-item">
                     <a href="{{ route('admin.brand.index') }}"
                         class="nav-link {{ request()->routeIs('admin.brand.*') ? 'active' : '' }}">
@@ -67,7 +67,7 @@
                         class="nav-link {{ request()->routeIs('admin.product.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-star"></i>
                         <p>
-                            Produk
+                            Produk/Ukuran
                         </p>
                     </a>
                 </li>
@@ -76,7 +76,7 @@
                         class="nav-link {{ request()->routeIs('admin.material.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-boxes"></i>
                         <p>
-                            Material
+                            Jenis
                         </p>
                     </a>
                 </li>
@@ -89,7 +89,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-header pt-4">PENYETOKAN MATERIAL</li>
+                {{-- <li class="nav-header pt-4">PENYETOKAN MATERIAL</li>
                 <li class="nav-item">
                     <a href="{{ route('admin.stock.plastic.index') }}"
                         class="nav-link {{ request()->routeIs('admin.stock.plastic.*') ? 'active' : '' }}">
@@ -135,7 +135,7 @@
                             Finish
                         </p>
                     </a>
-                </li>
+                </li> --}}
                 <div class="pt-5"></div>
             </ul>
         </nav>

@@ -119,7 +119,9 @@
                     Print
                 </button>
             </div> --}}
-            <table id="main-table" class="table table-striped table-bordered table-responsive" style="width:100%"></table>
+            <table id="main-table" class="table table-striped table-bordered table-responsive" style="width:100%">
+                {{-- <table id="dataTable"></table> --}}
+            </table>
         </div>
     </div>
 @endsection
@@ -133,7 +135,6 @@
     <script src="{{ asset('vendor/bootstrap-multiselect/bootstrap-multiselect.js') }}"></script> --}}
     <script>
         $(function() {
-            // $('#dataTable').DataTable();
             $('.datepicker').datepicker({
                 autoclose: true,
                 format: 'dd-mm-yyyy'
@@ -242,11 +243,11 @@
 			function showChildren(data) {
 				let total = 0
 				html = ''
-				html += `<table style="width:100%" class="table child-table">`
+				html += `<table id="dataTable" style="width:100%" class="table child-table dataTable">`
 				html += `	<thead>`
 				html += `		<tr class="text-center">`
 				html += `			<th>No</th>`
-				html += `			<th>Tangga</th>`
+				html += `			<th>Tanggal</th>`
 				html += `			<th>Brand</th>`
 				html += `			<th>Jenis/Ukuran</th>`
 				html += `			<th>Stok Sebelumnya</th>`
@@ -298,7 +299,7 @@
                             html += `			<td>${item.stock_now ? formatRupiah(item.stock_now.toString()) : 0}</td>`
                             html += `			<td>${item.type}</td>`
                             html += `		</tr>`
-                        }
+                        }  
 
 						// total += parseInt(item.total)
 					})

@@ -246,7 +246,7 @@
 				html += `	<thead>`
 				html += `		<tr class="text-center">`
 				html += `			<th>No</th>`
-				html += `			<th>Tangga</th>`
+				html += `			<th>Tanggal</th>`
 				html += `			<th>Brand</th>`
 				html += `			<th>Jenis/Ukuran</th>`
 				html += `			<th>Stok Sebelumnya</th>`
