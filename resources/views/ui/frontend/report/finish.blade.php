@@ -206,19 +206,7 @@
                         data : null,
 					    render: (data) => `<a href="{{ route('frontend.report.record.finish') }}" class="btn btn-sm btn-outline-warning"><i class="fa fa-history"></i></a>`,
 					},
-                    // {
-                    //     title: "Sisa Stok",
-                    //     name: "stock",
-                    //     data: null,
-                    //     render: (data) => data ? formatRupiah(data.material.stock.toString()) : 0
-                        // render : (data) => {
-                        // 	if (data.material) {
-                        // 		return  formatRupiah( data.material.stock.toString()) : 0
-                        // 	}
-                        // 	return '-'
-                        // }
-                    // },
-                    // {title : "Action", searchable: false, orderable : false},
+                    
 
                 ]
             });
