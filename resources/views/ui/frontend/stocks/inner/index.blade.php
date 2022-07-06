@@ -26,7 +26,7 @@
             <div class="float-right">
                 <a href="{{ route('frontend.reject.inner.index') }}" class="btn btn-sm btn-danger"
                     style="border-radius: 30px">
-                    <i class="fa fa-plus"></i>
+                    <i class="fa fa-list"></i>
                     Reject
                 </a>
                 {{-- <a href="{{ route('frontend.inner.create') }}" class="btn btn-sm btn-primary" style="border-radius: 30px">

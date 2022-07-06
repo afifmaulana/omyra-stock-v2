@@ -107,6 +107,21 @@ class PlasticController extends Controller
         ]);
     }
 
+    public function detail($id)
+    {
+        $stock = Stock::where('id', $id)->first();
+        // $materialId = Stock::where('material_id')->first();
+        $records = RecordLog::whereHas('material', function ($query) {
+            $query->where('type', 'plastic');
+            $query->where('modelable_type', 'App\Models\Stock');
+            // $query->where($materialId)->first();
+        })->orderBy('id', 'DESC')->get();
+        return view('ui.frontend.stocks.plastic.detail', [
+            'stock' => $stock,
+            'records' => $records,
+        ]);
+    }
+
     public function update(Request $request, $id)
     {
         // dd($request->all());

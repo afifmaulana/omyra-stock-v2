@@ -135,6 +135,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('create', [PlasticController::class, 'store'])->name('frontend.plastic.store');
             Route::get('edit/{id}', [PlasticController::class, 'edit'])->name('frontend.plastic.edit');
             Route::put('edit/{id}', [PlasticController::class, 'update'])->name('frontend.plastic.update');
+            Route::get('detail/{id}', [PlasticController::class, 'detail'])->name('frontend.plastic.detail');
             Route::delete('{id}', [PlasticController::class, 'destroy'])->name('frontend.plastic.delete');
         });
         Route::prefix('inner')->group(function () {

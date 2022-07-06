@@ -25,7 +25,7 @@
             <div class="float-right">
                 <a href="{{ route('frontend.reject.plastic.index') }}" class="btn btn-sm btn-danger"
                     style="border-radius: 30px">
-                    <i class="fa fa-plus"></i>
+                    <i class="fa fa-list"></i>
                     Reject
                 </a>
                 {{-- <a href="{{ route('frontend.reject.plastic.index') }}" class="btn btn-sm btn-primary"
@@ -50,11 +50,8 @@
                 </thead>
                 <tbody>
                     @foreach ($stocks as $stock)
-                        {{-- @foreach ($stock->semifinishes as $semifinish) --}}
-                            {{-- <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle"> --}}
                             <tr>
                                 <td>{{ $loop->iteration }}
-                                    {{-- <button class="btn btn-default rounded btn-sm"><span lass="fa fa-plus-circle" style="color: green"></span></button> --}}
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse($stock->date)->format('d-m-Y') }}</td>
 
@@ -73,39 +70,11 @@
                                         <button id="btn-delete" class="btn btn-sm btn-danger"><i
                                                 class="fa fa-trash"></i></button>
                                     </form>
+                                    <a href="{{ route('frontend.plastic.detail', $stock->id) }}" class="btn btn-sm btn-warning">
+                                        <i class="fa fa-history text-white"></i>
+                                    </a>
                                 </td>
                             </tr>
-                            {{-- <tr>
-                                <td colspan="12" class="hiddenRow">
-                                    <div class="accordian-body collapse" id="demo1">
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Access Key</th>
-                                                    <th>Secret Key</th>
-                                                    <th>Status </th>
-                                                    <th> Created</th>
-                                                    <th> Expires</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>access-key-1</td>
-                                                    <td>secretKey-1</td>
-                                                    <td>Status</td>
-                                                    <td>some date</td>
-                                                    <td>some date</td>
-                                                    <td><a href="#" class="btn btn-default btn-sm">
-                                                            <i class="glyphicon glyphicon-cog"></i></a></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-                                </td>
-                            </tr> --}}
-                        {{-- @endforeach --}}
                     @endforeach
                 </tbody>
                 <tfoot>
