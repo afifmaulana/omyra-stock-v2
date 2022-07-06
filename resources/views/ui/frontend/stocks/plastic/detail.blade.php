@@ -18,7 +18,7 @@
     <div class="bg-grey pt-23 mt-1" style="max-height: 86vh; overflow: scroll;">
         {{-- @include('components.frontend.flashmessage') --}}
         <div class="container-omyra" style="margin-bottom: 90px;">
-            <table class="table table-bordered">
+            <table class="table table-striped table-bordered table-responsive display table-condensed">
                 <thead>
                     <tr>
                         <th>#ID</th>
