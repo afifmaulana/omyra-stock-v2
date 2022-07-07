@@ -191,24 +191,7 @@
                 }
             });
 
-            $('.brand-plastic').on('change', function() {
-                let brandId = $(this).val();
-                $.ajax({
-                    type: "GET",
-                    url: "{{ route('api.get_plastic.by.brand_id', '') }}" + '/' + brandId,
-                    dataType: "json",
-                    success: function(response) {
-                        let html = ``;
-                        html +=
-                            `<option selected="selected" disabled>-- Pilih Jenis / Ukuran --</option>`;
-                        response.data.forEach(item => {
-                            html +=
-                                `<option value="${ item.id }">${item.name} / ${ item.product.size }</option>`;
-                        });
-                        $('#filter-material').html(html);
-                    }
-                });
-            });
+
 
             // $('#product').on('change', function() {
             //     let productId = $(this).val();
@@ -229,5 +212,43 @@
             //     });
             // });
         })
+
+        $(document).ready(function() {
+            let brandId = $('.brand-plastic').val();
+            let selectedMaterialId = "{{ $stock->material_id }}"
+            console.log('selectedMaterialId : ', selectedMaterialId)
+            getMaterial(brandId, selectedMaterialId)
+        });
+
+        // $(document).on('change', '.brand-plastic', function() {
+        //         let brandId = $(this).val();
+        //         getMaterial(brandId)
+
+        // });
+        function getMaterial(brandId, selectedMaterialId=null){
+            console.log('selectedMaterialId 1 : ', selectedMaterialId)
+            $.ajax({
+                    type: "GET",
+                    url: "{{ route('api.get_plastic.by.brand_id', '') }}" + '/' + brandId,
+                    dataType: "json",
+                    success: function(response) {
+                        let html = ``;
+                        html +=
+                            `<option selected="selected" disabled>-- Pilih Jenis / Ukuran --</option>`;
+                        response.data.forEach(item => {
+                            if(selectedMaterialId){
+                                html +=
+                                `<option value="${ item.id }" ${(item.id==selectedMaterialId ? 'selected' : '')}>${item.name} / ${ item.product.size }</option>`;
+                            }else{
+                                html +=
+                                `<option value="${ item.id }">${item.name} / ${ item.product.size }</option>`;
+                            }
+
+                        });
+                        $('#filter-material').html(html);
+                    }
+                });
+        }
+
     </script>
 @endpush

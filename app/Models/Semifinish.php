@@ -25,4 +25,9 @@ class Semifinish extends Model
     {
         return $this->hasMany(Materials::class);
     }
+
+    public function records()
+    {
+        return $this->morphMany(RecordLog::class, 'modelable')->orderBy('id', 'DESC');
+    }
 }

@@ -56,11 +56,11 @@
                             <td>{{ number_format($stock->total,0,',','.') }}</td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
-                                <form id="delete-master" action="{{ route('frontend.master.delete', $stock->id) }}"
+                                <form id="delete-master-{{ $stock->id }}" action="{{ route('frontend.master.delete', $stock->id) }}"
                                     class="d-inline" method="POST">
                                     @csrf
                                     @method('delete')
-                                    <button id="btn-delete" class="btn btn-sm btn-danger"><i
+                                    <button id="btn-delete" data-id="{{ $stock->id }}" class="btn btn-sm btn-danger btn-delete"><i
                                             class="fa fa-trash"></i></button>
                                 </form>
                             </td>
@@ -105,8 +105,9 @@
                 //         ]
             });
 
-            $('#btn-delete').on('click', function(e) {
+            $(document).on('click', '.btn-delete', function(e) {
                 e.preventDefault();
+                const id=$(this).data('id')
                 Swal.fire({
                     title: 'Are you sure ?',
                     text: "You won't be able to revert this !",
@@ -117,7 +118,7 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $('form#delete-master').submit();
+                        $(`form#delete-master-${id}`).submit();
                     }
                 })
             });

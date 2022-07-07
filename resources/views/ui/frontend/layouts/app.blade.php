@@ -13,6 +13,9 @@
     @yield('content')
     @include('components.frontend.navbar-bottom')
     @include('components.frontend.scripts')
+    <script>
+        BASE_URL="{{ asset('') }}"
+    </script>
     @stack('scripts')
   </body>
 </html>

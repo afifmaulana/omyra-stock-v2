@@ -23,9 +23,9 @@ class CreateRecordLogsTable extends Migration
             $table->string('type');
             $table->string('type_calculation');
             $table->double('stock_before')->default(0);
-            $table->double('stock_before_semifinish')->default(0);
+            // $table->double('stock_before_semifinish')->default(0);
             $table->double('stock_now')->default(0);
-            $table->double('stock_now_semifinish')->default(0);
+            // $table->double('stock_now_semifinish')->default(0);
             $table->double('total')->default(0);
 
             $table->timestamps();

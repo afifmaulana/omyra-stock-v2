@@ -63,11 +63,11 @@
                                 <td>
                                     <a href="{{ route('frontend.plastic.edit', $stock->id) }}" class="btn btn-sm btn-info"><i
                                             class="fa fa-edit"></i></a>
-                                    <form id="delete-plastic" action="{{ route('frontend.plastic.delete', $stock->id) }}"
+                                    <form id="delete-plastic-{{ $stock->id }}" action="{{ route('frontend.plastic.delete', $stock->id) }}"
                                         class="d-inline" method="POST">
                                         @csrf
                                         @method('delete')
-                                        <button id="btn-delete" class="btn btn-sm btn-danger"><i
+                                        <button id="btn-delete" data-id="{{ $stock->id }}" class="btn btn-sm btn-danger btn-delete"><i
                                                 class="fa fa-trash"></i></button>
                                     </form>
                                     <a href="{{ route('frontend.plastic.detail', $stock->id) }}" class="btn btn-sm btn-warning">
@@ -135,8 +135,9 @@
             //     }
             // });
 
-            $('#btn-delete').on('click', function(e) {
+            $(document).on('click', '.btn-delete', function(e) {
                 e.preventDefault();
+                const id=$(this).data('id')
                 Swal.fire({
                     title: 'Are you sure ?',
                     text: "You won't be able to revert this !",
@@ -147,7 +148,7 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $('form#delete-plastic').submit();
+                        $(`form#delete-plastic-${id}`).submit();
                     }
                 })
             });

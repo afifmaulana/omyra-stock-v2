@@ -257,7 +257,7 @@
 				html += `		</tr>`
 				html += `	</thead>`
 				html += `	<tbody>`
-					data.material.recordsemifinishes.forEach((item, key) => {
+					data.records.forEach((item, key) => {
 
                         if(item.type == 'Barang Masuk')
                         {

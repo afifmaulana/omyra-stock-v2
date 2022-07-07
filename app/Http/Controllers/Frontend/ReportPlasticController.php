@@ -49,6 +49,10 @@ class ReportPlasticController extends Controller
 		$query->with('material.records.product');
 		$query->with('material.records.brand');
 
+        // $query->with('records');
+        // $query->with('records.material');
+        // $query->with('records.product');
+        // $query->with('records.brand');
 
 		$data = $query->get();
 
@@ -63,15 +67,18 @@ class ReportPlasticController extends Controller
         ]);
     }
 
-    public function history($materialId)
+    public function detail($id)
     {
-        $stock = Stock::where('material_id', $materialId)->first();
-        $records = RecordLog::whereHas('material', function ($query) {
-            $query->where('type', 'plastic');
-            $query->where('modelable_type', 'App\Models\Stock');
-        })->orderBy('id', 'DESC')->get();
+        // $stock = Stock::where('id', $id)->first();
+        // $records = RecordLog::whereHas('material', function ($query) use($id) {
+            // $query->where('modelable_type', 'App\Models\Stock');
+            // $query->where('material_id', $id);
+        $records = RecordLog::whereHasMorph('modelable', [Stock::class], function ($query) use($id) {
+            $query->where('id', $id);
+        })->get();
+        // dd($records);
         return view('ui.frontend.report.record.plastic', [
-            'stock' => $stock,
+            // 'stock' => $stock,
             'records' => $records,
         ]);
     }

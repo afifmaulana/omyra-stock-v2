@@ -20,7 +20,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $brands = Brand::orderBy('id', 'DESC')->get();
+        $brands = Brand::orderBy('name', 'ASC')->get();
         return view('ui.admin.product.create', [
             'brands' => $brands,
         ]);

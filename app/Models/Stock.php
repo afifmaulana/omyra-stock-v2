@@ -29,4 +29,9 @@ class Stock extends Model
     {
         return ['January', 'February', 'March', 'April', 'May', 'June', 'July ', 'August', 'September', 'October', 'November', 'December'];
     }
+
+    public function records()
+    {
+        return $this->morphMany(RecordLog::class, 'modelable');
+    }
 }

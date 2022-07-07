@@ -41,10 +41,15 @@ class ReportSemifinishController extends Controller
 		$query->with('material:id,product_id,name,stock');
 		$query->with('material.product:id,brand_id,size');
 		$query->with('material.product.brand:id,name');
-        $query->with('material.recordsemifinishes');
-		$query->with('material.recordsemifinishes.material');
-		$query->with('material.recordsemifinishes.product');
-		$query->with('material.recordsemifinishes.brand');
+        // $query->with('material.recordsemifinishes');
+		// $query->with('material.recordsemifinishes.material');
+		// $query->with('material.recordsemifinishes.product');
+		// $query->with('material.recordsemifinishes.brand');
+
+        $query->with('records');
+        $query->with('records.material');
+        $query->with('records.product');
+        $query->with('records.brand');
 
 		$data = $query->get();
 

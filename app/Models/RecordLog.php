@@ -29,4 +29,8 @@ class RecordLog extends Model
     {
         return $this->belongsTo(Materials::class, 'material_id');
     }
+    public function modelable()
+	{
+		return $this->morphTo();
+	}
 }

@@ -172,6 +172,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('report')->group(function () {
         Route::get('/plastic', [ReportPlasticController::class, 'index'])->name('frontend.report.plastic.index');
         Route::post('/plastic/data', [ReportPlasticController::class, 'data'])->name('frontend.report.plastic.data');
+        Route::get('/plastic/detail/{id}', [ReportPlasticController::class, 'detail'])->name('frontend.report.plastic.detail');
 
         Route::get('/inner', [ReportInnerController::class, 'index'])->name('frontend.report.inner.index');
         Route::post('/inner/data', [ReportInnerController::class, 'data'])->name('frontend.report.inner.data');

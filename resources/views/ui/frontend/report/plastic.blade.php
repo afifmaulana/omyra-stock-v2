@@ -205,7 +205,7 @@
                     {
 						title : "Action",
                         data : null,
-					    render: (data) => `<a href="{{ route('frontend.report.record.plastic') }}" class="btn btn-sm btn-outline-warning"><i class="fa fa-history"></i></a>`,
+					    render: (data) => `<a href="${BASE_URL}report/plastic/detail/${data.id}" class="btn btn-sm btn-outline-warning"><i class="fa fa-history"></i></a>`,
 					},
                     // {
                     //     title: "Sisa Stok",
@@ -236,14 +236,23 @@
 					row.child(showChildren(row.data())).show();
 					tr.addClass('shown');
 					$(this).addClass('shown');
+                    $(`#child-${row.data().id}`).DataTable({
+                    // "destroy": true,
+                    "pageLength": 2,
+                    "processing": false,
+                    "serverSide": false,
+                    "searching": false,
+                    "orderable": false,
+                });
 				}
 			});
 
 
 			function showChildren(data) {
+                console.log(data)
 				let total = 0
 				html = ''
-				html += `<table id="dataTable" style="width:100%" class="table child-table dataTable">`
+				html += `<table id="child-${data.id}" style="width:100%" class="table dataTable">`
 				html += `	<thead>`
 				html += `		<tr class="text-center">`
 				html += `			<th>No</th>`
@@ -299,7 +308,7 @@
                             html += `			<td>${item.stock_now ? formatRupiah(item.stock_now.toString()) : 0}</td>`
                             html += `			<td>${item.type}</td>`
                             html += `		</tr>`
-                        }  
+                        }
 
 						// total += parseInt(item.total)
 					})
@@ -331,6 +340,8 @@
 				// html += `		</tr>`
 				// html += `	</tfoot>`
 				html += `</table>`
+
+
 				return html
 			}
 
