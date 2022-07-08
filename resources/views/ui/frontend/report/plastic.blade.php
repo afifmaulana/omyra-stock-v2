@@ -184,7 +184,8 @@
                         title: "Tanggal", name: "date", data: 'date',
                         render: (data) => {
                             if (data) {
-                                return moment(data).format("dddd, MMMM Do YYYY")
+                                return moment(data).format("DD-MM-YYYY")
+                                // return moment(data).format("dddd, MMMM Do YYYY")
                             }
                             return '-'
                         }
