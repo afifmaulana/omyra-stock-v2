@@ -706,6 +706,7 @@ input[type=text]{
 .my-float{
     margin-top:16px;
 }
+
 .float-reject{
     position:fixed;
     width:60px;

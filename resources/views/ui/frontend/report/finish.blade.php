@@ -126,6 +126,7 @@
 
 @push('scripts')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     {{-- <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
@@ -144,8 +145,8 @@
             const table = $('#main-table').DataTable({
                 "destroy": true,
                 "pageLength": 10,
-                "processing": true,
-                "serverSide": true,
+                "processing": false,
+                "serverSide": false,
                 "ajax": {
                     url: "{{ url('') }}/report/finish/data",
                     headers: {
@@ -206,7 +207,7 @@
                         data : null,
 					    render: (data) => `<a href="{{ route('frontend.report.record.finish') }}" class="btn btn-sm btn-outline-warning"><i class="fa fa-history"></i></a>`,
 					},
-                    
+
 
                 ]
             });
@@ -251,7 +252,7 @@
                         {
                             html += `		<tr style="color: green" class="text-center">`
                             html += `			<td>${key+1}</td>`
-                            html += `			<td class="datepicker">${item.date}</td>`
+                            html += `			<td class="datepicker">${moment(item.date).format("DD-MM-YYYY")}</td>`
                             html += `			<td>${item.brand.name}</td>`
                             html += `			<td>${item.master.name} / ${item.product.size}</td>`
                             html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
@@ -264,7 +265,7 @@
                         if(item.type == 'Barang Dipakai') {
                             html += `		<tr style="color: orange" class="text-center">`
                             html += `			<td>${key+1}</td>`
-                            html += `			<td class="datepicker">${item.date}</td>`
+                            html += `			<td class="datepicker">${moment(item.date).format("DD-MM-YYYY")}</td>`
                             html += `			<td>${item.brand.name}</td>`
                             html += `			<td>${item.master.name} / ${item.product.size}</td>`
                             html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`

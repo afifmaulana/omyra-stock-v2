@@ -51,7 +51,7 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <div class="text-header font-size-18 text-active-pink font-weight-500">Laporan Stok Plastic</div>
+                <div class="text-header font-size-18 text-active-pink font-weight-500">Laporan Stok Plastik</div>
             </div>
         </div>
     </div>
@@ -128,6 +128,7 @@
 
 @push('scripts')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     {{-- <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
@@ -135,6 +136,7 @@
     <script src="{{ asset('vendor/bootstrap-multiselect/bootstrap-multiselect.js') }}"></script> --}}
     <script>
         $(function() {
+            moment.locale('fr');
             $('.datepicker').datepicker({
                 autoclose: true,
                 format: 'dd-mm-yyyy'
@@ -145,8 +147,8 @@
             const table = $('#main-table').DataTable({
                 "destroy": true,
                 "pageLength": 10,
-                "processing": true,
-                "serverSide": true,
+                "processing": false,
+                "serverSide": false,
                 "ajax": {
                     url: "{{ url('') }}/report/plastic/data",
                     headers: {
@@ -178,7 +180,15 @@
                     //     data: null,
                     //     render: (data, type, full, meta) => meta.row + 1
                     // },
-                    { title: "Tanggal", name: "date", data: 'date' },
+                    {
+                        title: "Tanggal", name: "date", data: 'date',
+                        render: (data) => {
+                            if (data) {
+                                return moment(data).format("dddd, MMMM Do YYYY")
+                            }
+                            return '-'
+                        }
+                    },
                     {
                         title: "Brand", name: "brand", data: null,
                         render: (data) => {
@@ -238,7 +248,7 @@
 					$(this).addClass('shown');
                     $(`#child-${row.data().id}`).DataTable({
                     // "destroy": true,
-                    "pageLength": 2,
+                    "pageLength": 5,
                     "processing": false,
                     "serverSide": false,
                     "searching": false,
@@ -249,7 +259,7 @@
 
 
 			function showChildren(data) {
-                console.log(data)
+                // console.log(data)
 				let total = 0
 				html = ''
 				html += `<table id="child-${data.id}" style="width:100%" class="table dataTable">`
@@ -271,7 +281,7 @@
                         if(item.type == 'Barang Dipakai') {
                             html += `		<tr style="color: orange" class="text-center">`
                             html += `			<td>${key+1}</td>`
-                            html += `			<td class="datepicker">${item.date}</td>`
+                            html += `			<td class="datepicker">${moment(item.date).format("DD-MM-YYYY")}</td>`
                             html += `			<td>${item.brand.name}</td>`
                             html += `			<td>${item.material.name} / ${item.product.size}</td>`
                             html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
@@ -285,7 +295,7 @@
                         {
                             html += `		<tr style="color: green" class="text-center">`
                             html += `			<td>${key+1}</td>`
-                            html += `			<td>${item.date}</td>`
+                            html += `			<td>${moment(item.date).format("DD-MM-YYYY")}</td>`
                             html += `			<td>${item.brand.name}</td>`
                             html += `			<td>${item.material.name} / ${item.product.size}</td>`
                             html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
@@ -299,7 +309,7 @@
                         {
                             html += `		<tr style="color: red; font-weight: 700; font-style: italic;" class="text-center">`
                             html += `			<td>${key+1}</td>`
-                            html += `			<td>${item.date}</td>`
+                            html += `			<td>${moment(item.date).format("DD-MM-YYYY")}</td>`
                             html += `			<td>${item.brand.name}</td>`
                             html += `			<td>${item.material.name} / ${item.product.size}</td>`
                             html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
