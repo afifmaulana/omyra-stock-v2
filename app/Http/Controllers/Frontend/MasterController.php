@@ -92,6 +92,53 @@ class MasterController extends Controller
         }
     }
 
+    public function edit($id)
+    {
+        $stock = Stock::where('id', $id)->first();
+        $products = Product::orderBy('id', 'DESC')->get();
+        $brands = Brand::orderBy('name', 'ASC')->get();
+        return view('ui.frontend.stocks.master.edit', [
+            'stock' => $stock,
+            'products' => $products,
+            'brands' => $brands,
+
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // dd($request->all());
+        $stock = Stock::where('id', $id)->first();
+        DB::beginTransaction();
+        try {
+            $title = $description = 'Stok master dengan ID #' . $stock->id . ' telah diubah oleh Mas ' . Auth::user()->name;
+            $log = new LogActivity();
+            $log->user_id = Auth::user()->id;
+            $log->source_type = 'App\Stock';
+            $log->source_id = $stock->id;
+            $log->title = $title;
+            $log->description = $description;
+            $log->save();
+
+            $stock->date = Carbon::parse($request->date)->format('Y-m-d');
+            $stock->material_id = $request->material;
+            $stock->user_id = Auth::user()->id;
+            $stock->total = $request->total;
+            $stock->update();
+
+            $material = Materials::find($stock->material_id);
+            $material->stock += $stock->total;
+            $material->update();
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th->getMessage());
+        }
+
+        return redirect()->route('frontend.master.index')->with('success', 'Berhasil mengubah data');
+    }
+
     public function destroy($id)
     {
         $stock = Stock::where('id', $id)->first();

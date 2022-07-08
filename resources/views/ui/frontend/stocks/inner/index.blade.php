@@ -56,7 +56,7 @@
                             <td>{{ $stock->material->name . ' / ' . $stock->material->product->size }}</td>
                             <td>{{ number_format($stock->total,0,',','.') }}</td>
                             <td>
-                                <a href="#" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                                <a href="{{ route('frontend.inner.edit', $stock->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                                 <form id="delete-inner-{{ $stock->id }}" action="{{ route('frontend.inner.delete', $stock->id) }}"
                                     class="d-inline" method="POST">
                                     @csrf

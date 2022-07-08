@@ -142,12 +142,16 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('index', [InnerController::class, 'index'])->name('frontend.inner.index');
             Route::get('create', [InnerController::class, 'create'])->name('frontend.inner.create');
             Route::post('create', [InnerController::class, 'store'])->name('frontend.inner.store');
+            Route::get('edit/{id}', [InnerController::class, 'edit'])->name('frontend.inner.edit');
+            Route::put('edit/{id}', [InnerController::class, 'update'])->name('frontend.inner.update');
             Route::delete('{id}', [InnerController::class, 'destroy'])->name('frontend.inner.delete');
         });
         Route::prefix('master')->group(function () {
             Route::get('index', [MasterController::class, 'index'])->name('frontend.master.index');
             Route::get('create', [MasterController::class, 'create'])->name('frontend.master.create');
             Route::post('create', [MasterController::class, 'store'])->name('frontend.master.store');
+            Route::get('edit/{id}', [MasterController::class, 'edit'])->name('frontend.master.edit');
+            Route::put('edit/{id}', [MasterController::class, 'update'])->name('frontend.master.update');
             Route::delete('{id}', [MasterController::class, 'destroy'])->name('frontend.master.delete');
         });
     });
