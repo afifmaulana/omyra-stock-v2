@@ -31,7 +31,7 @@
 
             <table id="dataTable" class="table table-striped table-bordered table-responsive" style="width:100%">
                 <thead>
-                    <tr>
+                    <tr class="text-center">
                         <th>No</th>
                         <th>Tanggal</th>
                         <th>Bongkar Oven</th>
@@ -43,7 +43,7 @@
                 </thead>
                 <tbody>
                     @foreach ($semifinishes as $item)
-                        <tr>
+                        <tr class="text-center">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->date)->format('d-m-Y') }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->unloading_date)->format('d-m-Y') }}</td>
@@ -65,7 +65,7 @@
                     @endforeach
                 </tbody>
                 <tfoot>
-                    <tr>
+                    <tr class="text-center">
                         <th>No</th>
                         <th>Tanggal</th>
                         <th>Bongkar Oven</th>

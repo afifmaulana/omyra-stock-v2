@@ -49,22 +49,22 @@
                         <div class="card-body">
                             <table id="table-data" class="table table-bordered table-striped">
                                 <thead>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th>No</th>
-                                        <th>Brand / Ukuran</th>
+                                        <th>Brand</th>
                                         <th>Tanggal</th>
-                                        <th>Jenis</th>
+                                        <th>Jenis / Ukuran</th>
                                         <th>Jumlah</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($reminders as $item)
-                                    <tr>
+                                    <tr class="text-center">
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->product->brand->name . ' / ' . $item->product->size }}</td>
+                                        <td>{{ $item->material->product->brand->name }}</td>
                                         <td>{{ $item->date }}</td>
-                                        <td>{{ $item->material->name }}</td>
+                                        <td>{{ $item->material->name  . ' / ' . $item->material->product->size}}</td>
                                         <td>{{ $item->total }}</td>
                                         <td>
                                             <a href="" class="btn btn-sm btn-info"><i
@@ -82,7 +82,7 @@
                                     @endforeach
                                 </tbody>
                                 <tfoot>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th>No</th>
                                         <th>Brand / Ukuran</th>
                                         <th>Tanggal</th>

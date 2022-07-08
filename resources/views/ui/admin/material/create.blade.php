@@ -13,12 +13,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Halaman Tambah Material</h1>
+                    <h1 class="m-0">Halaman Tambah Jenis Brand</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Halaman Tambah Material</li>
+                        <li class="breadcrumb-item active">Halaman Tambah Jenis Brand</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -33,7 +33,7 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Form Tambah Material</h3>
+                            <h3 class="card-title">Form Tambah Jenis Brand</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -57,13 +57,13 @@
                                     <label for="type">Kategori</label>
                                     <select class="form-control select2" style="width: 100%;" id="type" name="type">
                                         <option selected="selected" disabled>-- Pilih Kategori --</option>
-                                        <option value="plastic">Plastic</option>
+                                        <option value="plastic">Plastik</option>
                                         <option value="inner">Inner</option>
                                         <option value="master">Master</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Nama Material</label>
+                                    <label for="name">Nama Jenis</label>
                                     <input type="text" name="name" class="form-control" id="name"
                                         placeholder="Masukan nama material">
                                 </div>

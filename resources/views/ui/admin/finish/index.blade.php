@@ -17,12 +17,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Halaman Produksi Finish</h1>
+                    <h1 class="m-0">Halaman Barang Jadi</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Halaman Produksi Finish</li>
+                        <li class="breadcrumb-item active">Halaman Barang Jadi</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -38,7 +38,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h3 class="card-title">Data Produksi Finish</h3>
+                                <h3 class="card-title">Data Barang Jadi</h3>
                                 <a href="{{ route('admin.finish.create') }}" class="btn btn-primary font-weight-bold">
                                     <i class="fas fa-plus mr-1"></i>
                                     Tambah
@@ -49,7 +49,7 @@
                         <div class="card-body">
                             <table id="table-data" class="table table-bordered table-striped">
                                 <thead>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th>No</th>
                                         <th>Brand / Ukuran</th>
                                         <th>Kebutuhan Inner / Jumlah</th>
@@ -59,7 +59,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($finishes as $item)
-                                    <tr>
+                                    <tr class="text-center">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->product->brand->name . ' / ' . $item->product->size }}</td>
                                         <td>{{ $item->inner->name . ' / ' . $item->need_inner }}</td>
@@ -69,7 +69,7 @@
                                     @endforeach
                                 </tbody>
                                 <tfoot>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th>No</th>
                                         <th>Brand / Ukuran</th>
                                         <th>Kebutuhan Inner / Jumlah</th>

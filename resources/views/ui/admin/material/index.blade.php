@@ -17,12 +17,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Halaman Material</h1>
+                    <h1 class="m-0">Halaman Jenis Brand</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Halaman Material</li>
+                        <li class="breadcrumb-item active">Halaman Jenis Brand</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -38,7 +38,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h3 class="card-title">Data Material</h3>
+                                <h3 class="card-title">Data Jenis Brand</h3>
                                 <a href="{{ route('admin.material.create') }}" class="btn btn-primary font-weight-bold">
                                     <i class="fas fa-plus mr-1"></i>
                                     Tambah
@@ -49,10 +49,10 @@
                         <div class="card-body">
                             <table id="table-data" class="table table-bordered table-striped">
                                 <thead>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th>No</th>
                                         <th>Brand / Ukuran</th>
-                                        <th>Nama Material</th>
+                                        <th>Jenis Brand</th>
                                         <th>Kategori</th>
                                         <th>Stok</th>
                                         <th>Action</th>
@@ -60,7 +60,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($materials as $material)
-                                    <tr>
+                                    <tr class="text-center">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $material->product->brand->name . ' / ' . $material->product->size }}
                                         </td>
@@ -83,7 +83,7 @@
                                     @endforeach
                                 </tbody>
                                 <tfoot>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th>No</th>
                                         <th>Brand / Ukuran</th>
                                         <th>Nama Material</th>

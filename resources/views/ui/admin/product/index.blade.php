@@ -49,19 +49,19 @@
                         <div class="card-body">
                             <table id="table-data" class="table table-bordered table-striped">
                                 <thead>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th>No</th>
                                         <th>Brand</th>
                                         <th>Ukuran</th>
-                                        <th>Stok Semifinish</th>
-                                        <th>Stok Finish</th>
+                                        <th>Stok <br> Barang 1/2 Jadi</th>
+                                        <th>Stok <br> Barang Jadi</th>
                                         <th>Kebutuhan Inner</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($products as $product)
-                                    <tr>
+                                    <tr class="text-center">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $product->brand->name }}</td>
                                         <td>{{ $product->size }}</td>
@@ -84,7 +84,7 @@
                                     @endforeach
                                 </tbody>
                                 <tfoot>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th>No</th>
                                         <th>Brand</th>
                                         <th>Ukuran</th>

@@ -20,7 +20,7 @@ class MaterialController extends Controller
 
     public function create()
     {
-        $products = Product::orderBy('id', 'DESC')->get();
+        $products = Product::orderBy('id', 'ASC')->get();
         return view('ui.admin.material.create', [
             'products' => $products,
         ]);

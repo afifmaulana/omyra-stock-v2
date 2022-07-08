@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Reminder;
 use Carbon\Carbon;
@@ -21,8 +22,10 @@ class ReminderController extends Controller
 
     public function create()
     {
+        $brands = Brand::orderBy('name', 'ASC')->get();
         $products = Product::orderBy('id', 'DESC')->get();
         return view('ui.admin.reminder.create', [
+            'brands' => $brands,
             'products' => $products,
         ]);
     }

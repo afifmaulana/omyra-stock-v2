@@ -31,7 +31,7 @@
 
             <table id="dataTable" class="table table-striped table-bordered table-responsive table-condensed">
                 <thead>
-                    <tr>
+                    <tr class="text-center">
                         <th>No</th>
                         <th>Tanggal</th>
                         <th>Brand</th>
@@ -42,7 +42,7 @@
                 </thead>
                 <tbody>
                     @foreach ($rejects as $reject)
-                            <tr>
+                            <tr class="text-center">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ \Carbon\Carbon::parse($reject->date)->format('d-m-Y') }}</td>
 
@@ -67,7 +67,7 @@
                     @endforeach
                 </tbody>
                 <tfoot>
-                    <tr>
+                    <tr class="text-center">
                         <th>No</th>
                         <th>Tanggal</th>
                         <th>Brand</th>

@@ -56,7 +56,7 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.brand.index') }}"
                         class="nav-link {{ request()->routeIs('admin.brand.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-building"></i>
+                        <i class="nav-icon fas fa-list"></i>
                         <p>
                             Brand
                         </p>
@@ -65,7 +65,7 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.product.index') }}"
                         class="nav-link {{ request()->routeIs('admin.product.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-star"></i>
+                        <i class="nav-icon fas fa-cubes"></i>
                         <p>
                             Produk/Ukuran
                         </p>
@@ -83,7 +83,7 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.reminder.index') }}"
                         class="nav-link {{ request()->routeIs('admin.reminder.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-boxes"></i>
+                        <i class="nav-icon fas fa-clock"></i>
                         <p>
                             Reminder
                         </p>

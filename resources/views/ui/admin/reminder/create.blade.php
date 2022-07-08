@@ -58,13 +58,13 @@
                                         @endif
                                     </div>
                                     <div class="form-group">
-                                        <label for="product">Brand / Ukuran</label>
+                                        <label for="product">Brand</label>
                                         <select class="form-control select2" style="width: 100%;" id="product"
                                             name="product">
-                                            <option selected="selected" disabled>-- Pilih Brand / Ukuran --</option>
-                                            @foreach ($products as $product)
-                                                <option value="{{ $product->id }}">
-                                                    {{ $product->brand->name . ' / ' . $product->size }}
+                                            <option selected="selected" disabled>-- Pilih Brand --</option>
+                                            @foreach ($brands as $brand)
+                                                <option value="{{ $brand->id }}">
+                                                    {{ $brand->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -87,7 +87,7 @@
                                     <div class="form-group">
                                         <div class="d-flex justify-content-between">
                                             <label for="total">Total</label>
-                                            {{-- <div id="max-label" class="text-danger font-weight-bold"></div> --}}
+                                            <div id="max-label" class="text-danger font-weight-bold"></div>
                                         </div>
                                         <input type="number" name="total" class="form-control" id="total"
                                             placeholder="Masukan jumlah total">
@@ -198,10 +198,10 @@
                     success: function(response) {
                         let html = ``;
                         html +=
-                            `<option selected="selected" disabled>-- Pilih Jenis Brand --</option>`;
-                        response.materials.forEach(material => {
+                            `<option selected="selected" disabled>-- Pilih Jenis Brand/Ukuran --</option>`;
+                        response.data.forEach(material => {
                             html +=
-                                `<option value="${ material.id }">${ material.name }</option>`;
+                                `<option value="${ material.id }">${ material.name } / ${material.product.size}</option>`;
                         });
                         $('#material').html(html);
                     }
@@ -218,8 +218,8 @@
                         let material = response.material;
                         console.log(typeof(material.stock));
                         if (material != null) {
-                            $('#max-label').html('Max: ' + material.stock);
-                            $('#total').attr('max', material.stock);
+                            $('#max-label').html('Stok Barang 1/2 Jadi: ' + material.product.stock_semifinish);
+                            $('#total').attr('max', material.product.stock_semifinish);
                         } else {
                             $('#max-label').html('');
                         }

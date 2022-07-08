@@ -60,7 +60,7 @@
                                     {{-- <div class="buble buble4" style="background: #fff;"></div> --}}
                                     <h6 class="text-red">--> Reminder Next Stuffing <--</h6>
                                     {{-- <h6 class="text-red"></h6> --}}
-                                    <h6 class="pt-2">{{ $item->product->brand->name . ' / ' . $item->product->size . ' / ' . $item->material->name }}
+                                    <h6 class="pt-2">{{ $item->material->product->brand->name . ' / ' . $item->material->name . ' / ' . $item->material->product->size }}
                                     </h6>
 
                                     {{-- <div class="row justify-content-center mb-2">
@@ -242,7 +242,7 @@
                     <div class="font-weight-500 line-height-23 font-18px d-inline-block">
                         {{ $item->description }}
                     </div>
-                    <div class="d-inline-block font-14" style="color: #BBBBBB">Tanggal Borongan: {{ $item->created_at }}</div>
+                    <div class="d-inline-block font-14" style="color: #BBBBBB">Tanggal: {{ $item->created_at }}</div>
                 </div>
             </div>
         @endforeach

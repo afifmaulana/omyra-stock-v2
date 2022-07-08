@@ -71,10 +71,10 @@
                     </select>
                 </div> --}}
                 <div class="form-group">
-                    <label class="font-weight-500">Jumlah Plastic</label>
+                    <label class="font-weight-500">Jumlah Plastik</label>
                     <input type="number" name="total" id="total"
                         class="form-control font-size-16 form-omyra {{ $errors->has('total') ? 'is-invalid' : '' }}"
-                        placeholder="12.000">
+                        placeholder="Jumlah Barang Masuk">
                     @if ($errors->has('total'))
                         <span class="invalid-feedback" role="alert">
                             <p><b>{{ $errors->first('total') }}</b></p>

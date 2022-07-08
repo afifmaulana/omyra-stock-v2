@@ -35,7 +35,7 @@
 
             <table id="dataTable" class="table table-striped table-bordered table-responsive" style="width:100%">
                 <thead>
-                    <tr>
+                    <tr class="text-center">
                         <th>No</th>
                         <th>Tanggal</th>
                         <th>Brand</th>
@@ -46,7 +46,7 @@
                 </thead>
                 <tbody>
                     @foreach ($stocks as $stock)
-                        <tr>
+                        <tr class="text-center">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ \Carbon\Carbon::parse($stock->date)->format('d-m-Y') }}</td>
                             <td>
@@ -68,7 +68,7 @@
                     @endforeach
                 </tbody>
                 <tfoot>
-                    <tr>
+                    <tr class="text-center">
                         <th>No</th>
                         <th>Tanggal</th>
                         <th>Brand</th>
