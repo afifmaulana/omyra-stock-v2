@@ -160,11 +160,109 @@ class FinishController extends Controller
 
     public function destroy($id)
     {
-        $finish = Finish::where('id', $id)->first();
-        // dd($finish);
-        $finish->delete();
+        // dd($id);
+        DB::beginTransaction();
+        try {
 
-            $title = $description = Auth::user()->name . ' telah menghapus data barang jadi dengan ID #'. $finish->id;
+            $finish = Finish::where('id', $id)->first();
+
+            $inner = Materials::find($finish->inner_id);
+            $master = Materials::find($finish->master_id);
+            $product = $inner->product;
+            $finish->product_id = $product->id;
+
+            //Mengambil stok barang 1/2 jadi sebelum dikembalikan
+            $stock_semifinish_before = $product->stock_semifinish;
+            //pengembalian stok barang 1/2 jadi karena data barang jadi dihapus
+            $product->stock_semifinish += $finish->need_inner;
+
+            //Mengambil stok barang jadi sebelum dihapus
+            $stock_finish_before = $product->stock_finish;
+            //pengurangan stok barang jadi karena data dihapus
+            $product->stock_finish -= $finish->total;
+
+            //Mengambil stok inner sebelum dikembalikan karena barang tidak jadi dipakai
+            $stock_inner_before = $inner->stock;
+            //pengembalian stok inner karena tidak jadi dipakai / Data barang jadi telah dihapus
+            $inner->stock += $finish->need_inner;
+
+            //Mengambil stok master sebelum dikembalikan
+            $stock_master_before = $master->stock;
+            //pengembalian stok Master karena tidak jadi dipakai / Data barang jadi telah dihapus
+            $master->stock += $finish->total;
+
+            $finish->save();
+            $product->update();
+            $inner->update();
+            $master->update();
+
+
+            //Proses penyimpanan log/history pengembalian stok barang 1/2 jadi
+            $dataSemifinish = [
+                'brand_id' => $master->product->brand_id,
+                'product_id' => $master->product_id,
+                'material_id' => $master->id,
+                'modelable_id' => $finish->id,
+                'modelable_type' => 'App\Models\Semifinish',
+                'type' => 'Data Dikembalikan',
+                'type_calculation' => '+',
+                'date' => $finish->date,
+                'stock_before' => $stock_semifinish_before,
+                'total' => $finish->need_inner,
+                'stock_now' => $stock_semifinish_before += $finish->need_inner,
+            ];
+            RecordLog::saveRecord($dataSemifinish);
+
+            //Proses penyimpanan log/history Pengurangan stok barang jadi karena data dihapus
+            $dataFinish = [
+                'brand_id' => $inner->product->brand_id,
+                'product_id' => $inner->product_id,
+                'material_id' => $inner->id,
+                'modelable_id' => $finish->id,
+                'modelable_type' => 'App\Models\Finish',
+                'type' => 'Data Dihapus',
+                'type_calculation' => '-',
+                'date' => $finish->date,
+                'stock_before' => $stock_finish_before,
+                'total' => $finish->total,
+                'stock_now' => $stock_finish_before -= $finish->total,
+            ];
+            RecordLog::saveRecord($dataFinish);
+
+            //Proses penyimpanan log/history pengembalian stok Inner karena tidak jadi dipakai
+            $dataInner = [
+                'brand_id' => $inner->product->brand_id,
+                'product_id' => $inner->product_id,
+                'material_id' => $inner->id,
+                'modelable_id' => $finish->id,
+                'modelable_type' => 'App\Models\Stock',
+                'type' => 'Data Dikembalikan',
+                'type_calculation' => '+',
+                'date' => $finish->date,
+                'stock_before' => $stock_inner_before,
+                'total' => $finish->need_inner,
+                'stock_now' => $stock_inner_before += $finish->need_inner,
+            ];
+            RecordLog::saveRecord($dataInner);
+
+            //Proses penyimpanan log/history pengembalian stok master karena tidak jadi dipakai
+            $dataMaster = [
+                'brand_id' => $master->product->brand_id,
+                'product_id' => $master->product_id,
+                'material_id' => $master->id,
+                'modelable_id' => $finish->id,
+                'modelable_type' => 'App\Models\Stock',
+                'type' => 'Data Dikembalikan',
+                'type_calculation' => '+',
+                'date' => $finish->date,
+                'stock_before' => $stock_master_before,
+                'total' => $finish->total,
+                'stock_now' => $stock_master_before += $finish->total,
+            ];
+            RecordLog::saveRecord($dataMaster);
+
+
+            $title = $description = Auth::user()->name . ' telah menghapus stok barang jadi dengan ID #' . $finish->id;
             $log = new LogActivity();
             $log->user_id = Auth::user()->id;
             $log->source_id = $finish->id;
@@ -172,6 +270,17 @@ class FinishController extends Controller
             $log->title = $title;
             $log->description = $description;
             $log->save();
-        return redirect()->route('frontend.finish.index')->with(['success' => 'Berhasil menghapus data.']);
+
+            $finish->delete();
+            DB::commit();
+
+            return redirect()->route('frontend.finish.index')->with(['success' => 'Berhasil menghapus data.']);
+
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th->getMessage());
+        }
+
     }
 }

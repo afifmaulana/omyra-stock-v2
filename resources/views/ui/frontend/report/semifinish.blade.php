@@ -287,6 +287,32 @@
                             html += `			<td>${item.type}</td>`
                             html += `		</tr>`
                         }
+                        if(item.type == 'Data Dihapus') {
+                            html += `		<tr style="color: red" class="text-center">`
+                            html += `			<td>${key+1}</td>`
+                            html += `			<td class="datepicker">${moment(item.date).format("DD-MM-YYYY")}</td>`
+                            html += `			<td>${item.brand.name}</td>`
+                            html += `			<td>${item.material.name} / ${item.product.size}</td>`
+                            html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
+                            html += `			<td>${item.type_calculation}</td>`
+                            html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
+                            html += `			<td>${item.stock_now ? formatRupiah(item.stock_now.toString()) : 0}</td>`
+                            html += `			<td>${item.type}</td>`
+                            html += `		</tr>`
+                        }
+                        if(item.type == 'Data Dikembalikan') {
+                            html += `		<tr style="color: grey" class="text-center">`
+                            html += `			<td>${key+1}</td>`
+                            html += `			<td class="datepicker">${moment(item.date).format("DD-MM-YYYY")}</td>`
+                            html += `			<td>${item.brand.name}</td>`
+                            html += `			<td>${item.material.name} / ${item.product.size}</td>`
+                            html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
+                            html += `			<td>${item.type_calculation}</td>`
+                            html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
+                            html += `			<td>${item.stock_now ? formatRupiah(item.stock_now.toString()) : 0}</td>`
+                            html += `			<td>${item.type}</td>`
+                            html += `		</tr>`
+                        }
 
 
 						// total += parseInt(item.total)
@@ -306,18 +332,6 @@
 				html += `			<th>Keterangan</th>`
 				html += `		</tr>`
                 html += `	</tfoot>`
-
-				// html += `	<tfoot style="color: red">`
-				// html += `		<tr>`
-				// html += `			<th colspan="3">Jumlah</th>`
-				// html += `			<th>${total}</th>`
-				// html += `		</tr>`
-				// html += `		<tr>`
-				// html += `			<th colspan="3">Total Pengurangan</th>`
-				// html += `			<th colspan="3">${data.total} - ${total}</th>`
-				// html += `			<th>${parseInt(data.total) - parseInt(total)}</th>`
-				// html += `		</tr>`
-				// html += `	</tfoot>`
 				html += `</table>`
 				return html
 			}

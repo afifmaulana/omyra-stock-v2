@@ -324,9 +324,9 @@
                             html += `			<td>${item.type}</td>`
                             html += `		</tr>`
                         }
-                        if(item.type == 'Data Dihapus')
+                        if(item.type == 'Data Dikembalikan')
                         {
-                            html += `		<tr style="color: red; font-weight: 700; font-style: italic;" class="text-center">`
+                            html += `		<tr style="color: grey; font-weight: 700; font-style: italic;" class="text-center">`
                             html += `			<td>${key+1}</td>`
                             html += `			<td>${item.date}</td>`
                             html += `			<td>${item.brand.name}</td>`

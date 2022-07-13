@@ -116,11 +116,96 @@ class SemiFinishController extends Controller
                 $log->save();
 
                 DB::commit();
-                
+
                 return redirect()->route('frontend.semi-finish.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
             } catch (\Throwable $th) {
                 DB::rollBack();
                 dd($th->getMessage());
             }
+    }
+
+    public function destroy($id)
+    {
+        // dd($id);
+        DB::beginTransaction();
+        try {
+
+            $semifinish = Semifinish::where('id', $id)->first();
+
+            $material = Materials::find($semifinish->material_id);
+            $product = $material->product;
+            $semifinish->product_id = $product->id;
+            // $product = Product::find($request->product);
+
+            $stock_before = $material->stock; //Mengambil stok sebelum dikurangi
+
+            // PROSES PENGEMBALIAN STOK MATERIAL PLASTIC YANG TIDAK JADI DIPAKAI KARENA DATA DIHAPUS
+            $material->stock += $semifinish->total;
+
+            //Mengambil stok barang 1/2 jadi sebelum ditambah
+            $stock_semifinish_before = $product->stock_semifinish;
+
+            // PROSES PENGURANGAN STOK BARANG 1/2 JADI KARENA DATA DIHAPUS
+            $product->stock_semifinish -= $semifinish->total;
+
+            $semifinish->save();
+            $material->update();
+            $product->update();
+
+
+            //Proses penyimpanan log/history pengembalian stok plastik karena data dihapus
+            $dataStock = [
+                'brand_id' => $material->product->brand_id,
+                'product_id' => $material->product_id,
+                'material_id' => $material->id,
+                'modelable_id' => $semifinish->id,
+                'modelable_type' => 'App\Models\Stock',
+                'type' => 'Data Dikembalikan',
+                'type_calculation' => '+',
+                'date' => $semifinish->date,
+                'stock_before' => $stock_before,
+                'total' => $semifinish->total,
+                'stock_now' => $stock_before += $semifinish->total,
+            ];
+            RecordLog::saveRecord($dataStock);
+
+
+            //Proses penyimpanan log/history pengurangan stok barang 1/2 jadi karena data dihapus
+            $dataSemifinish = [
+                'brand_id' => $material->product->brand_id,
+                'product_id' => $material->product_id,
+                'material_id' => $material->id,
+                'modelable_id' => $semifinish->id,
+                'modelable_type' => 'App\Models\Semifinish',
+                'type' => 'Data Dihapus',
+                'type_calculation' => '-',
+                'date' => $semifinish->date,
+                'stock_before' => $stock_semifinish_before,
+                'total' => $semifinish->total,
+                'stock_now' => $stock_semifinish_before -= $semifinish->total,
+            ];
+            RecordLog::saveRecord($dataSemifinish);
+
+
+            $title = $description = Auth::user()->name . ' telah menghapus stok barang 1/2 jadi dengan ID #' . $semifinish->id;
+            $log = new LogActivity();
+            $log->user_id = Auth::user()->id;
+            $log->source_id = $semifinish->id;
+            $log->source_type = '\App\Semifinish';
+            $log->title = $title;
+            $log->description = $description;
+            $log->save();
+
+            $semifinish->delete();
+            DB::commit();
+
+            return redirect()->route('frontend.semi-finish.index')->with(['success' => 'Berhasil menghapus data.']);
+
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th->getMessage());
+        }
+
     }
 }
