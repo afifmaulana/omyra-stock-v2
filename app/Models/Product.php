@@ -20,4 +20,19 @@ class Product extends Model
     {
         return $this->hasMany(Materials::class);
     }
+    public function records()
+    {
+        return $this->hasMany(RecordLog::class, 'product_id', 'id')->where('modelable_type', 'App\Models\Stock')
+        ->orderBy('id', 'DESC');
+    }
+    public function recordsemifinishes()
+    {
+        return $this->hasMany(RecordLog::class, 'product_id', 'id')->where('modelable_type', 'App\Models\Semifinish')
+        ->orderBy('id', 'DESC');
+    }
+    public function recordfinishes()
+    {
+        return $this->hasMany(RecordLog::class, 'product_id', 'id')->where('modelable_type', 'App\Models\Finish')
+        ->orderBy('id', 'DESC');
+    }
 }

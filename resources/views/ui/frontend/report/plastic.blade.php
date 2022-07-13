@@ -129,6 +129,9 @@
 @push('scripts')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script>
+        moment.locale('id')
+    </script>
     {{-- <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
@@ -184,7 +187,8 @@
                         title: "Tanggal", name: "date", data: 'date',
                         render: (data) => {
                             if (data) {
-                                return moment(data).format("DD-MM-YYYY")
+                                return data
+                                // return moment(data).format('dddd, DD MMMM YYYY')
                                 // return moment(data).format("dddd, MMMM Do YYYY")
                             }
                             return '-'
@@ -282,7 +286,7 @@
                         if(item.type == 'Barang Dipakai') {
                             html += `		<tr style="color: orange" class="text-center">`
                             html += `			<td>${key+1}</td>`
-                            html += `			<td class="datepicker">${moment(item.date).format("DD-MM-YYYY")}</td>`
+                            html += `			<td class="datepicker">${item.date}</td>`
                             html += `			<td>${item.brand.name}</td>`
                             html += `			<td>${item.material.name} / ${item.product.size}</td>`
                             html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
@@ -296,7 +300,7 @@
                         {
                             html += `		<tr style="color: green" class="text-center">`
                             html += `			<td>${key+1}</td>`
-                            html += `			<td>${moment(item.date).format("DD-MM-YYYY")}</td>`
+                            html += `			<td>${item.date}</td>`
                             html += `			<td>${item.brand.name}</td>`
                             html += `			<td>${item.material.name} / ${item.product.size}</td>`
                             html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
@@ -310,7 +314,21 @@
                         {
                             html += `		<tr style="color: red; font-weight: 700; font-style: italic;" class="text-center">`
                             html += `			<td>${key+1}</td>`
-                            html += `			<td>${moment(item.date).format("DD-MM-YYYY")}</td>`
+                            html += `			<td>${item.date}</td>`
+                            html += `			<td>${item.brand.name}</td>`
+                            html += `			<td>${item.material.name} / ${item.product.size}</td>`
+                            html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
+                            html += `			<td>${item.type_calculation}</td>`
+                            html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
+                            html += `			<td>${item.stock_now ? formatRupiah(item.stock_now.toString()) : 0}</td>`
+                            html += `			<td>${item.type}</td>`
+                            html += `		</tr>`
+                        }
+                        if(item.type == 'Data Dihapus')
+                        {
+                            html += `		<tr style="color: red; font-weight: 700; font-style: italic;" class="text-center">`
+                            html += `			<td>${key+1}</td>`
+                            html += `			<td>${item.date}</td>`
                             html += `			<td>${item.brand.name}</td>`
                             html += `			<td>${item.material.name} / ${item.product.size}</td>`
                             html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`

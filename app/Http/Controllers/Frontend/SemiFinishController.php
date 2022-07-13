@@ -116,7 +116,7 @@ class SemiFinishController extends Controller
                 $log->save();
 
                 DB::commit();
-
+                
                 return redirect()->route('frontend.semi-finish.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
             } catch (\Throwable $th) {
                 DB::rollBack();

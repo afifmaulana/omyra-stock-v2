@@ -65,8 +65,8 @@
                                 <td>{{ $stock->material->name . ' / ' . $stock->material->product->size }}</td>
                                 <td>{{ number_format($stock->total, 0, ',', '.') }}</td>
                                 <td>
-                                    <a href="{{ route('frontend.plastic.edit', $stock->id) }}" class="btn btn-sm btn-info"><i
-                                            class="fa fa-edit"></i></a>
+                                    <a href="#" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                                    {{-- <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a> --}}
                                     <form id="delete-plastic-{{ $stock->id }}" action="{{ route('frontend.plastic.delete', $stock->id) }}"
                                         class="d-inline" method="POST">
                                         @csrf
@@ -74,9 +74,9 @@
                                         <button id="btn-delete" data-id="{{ $stock->id }}" class="btn btn-sm btn-danger btn-delete"><i
                                                 class="fa fa-trash"></i></button>
                                     </form>
-                                    <a href="{{ route('frontend.plastic.detail', $stock->id) }}" class="btn btn-sm btn-warning">
+                                    {{-- <a href="{{ route('frontend.plastic.detail', $stock->id) }}" class="btn btn-sm btn-warning">
                                         <i class="fa fa-history text-white"></i>
-                                    </a>
+                                    </a> --}}
                                 </td>
                             </tr>
                     @endforeach

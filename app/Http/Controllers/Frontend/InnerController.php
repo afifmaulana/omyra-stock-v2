@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Finish;
 use App\Models\LogActivity;
 use App\Models\Materials;
 use App\Models\Product;
 use App\Models\RecordLog;
+use App\Models\Reject;
 use App\Models\Stock;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -127,7 +129,10 @@ class InnerController extends Controller
             $stock->update();
 
             $material = Materials::find($stock->material_id);
-            $material->stock += $stock->total;
+            $totalFinish = Finish::where('inner_id', $material->id)->sum('total');
+            $totalReject = Reject::where('material_id', $material->id)->sum('total');
+
+            $material->stock = ($stock->total - $totalFinish - $totalReject);
             $material->update();
 
             DB::commit();
@@ -141,10 +146,38 @@ class InnerController extends Controller
 
     public function destroy($id)
     {
-        $stock = Stock::where('id', $id)->first();
-        // dd($stock);
-        $stock->delete();
-            $title = $description = Auth::user()->name . ' telah menghapus stok inner dengan ID #'. $stock->id;
+        // dd($id);
+        DB::beginTransaction();
+        try {
+
+            $stock = Stock::where('id', $id)->first();
+
+            $material = Materials::find($stock->material_id);
+
+            //mengambil stok sebelumnya
+            $stock_before = $material->stock;
+            //stok berkurang ketika data di hapus
+            $material->stock -= $stock->total;
+            // dd($stock);
+            $material->update();
+
+
+            $data = [
+                'brand_id' => $material->product->brand_id,
+                'product_id' => $material->product_id,
+                'material_id' => $material->id,
+                'modelable_id' => $stock->id,
+                'modelable_type' => Stock::class,
+                'type' => 'Data Dihapus',
+                'type_calculation' => '-',
+                'date' => $stock->date,
+                'stock_before' => $stock_before,
+                'total' => $stock->total,
+                'stock_now' => $stock_before -= $stock->total,
+            ];
+            RecordLog::saveRecord($data);
+
+            $title = $description = Auth::user()->name . ' telah menghapus stok inner dengan ID #' . $stock->id;
             $log = new LogActivity();
             $log->user_id = Auth::user()->id;
             $log->source_id = $stock->id;
@@ -152,6 +185,17 @@ class InnerController extends Controller
             $log->title = $title;
             $log->description = $description;
             $log->save();
-        return redirect()->route('frontend.inner.index')->with(['success' => 'Berhasil menghapus data.']);
+
+            $stock->delete();
+            DB::commit();
+
+            return redirect()->route('frontend.inner.index')->with(['success' => 'Berhasil menghapus data.']);
+
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th->getMessage());
+        }
+
     }
 }

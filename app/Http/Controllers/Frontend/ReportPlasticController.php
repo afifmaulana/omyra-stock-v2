@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Materials;
 use App\Models\Product;
 use App\Models\RecordLog;
 use App\Models\Stock;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReportPlasticController extends Controller
@@ -58,25 +60,48 @@ class ReportPlasticController extends Controller
 
         $recordsTotal = $query->count();
 		$recordsFiltered = $data->count();
+
+        $datas = [];
+
+        if (!empty($data)) {
+                foreach ($data as $row) {
+                    $row['date'] = Carbon::parse($row->date)->translatedFormat('l, d F Y');
+                    if($row->material){
+                        foreach($row->material->records as $record){
+                            $record['date'] = Carbon::parse($record->date)->translatedFormat('d F Y');
+                        }
+                    }
+
+                    $datas[] = $row;
+            }
+        }
+
         return response()->json([
             'draw' => $request->input('draw'),
             'recordsTotal' => $recordsTotal,
             'recordsFiltered' => $recordsFiltered,
-            'data' => $data,
+            'data' => $datas,
 			'sql' => $query->toSql()
         ]);
     }
 
     public function detail($id)
     {
-        // $stock = Stock::where('id', $id)->first();
+
         // $records = RecordLog::whereHas('material', function ($query) use($id) {
             // $query->where('modelable_type', 'App\Models\Stock');
             // $query->where('material_id', $id);
-        $records = RecordLog::whereHasMorph('modelable', [Stock::class], function ($query) use($id) {
-            $query->where('id', $id);
-        })->get();
-        // dd($records);
+        // $records = RecordLog::whereHasMorph('modelable', [Stock::class], function ($query) use($id) {
+        //     $query->where('id', $id);
+        // })->get();
+        $stock = Stock::where('id', $id)->first();
+        $material = Materials::where('id', $stock->material_id)->first();
+        $product = Product::where('id', $material->product_id)->first();
+        $records = RecordLog::where('modelable_type', Stock::class)
+        ->where('material_id', $material->id)
+        ->where('product_id', $product->id)
+        ->where('brand_id', $product->brand_id)->orderBy('id', 'DESC')->get();
+        // dd($$);
         return view('ui.frontend.report.record.plastic', [
             // 'stock' => $stock,
             'records' => $records,

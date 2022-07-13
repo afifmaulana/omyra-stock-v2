@@ -40,7 +40,7 @@
                         @if ($item->type == 'Barang Reject')
                             <tr style="color: red; font-style: italic; font-weight: 600">
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ \Carbon\Carbon::parse($item->date)->format('d-m-Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->date)->translatedFormat('l, d F Y') }}</td>
                                 <td>{{ $item->brand->name }}</td>
                                 <td>{{ $item->material->name . ' / ' . $item->product->size }}</td>
                                 <td>{{ number_format($item->stock_before, 0, ',', '.') }}</td>
@@ -55,7 +55,7 @@
                         @if ($item->type == 'Barang Dipakai')
                             <tr style="color: red">
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ \Carbon\Carbon::parse($item->date)->format('d-m-Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->date)->translatedFormat('l, d F Y') }}</td>
                                 <td>{{ $item->brand->name }}</td>
                                 <td>{{ $item->material->name . ' / ' . $item->product->size }}</td>
                                 <td>{{ number_format($item->stock_before, 0, ',', '.') }}</td>
@@ -69,7 +69,7 @@
                         @if ($item->type == 'Barang Masuk')
                             <tr style="color: green">
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ \Carbon\Carbon::parse($item->date)->format('d-m-Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->date)->translatedFormat('l, d F Y') }}</td>
                                 <td>{{ $item->brand->name }}</td>
                                 <td>{{ $item->material->name . ' / ' . $item->product->size }}</td>
                                 <td>{{ number_format($item->stock_before, 0, ',', '.') }}</td>

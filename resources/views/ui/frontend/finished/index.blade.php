@@ -51,13 +51,14 @@
                             <td>{{ number_format($item->total,0,',','.') }}</td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
-                                <form id="delete-finish-{{ $stock->id }}" action="{{ route('frontend.finish.delete', $stock->id) }}"
+                                <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                {{-- <form id="delete-finish-{{ $item->id }}" action="{{ route('frontend.finish.delete', $item->id) }}"
                                     class="d-inline" method="POST">
                                     @csrf
                                     @method('delete')
-                                    <button id="btn-delete" data-id="{{ $stock->id }}" class="btn btn-sm btn-danger btn-delete"><i
+                                    <button id="btn-delete" data-id="{{ $item->id }}" class="btn btn-sm btn-danger btn-delete"><i
                                             class="fa fa-trash"></i></button>
-                                </form>
+                                </form> --}}
                             </td>
                         </tr>
                     @endforeach
