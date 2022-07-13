@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Finish;
 use App\Models\LogActivity;
 use App\Models\Materials;
 use App\Models\Product;
@@ -122,6 +123,63 @@ class SemiFinishController extends Controller
                 DB::rollBack();
                 dd($th->getMessage());
             }
+    }
+
+    public function edit($id)
+    {
+        $semifinish = Semifinish::where('id', $id)->first();
+        $products = Product::orderBy('id', 'DESC')->get();
+        $brands = Brand::orderBy('name', 'ASC')->get();
+        return view('ui.frontend.semi-finished.edit', [
+            'semifinish' => $semifinish,
+            'products' => $products,
+            'brands' => $brands,
+
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // dd($request->all());
+        $semifinish = Semifinish::where('id', $id)->first();
+        DB::beginTransaction();
+        try {
+            $title = $description = 'Stok Barang 1/2 Jadi dengan ID #' . $semifinish->id . ' telah diubah oleh Mba ' . Auth::user()->name;
+            $log = new LogActivity();
+            $log->user_id = Auth::user()->id;
+            $log->source_type = 'App\Semifinish';
+            $log->source_id = $semifinish->id;
+            $log->title = $title;
+            $log->description = $description;
+            $log->save();
+
+            $semifinish->material_id = $request->material;
+            $semifinish->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
+            $semifinish->unloading_date = Carbon::createFromFormat('d-m-Y', $request->unloading_date)->format('Y-m-d');
+            $semifinish->total = $request->total;
+            $semifinish->user_id = Auth::user()->id;
+            $semifinish->update();
+
+            $material = Materials::find($request->material);
+            $product = $material->product;
+            $semifinish->product_id = $product->id;
+            $totalSemifinish = Semifinish::where('material_id', $material->id)->sum('total');
+            $totalFinish = Finish::where('material_id', $material->id)->sum('total');
+            // $totalReject = Reject::where('material_id', $material->id)->sum('total');
+
+            $material->stock = ($semifinish->total - $totalSemifinish);
+            $material->update();
+
+            $product->stock_semifinish = ($semifinish->total - $totalFinish);
+            $product->update();
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th->getMessage());
+        }
+
+        return redirect()->route('frontend.semi-finish.index')->with('success', 'Berhasil mengubah data');
     }
 
     public function destroy($id)

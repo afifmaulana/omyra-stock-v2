@@ -164,12 +164,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('index', [FrontendSemiFinishController::class, 'index'])->name('frontend.semi-finish.index');
         Route::get('create', [FrontendSemiFinishController::class, 'create'])->name('frontend.semi-finish.create');
         Route::post('store', [FrontendSemiFinishController::class, 'store'])->name('frontend.semi-finish.store');
+        Route::get('edit/{id}', [FrontendSemiFinishController::class, 'edit'])->name('frontend.semi-finish.edit');
+        Route::put('edit/{id}', [FrontendSemiFinishController::class, 'update'])->name('frontend.semi-finish.update');
         Route::delete('{id}', [FrontendSemiFinishController::class, 'destroy'])->name('frontend.semi-finish.delete');
     });
     Route::prefix('finish')->group(function () {
         Route::get('index', [FrontendFinishController::class, 'index'])->name('frontend.finish.index');
         Route::get('create', [FrontendFinishController::class, 'create'])->name('frontend.finish.create');
         Route::post('store', [FrontendFinishController::class, 'store'])->name('frontend.finish.store');
+        Route::get('edit/{id}', [FrontendFinishController::class, 'edit'])->name('frontend.finish.edit');
+        Route::put('edit/{id}', [FrontendFinishController::class, 'update'])->name('frontend.finish.update');
         Route::delete('{id}', [FrontendFinishController::class, 'destroy'])->name('frontend.finish.delete');
     });
 

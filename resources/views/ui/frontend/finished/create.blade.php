@@ -144,7 +144,7 @@
                 let greatest = Math.min(num1, num2, num3);
                 max_total = greatest;
                 $('#total').attr('max', max_total);
-                $('#max-label').html('Max: ' + max_total);
+                $('#max-label').html('Stok Barang 1/2 Jadi: ' + max_stock_semifinish);
             }
 
             function checkAllField() {
@@ -216,7 +216,7 @@
                             `<option value="" selected="selected" disabled>-- Pilih Jenis/Ukuran Inner --</option>`;
                         response.data.forEach(material => {
                             html +=
-                                `<option value="${ material.id }">${ material.name } / ${material.product.size} | stok Inner: ${material.stock} | barang 1/2 jadi: ${material.product.stock_semifinish}</option>`;
+                                `<option value="${ material.id }">${ material.name } / ${material.product.size} | stok Inner: ${material.stock}</option>`;
                         });
                         $('#inner').html(html);
                     }

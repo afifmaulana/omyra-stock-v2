@@ -158,6 +158,61 @@ class FinishController extends Controller
         }
     }
 
+    public function edit($id)
+    {
+        $finish = Finish::where('id', $id)->first();
+        $products = Product::orderBy('id', 'DESC')->get();
+        $brands = Brand::orderBy('name', 'ASC')->get();
+        return view('ui.frontend.finished.edit', [
+            'finish' => $finish,
+            'products' => $products,
+            'brands' => $brands,
+
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // dd($request->all());
+        $finish = Finish::where('id', $id)->first();
+        DB::beginTransaction();
+        try {
+            $title = $description = 'Stok Barang Jadi dengan ID #' . $finish->id . ' telah diubah oleh Mba ' . Auth::user()->name;
+            $log = new LogActivity();
+            $log->user_id = Auth::user()->id;
+            $log->source_type = 'App\Finish';
+            $log->source_id = $finish->id;
+            $log->title = $title;
+            $log->description = $description;
+            $log->save();
+
+            $finish->product_id = $request->product;
+            $finish->inner_id = $request->inner;
+            $finish->need_inner = $request->need_inner;
+            $finish->master_id = $request->master;
+            $finish->total = $request->total;
+            $finish->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
+            $finish->user_id = Auth::user()->id;
+            $finish->update();
+
+            $material = Materials::find($request->material);
+            $product = $material->product;
+            $finish->product_id = $product->id;
+            $totalFinish = Finish::where('material_id', $material->id)->sum('total');
+            // $totalReject = Reject::where('material_id', $material->id)->sum('total');
+
+            $product->stock_semifinish = ($finish->total - $totalFinish);
+            $product->update();
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th->getMessage());
+        }
+
+        return redirect()->route('frontend.finish.index')->with('success', 'Berhasil mengubah data');
+    }
+
     public function destroy($id)
     {
         // dd($id);
