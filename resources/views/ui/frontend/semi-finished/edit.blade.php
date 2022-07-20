@@ -11,7 +11,7 @@
     <div class="box-shadow">
         <div class="col-12 shadow-lg">
             <div class="py-3">
-                <a href="{{ route('frontend.plastic.index') }}">
+                <a href="{{ route('frontend.semi-finish.index') }}">
                     <img src="{{ asset('images/icon/back.png') }}" width="18" height="18">
                 </a>
             </div>
