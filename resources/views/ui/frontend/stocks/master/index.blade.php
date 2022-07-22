@@ -11,7 +11,7 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <div class="text-header font-size-18 text-active-pink font-weight-500">Data Stok Master Box</div>
+                <div class="text-header font-size-18 text-active-pink font-weight-500">Data Stok Master Carton</div>
             </div>
         </div>
     </div>
@@ -96,6 +96,19 @@
     <script>
         $(function() {
             $('#dataTable').DataTable({
+                "oLanguage": {
+                                "sSearch": "Cari Data:",
+                                "lengthMenu":     "Tampilkan _MENU_ Data",
+                                },
+                "language": {
+                                "zeroRecords": "Data yang dicari tidak ditemukan",
+                                "paginate": {
+                                            "next": "Selanjutnya",
+                                            "previous": "Kembali"
+
+                                            },
+                                "infoEmpty": "Tidak ada data yang tampil",
+                            },
                 // dom: 'Bfrtip',
                 // buttons: [
                 //         { extend: 'copyHtml5', className: 'rounded btn btn-sm btn-secondary mb-3' },

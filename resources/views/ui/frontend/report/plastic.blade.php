@@ -148,6 +148,19 @@
             let list_stock_plastic = [];
 
             const table = $('#main-table').DataTable({
+                "oLanguage": {
+                                "sSearch": "Cari Data:",
+                                "lengthMenu":     "Tampilkan _MENU_ Data",
+                                },
+                "language": {
+                                "zeroRecords": "Data yang dicari tidak ditemukan",
+                                "paginate": {
+                                            "next": "Selanjutnya",
+                                            "previous": "Kembali"
+
+                                            },
+                                "infoEmpty": "Tidak ada data yang tampil",
+                            },
                 "destroy": true,
                 "pageLength": 10,
                 "processing": false,
@@ -217,11 +230,11 @@
                         title: "Jumlah Masuk", name: "count", data: 'total',
                         render: (data) => data ? formatRupiah(data.toString()) : 0
                     },
-                    {
-						title : "Action",
-                        data : null,
-					    render: (data) => `<a href="${BASE_URL}report/plastic/detail/${data.id}" class="btn btn-sm btn-outline-warning"><i class="fa fa-history"></i></a>`,
-					},
+                    // {
+					// 	title : "Action",
+                    //     data : null,
+					//     render: (data) => `<a href="${BASE_URL}report/plastic/detail/${data.id}" class="btn btn-sm btn-outline-warning"><i class="fa fa-history"></i></a>`,
+					// },
                     // {
                     //     title: "Sisa Stok",
                     //     name: "stock",

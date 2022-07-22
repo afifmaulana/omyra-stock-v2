@@ -101,6 +101,19 @@
     <script>
         $(function() {
              $('#dataTable').DataTable({
+                "oLanguage": {
+                                "sSearch": "Cari Data:",
+                                "lengthMenu":     "Tampilkan _MENU_ Data",
+                                },
+                "language": {
+                                "zeroRecords": "Data yang dicari tidak ditemukan",
+                                "paginate": {
+                                            "next": "Selanjutnya",
+                                            "previous": "Kembali"
+
+                                            },
+                                "infoEmpty": "Tidak ada data yang tampil",
+                            },
 
             });
         });

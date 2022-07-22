@@ -11,7 +11,7 @@
             <div class="text-light-pink {{ request()->routeIs(['frontend.plastic.index', 'frontend.plastic.create']) ? 'text-active-pink' : '' }}">
                 <i class="fa fa-archive h-40 p-0 m-0"></i>
             </div>
-            <p class="font-xs text-light-pink p-0 m-0 text-center {{ request()->routeIs(['frontend.plastic.index', 'frontend.plastic.create']) ? 'text-active-pink' : '' }}">Plastic</p>
+            <p class="font-xs text-light-pink p-0 m-0 text-center {{ request()->routeIs(['frontend.plastic.index', 'frontend.plastic.create']) ? 'text-active-pink' : '' }}">Plastik</p>
         </a>
         <a class="text-center py-2 m-0 {{ request()->routeIs(['frontend.inner.index', 'frontend.inner.create']) ? 'active' : '' }}" href="{{ route('frontend.inner.index') }}">
             <div class="text-light-pink {{ request()->routeIs(['frontend.inner.index', 'frontend.inner.create']) ? 'text-active-pink' : '' }}">

@@ -11,7 +11,7 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <div class="text-header font-size-18 text-active-pink font-weight-500">Data master reject</div>
+                <div class="text-header font-size-18 text-active-pink font-weight-500">Data Master Reject</div>
             </div>
         </div>
     </div>
@@ -93,6 +93,13 @@
     <script>
         $(function() {
              $('#dataTable').DataTable({
+                "oLanguage": {
+                                "sSearch": "Cari Data:",
+                                "lengthMenu":     "Tampilkan _MENU_ Data",
+                                },
+                "language": {
+                                "zeroRecords": "Data yang dicari tidak ditemukan"
+                            },
                 // dom: 'Bfrtip',
             });
             $('#btn-delete').on('click', function(e) {

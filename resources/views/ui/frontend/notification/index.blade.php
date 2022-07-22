@@ -27,7 +27,12 @@
                 <hr>
             @endforeach
             <div class="d-flex justify-content-center py-3">
-                {{ $log->links('pagination::bootstrap-4') }}
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        {{ $log->links('pagination::bootstrap-4') }}
+                    </ul>
+                  </nav>
+
             </div>
         </div>
     </div>

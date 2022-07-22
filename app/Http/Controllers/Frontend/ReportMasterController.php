@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Stock;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReportMasterController extends Controller
@@ -49,11 +50,27 @@ class ReportMasterController extends Controller
 
         $recordsTotal = $query->count();
 		$recordsFiltered = $data->count();
+
+        $datas = [];
+
+        if (!empty($data)) {
+                foreach ($data as $row) {
+                    $row['date'] = Carbon::parse($row->date)->translatedFormat('l, d F Y');
+                    if($row->material){
+                        foreach($row->material->records as $record){
+                            $record['date'] = Carbon::parse($record->date)->translatedFormat('d F Y');
+                        }
+                    }
+
+                    $datas[] = $row;
+            }
+        }
+
         return response()->json([
             'draw' => $request->input('draw'),
             'recordsTotal' => $recordsTotal,
             'recordsFiltered' => $recordsFiltered,
-            'data' => $data,
+            'data' => $datas,
 			'sql' => $query->toSql()
         ]);
     }

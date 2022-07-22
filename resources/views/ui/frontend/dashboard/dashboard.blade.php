@@ -58,7 +58,7 @@
 
                                 <div class="card-body shadow text-center bg-image-card" style="height: 150px; background-image: url('{{ asset('images/bg-card-home-2.svg') }}'), linear-gradient(180deg, #fff 0%, #a1e9ff69 100%);">
                                     {{-- <div class="buble buble4" style="background: #fff;"></div> --}}
-                                    <h6 class="text-red">--> Reminder Next Stuffing <--</h6>
+                                    <h6 class="text-red">--> Stuffing Selanjutnya <--</h6>
                                     {{-- <h6 class="text-red"></h6> --}}
                                     <h6 class="pt-2">{{ $item->material->product->brand->name . ' / ' . $item->material->name . ' / ' . $item->material->product->size }}
                                     </h6>
