@@ -259,7 +259,7 @@
 				html += `		</tr>`
 				html += `	</thead>`
 				html += `	<tbody>`
-					data.master.recordfinishes.forEach((item, key) => {
+					data.product.recordfinishes.forEach((item, key) => {
 
                         if(item.type == 'Barang Masuk')
                         {
@@ -267,7 +267,7 @@
                             html += `			<td>${key+1}</td>`
                             html += `			<td class="datepicker">${moment(item.date).format("DD-MM-YYYY")}</td>`
                             html += `			<td>${item.brand.name}</td>`
-                            html += `			<td>${item.master.name} / ${item.product.size}</td>`
+                            html += `			<td>${item.material.name} / ${item.product.size}</td>`
                             html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
                             html += `			<td>${item.type_calculation}</td>`
                             html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
@@ -275,12 +275,12 @@
                             html += `			<td>${item.type}</td>`
                             html += `		</tr>`
                         }
-                        if(item.type == 'Barang Dipakai') {
-                            html += `		<tr style="color: orange" class="text-center">`
+                        if(item.type == 'Data Dihapus') {
+                            html += `		<tr style="color: red" class="text-center">`
                             html += `			<td>${key+1}</td>`
                             html += `			<td class="datepicker">${moment(item.date).format("DD-MM-YYYY")}</td>`
                             html += `			<td>${item.brand.name}</td>`
-                            html += `			<td>${item.master.name} / ${item.product.size}</td>`
+                            html += `			<td>${item.material.name} / ${item.product.size}</td>`
                             html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
                             html += `			<td>${item.type_calculation}</td>`
                             html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`

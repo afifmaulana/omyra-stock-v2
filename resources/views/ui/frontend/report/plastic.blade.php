@@ -107,6 +107,13 @@
                     <div id="max-label" class="text-red px-2 font-30px font-weight-bold border border-danger"></div>
                 </div>
             </div>
+            <div class="d-flex flex-row-reverse mb-3">
+
+                <button class="btn btn-sm btn-circle btn-outline-primary float-right"
+                data-toggle="modal" data-target="#notes">
+                    <i class="fa fa-info"></i>
+                </button> Catatan Keterangan: &nbsp;
+            </div>
             {{-- <h5 class="py-3"></h5> --}}
             {{-- <hr>
             <div class="py-3 d-flex justify-content-center">
@@ -122,6 +129,41 @@
             <table id="main-table" class="table table-striped table-bordered table-responsive" style="width:100%">
                 {{-- <table id="dataTable"></table> --}}
             </table>
+        </div>
+    </div>
+
+
+        <!-- Modal -->
+    <div class="modal fade" id="notes" tabindex="-1" role="dialog" aria-labelledby="notesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="notesLabel">Catatan Keterangan:</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="row px-2" style="font-size: 10px;">
+                    <div class="square" style="background: red"></div> &nbsp; <span style="color: red">Teks merah</span>&nbsp;  = Data telah Dihapus
+                </div>
+                <div class="row px-2" style="font-size: 10px;">
+                    <div class="square" style="background: orange"></div> &nbsp; <span style="color: orange">Teks Oren/Jingga</span>&nbsp;  = Barang dipakai untuk barang 1/2 jadi (borongan)
+                </div>
+                <div class="row px-2" style="font-size: 10px;">
+                    <div class="square" style="background: green"></div> &nbsp; <span style="color: green">Teks Hijau</span>&nbsp;  = Barang Masuk
+                </div>
+                <div class="row px-2" style="font-size: 10px;">
+                    <div class="square" style="background: purple"></div> &nbsp; <span style="color: purple">Teks Ungu</span>&nbsp;  = Barang Reject
+                </div>
+                <div class="row px-2" style="font-size: 10px;">
+                    <div class="square" style="background: grey"></div> &nbsp; <span style="color: grey">Teks abu-abu</span>&nbsp;  = Data Dikembalikan karena data barang 1/2 jadi dihapus
+                </div>
+            </div>
+            <div class="modal-footer">
+            {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+            </div>
+        </div>
         </div>
     </div>
 @endsection
@@ -299,7 +341,7 @@
                         if(item.type == 'Barang Dipakai') {
                             html += `		<tr style="color: orange" class="text-center">`
                             html += `			<td>${key+1}</td>`
-                            html += `			<td class="datepicker">${item.date}</td>`
+                            html += `			<td>${item.date}</td>`
                             html += `			<td>${item.brand.name}</td>`
                             html += `			<td>${item.material.name} / ${item.product.size}</td>`
                             html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
@@ -325,7 +367,7 @@
                         }
                         if(item.type == 'Barang Reject')
                         {
-                            html += `		<tr style="color: red; font-weight: 700; font-style: italic;" class="text-center">`
+                            html += `		<tr style="color: purple; font-style: italic;" class="text-center">`
                             html += `			<td>${key+1}</td>`
                             html += `			<td>${item.date}</td>`
                             html += `			<td>${item.brand.name}</td>`
@@ -339,7 +381,21 @@
                         }
                         if(item.type == 'Data Dikembalikan')
                         {
-                            html += `		<tr style="color: grey; font-weight: 700; font-style: italic;" class="text-center">`
+                            html += `		<tr style="color: grey;" class="text-center">`
+                            html += `			<td>${key+1}</td>`
+                            html += `			<td>${item.date}</td>`
+                            html += `			<td>${item.brand.name}</td>`
+                            html += `			<td>${item.material.name} / ${item.product.size}</td>`
+                            html += `			<td>${item.stock_before ? formatRupiah(item.stock_before.toString()) : 0}</td>`
+                            html += `			<td>${item.type_calculation}</td>`
+                            html += `			<td>${item.total ? formatRupiah(item.total.toString()) : 0}</td>`
+                            html += `			<td>${item.stock_now ? formatRupiah(item.stock_now.toString()) : 0}</td>`
+                            html += `			<td>${item.type}</td>`
+                            html += `		</tr>`
+                        }
+                        if(item.type == 'Data Dihapus')
+                        {
+                            html += `		<tr style="color: red;" class="text-center">`
                             html += `			<td>${key+1}</td>`
                             html += `			<td>${item.date}</td>`
                             html += `			<td>${item.brand.name}</td>`
