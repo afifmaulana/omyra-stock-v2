@@ -49,6 +49,10 @@
                 <a href="{{ route('frontend.dashboard.index') }}">
                     <img src="{{ asset('images/icon/back.png') }}" width="18" height="18">
                 </a>
+                <button class="btn btn-sm btn-circle btn-outline-primary float-right mr-2"
+                data-toggle="modal" data-target="#notes">
+                    <i class="fa fa-info"></i>
+                </button>
             </div>
             <div class="row justify-content-center">
                 <div class="text-header font-size-18 text-active-pink font-weight-500">Laporan Stok Master</div>
@@ -106,13 +110,6 @@
                 <div class="col-auto">
                     <div id="max-label" class="text-red px-2 font-30px font-weight-bold border border-danger"></div>
                 </div>
-            </div>
-            <div class="d-flex flex-row-reverse mb-3">
-
-                <button class="btn btn-sm btn-circle btn-outline-primary float-right"
-                data-toggle="modal" data-target="#notes">
-                    <i class="fa fa-info"></i>
-                </button> Catatan Keterangan: &nbsp;
             </div>
             {{-- <h5 class="py-3"></h5> --}}
             {{-- <hr>
@@ -297,6 +294,14 @@
 					row.child(showChildren(row.data())).show();
 					tr.addClass('shown');
 					$(this).addClass('shown');
+                    $(`#child-${row.data().id}`).DataTable({
+                    // "destroy": true,
+                    "pageLength": 5,
+                    "processing": false,
+                    "serverSide": false,
+                    "searching": false,
+                    "orderable": false,
+                });
 				}
 			});
 

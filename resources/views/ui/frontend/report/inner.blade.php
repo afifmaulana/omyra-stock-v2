@@ -49,6 +49,10 @@
                 <a href="{{ route('frontend.dashboard.index') }}">
                     <img src="{{ asset('images/icon/back.png') }}" width="18" height="18">
                 </a>
+                <button class="btn btn-sm btn-circle btn-outline-primary float-right mr-2"
+                data-toggle="modal" data-target="#notes">
+                    <i class="fa fa-info"></i>
+                </button>
             </div>
             <div class="row justify-content-center">
                 <div class="text-header font-size-18 text-active-pink font-weight-500">Laporan Stok Inner</div>
@@ -97,35 +101,12 @@
                 <button class="btn btn-sm btn-info float-right mb-3" type="submit">Submit</button>
                 <button type="reset" class="btn btn-sm btn-outline-secondary btn-reset mb-3">Reset</button>
             </form>
-            {{-- <div class="row justify-content-center mb-2">
-                <a href="{{ route('frontend.report.record.inner') }}" class="btn btn-sm btn-outline-primary">Riwayat <i class="fa fa-eye"></i></a>
-            </div> --}}
-
             <hr>
             <div class="row justify-content-center mb-2">
                 <div class="col-auto">
                     <div id="max-label" class="text-red px-2 font-30px font-weight-bold border border-danger"></div>
                 </div>
             </div>
-            <div class="d-flex flex-row-reverse mb-3">
-
-                <button class="btn btn-sm btn-circle btn-outline-primary float-right"
-                data-toggle="modal" data-target="#notes">
-                    <i class="fa fa-info"></i>
-                </button> Catatan Keterangan: &nbsp;
-            </div>
-            {{-- <h5 class="py-3"></h5> --}}
-            {{-- <hr>
-            <div class="py-3 d-flex justify-content-center">
-                <a href="#" class="btn btn-sm btn-success mr-3">
-                    <i class="fas fa-download"></i>
-                    Download Excel
-                </a>
-                <button class="btn btn-sm btn-outline-info" id="print-all">
-                    <i class="fa fa-print"></i>
-                    Print
-                </button>
-            </div> --}}
             <table id="main-table" class="table table-striped table-bordered table-responsive" style="width:100%"></table>
         </div>
     </div>
@@ -298,6 +279,14 @@
 					row.child(showChildren(row.data())).show();
 					tr.addClass('shown');
 					$(this).addClass('shown');
+                    $(`#child-${row.data().id}`).DataTable({
+                    // "destroy": true,
+                    "pageLength": 5,
+                    "processing": false,
+                    "serverSide": false,
+                    "searching": false,
+                    "orderable": false,
+                });
 				}
 			});
 
