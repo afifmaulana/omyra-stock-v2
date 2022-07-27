@@ -49,6 +49,10 @@
                 <a href="{{ route('frontend.dashboard.index') }}">
                     <img src="{{ asset('images/icon/back.png') }}" width="18" height="18">
                 </a>
+                <button class="btn btn-sm btn-circle btn-outline-primary float-right mr-2"
+                data-toggle="modal" data-target="#notes">
+                    <i class="fa fa-info"></i>
+                </button>
             </div>
             <div class="row justify-content-center">
                 <div class="text-header font-size-18 text-active-pink font-weight-500">Laporan Barang 1/2 Jadi</div>
@@ -122,6 +126,36 @@
             <table id="main-table" class="table table-striped table-bordered table-responsive" style="width:100%"></table>
         </div>
     </div>
+            <!-- Modal -->
+            <div class="modal fade" id="notes" tabindex="-1" role="dialog" aria-labelledby="notesLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="notesLabel">Catatan Keterangan:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row px-2" style="font-size: 10px;">
+                            <div class="square" style="background: red"></div> &nbsp; <span style="color: red">Teks merah</span>&nbsp;  = Data telah Dihapus
+                        </div>
+                        <div class="row px-2" style="font-size: 10px;">
+                            <div class="square" style="background: orange"></div> &nbsp; <span style="color: orange">Teks Oren/Jingga</span>&nbsp;  = Barang dipakai untuk barang jadi (Stuffing)
+                        </div>
+                        <div class="row px-2" style="font-size: 10px;">
+                            <div class="square" style="background: green"></div> &nbsp; <span style="color: green">Teks Hijau</span>&nbsp;  = Barang Masuk
+                        </div>
+                        <div class="row px-2" style="font-size: 10px;">
+                            <div class="square" style="background: grey"></div> &nbsp; <span style="color: grey">Teks abu-abu</span>&nbsp;  = Data Dikembalikan karena data barang jadi dihapus
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+                    </div>
+                </div>
+                </div>
+            </div>
 @endsection
 
 @push('scripts')
