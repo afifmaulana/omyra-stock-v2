@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $stock_finish = Product::sum('stock_finish');
         $log = LogActivity::orderBy('id', 'DESC')->paginate('5');
         $semifinish = Semifinish::orderBy('id', 'DESC')->paginate('3');
-        $reminders = Reminder::orderBy('id','DESC')->paginate('5');
+        $reminders = Reminder::orderBy('id','DESC')->paginate('3');
         return view('ui.frontend.dashboard.dashboard',[
             'log' => $log,
             'total_inner' => $total_inner,
