@@ -19,6 +19,8 @@ class AdminSeeder extends Seeder
         $roleAdmin = Role::create(['name' => 'admin']);
         $roleWarehouse = Role::create(['name' => 'warehouse']);
         $roleStaff = Role::create(['name' => 'staff']);
+        $roleCeo = Role::create(['name' => 'ceo']);
+
 
         $admin1 = new User();
         $admin1->name = "Admin Omyra";
@@ -38,8 +40,16 @@ class AdminSeeder extends Seeder
         $staff1->password = Hash::make("12345678");
         $staff1->save();
 
+
+        $coe1 = new User();
+        $coe1->name = "CEO Omyra";
+        $coe1->email = "ceo@omyraglobal.com";
+        $coe1->password = Hash::make("12345678");
+        $coe1->save();
+
         $admin1->assignRole('admin');
         $warehouse1->assignRole('warehouse');
         $staff1->assignRole('staff');
+        $coe1->assignRole('ceo');
     }
 }

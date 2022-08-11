@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\LogActivity;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,16 @@ class ProductController extends Controller
         $product->need_inner = $request->inner;
         $product->user_id = Auth::user()->id;
         $product->save();
+
+            $title = $description = Auth::user()->name . ' telah menambahkan produk/ukuran baru ' . $product->size;
+            $log = new LogActivity();
+            $log->user_id = Auth::user()->id;
+            $log->source_id = $product->id;
+            $log->source_type = '\App\Product';
+            $log->title = $title;
+            $log->description = $description;
+            $log->save();
+
         return redirect()->route('admin.product.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
     }
 
@@ -63,6 +74,16 @@ class ProductController extends Controller
             'size' => $params['size'] ?? $product->size,
             'need_inner' => $params['need_inner'] ?? $product->need_inner,
         ]);
+
+            $title = $description = Auth::user()->name . ' telah mengubah produk/ukuran ' . $product->size;
+            $log = new LogActivity();
+            $log->user_id = Auth::user()->id;
+            $log->source_id = $product->id;
+            $log->source_type = '\App\Product';
+            $log->title = $title;
+            $log->description = $description;
+            $log->save();
+
         return redirect()->route('admin.product.index')->with('success', 'Berhasil mengubah produk!');
     }
 

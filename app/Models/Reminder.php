@@ -19,4 +19,9 @@ class Reminder extends Model
     {
         return $this->belongsTo(Materials::class, 'material_id', 'id');
     }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

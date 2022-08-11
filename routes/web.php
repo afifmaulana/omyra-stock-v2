@@ -24,11 +24,16 @@ use App\Http\Controllers\Frontend\RejectController;
 use App\Http\Controllers\Frontend\RejectInnerController;
 use App\Http\Controllers\Frontend\RejectMasterController;
 use App\Http\Controllers\Frontend\RejectPlasticController;
+use App\Http\Controllers\Frontend\ReportBrandController;
 use App\Http\Controllers\Frontend\ReportFinishController;
 use App\Http\Controllers\Frontend\ReportInnerController;
 use App\Http\Controllers\Frontend\ReportMasterController;
+use App\Http\Controllers\Frontend\ReportMaterialController;
 use App\Http\Controllers\Frontend\ReportPlasticController;
+use App\Http\Controllers\Frontend\ReportProductController;
+use App\Http\Controllers\Frontend\ReportReminderController;
 use App\Http\Controllers\Frontend\ReportSemifinishController;
+use App\Http\Controllers\Frontend\ReportUserController;
 use App\Http\Controllers\Frontend\SemiFinishController as FrontendSemiFinishController;
 use Illuminate\Support\Facades\Route;
 
@@ -125,6 +130,7 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin'], func
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [FrontendDashboardController::class, 'index'])->name('frontend.dashboard.index');
+    Route::get('/ceo', [FrontendDashboardController::class, 'indexCeo'])->name('frontend.dashboard.ceo');
     Route::get('/notification', [NotificationController::class, 'index'])->name('frontend.notification.index');
 
 
@@ -193,6 +199,20 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/finish', [ReportFinishController::class, 'index'])->name('frontend.report.finish.index');
         Route::post('/finish/data', [ReportFinishController::class, 'data'])->name('frontend.report.finish.data');
+
+        Route::get('/brand', [ReportBrandController::class, 'index'])->name('frontend.report.brand.index');
+
+
+        Route::get('/product', [ReportProductController::class, 'index'])->name('frontend.report.product.index');
+
+
+        Route::get('/material', [ReportMaterialController::class, 'index'])->name('frontend.report.material.index');
+
+
+        Route::get('/user', [ReportUserController::class, 'index'])->name('frontend.report.user.index');
+
+
+        Route::get('/reminder', [ReportReminderController::class, 'index'])->name('frontend.report.reminder.index');
 
         Route::prefix('reject')->group(function () {
             Route::prefix('plastic')->group(function () {

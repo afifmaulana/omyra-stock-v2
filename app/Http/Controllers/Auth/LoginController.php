@@ -76,18 +76,12 @@ class LoginController extends Controller
 
         if (Auth::attempt($credential, true)) {
             $user = Auth::user();
-            if (!$user->deleted_at) {
-                if (Auth::user()->roles->pluck('name')[0] == 'admin') {
+           if ($user->roles->pluck('name')[0] == 'admin') {
                     return redirect()->intended(route('admin.dashboard'));
-                } else if (Auth::user()->roles->pluck('name')[0] == 'warehouse') {
-                    return redirect()->intended(route('frontend.dashboard.index'));
-                } else {
-                    return redirect()->intended(route('frontend.dashboard.index'));
-                }
+            }else if ($user->roles->pluck('name')[0] == 'ceo') {
+                return redirect()->intended(route('frontend.dashboard.ceo'));
             } else {
-                $errors = new MessageBag(['email' => 'Akun Anda telah dihapus']);
-                return redirect()->back()->withInput($request->only('email'))
-                    ->withErrors($errors);
+                    return redirect()->intended(route('frontend.dashboard.index'));
             }
         } else {
             $errors = new MessageBag(['email' => 'Email atau password salah!']);

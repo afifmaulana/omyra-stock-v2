@@ -17,8 +17,8 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <div class="text-header font-size-18 text-active-pink font-weight-500">Ubah Akun</div>
-            </div>
+                <div class="text-header font-size-18 text-active-pink font-weight-500"> Akun</div>
+            </div> 
         </div>
     </div>
     <div class="pb-3 bg-grey mt-1" style="max-height: 86vh; overflow: scroll;">

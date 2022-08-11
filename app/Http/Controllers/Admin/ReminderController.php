@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\LogActivity;
 use App\Models\Product;
 use App\Models\Reminder;
 use Carbon\Carbon;
@@ -48,6 +49,15 @@ class ReminderController extends Controller
         $reminder->total = $request->total;
         $reminder->save();
 
+            $title = $description = Auth::user()->name . ' telah menambahkan pengingat Stuffing berikutnya';
+            $log = new LogActivity();
+            $log->user_id = Auth::user()->id;
+            $log->source_id = $reminder->id;
+            $log->source_type = '\App\Reminder';
+            $log->title = $title;
+            $log->description = $description;
+            $log->save();
+
         return redirect()->route('admin.reminder.index')->with('success', 'Berhasil menambahkan data baru!');
     }
 
@@ -78,6 +88,15 @@ class ReminderController extends Controller
             'date' => $params['date'] ?? $reminder->date,
             'total' => $params['total'] ?? $reminder->total,
         ]);
+
+        $title = $description = Auth::user()->name . ' telah mengubah pengingat Stuffing berikutnya';
+            $log = new LogActivity();
+            $log->user_id = Auth::user()->id;
+            $log->source_id = $reminder->id;
+            $log->source_type = '\App\Reminder';
+            $log->title = $title;
+            $log->description = $description;
+            $log->save();
         return redirect()->route('admin.reminder.index')->with('success', 'Berhasil mengubah Reminder!');
     }
 

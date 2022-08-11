@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\LogActivity;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,16 @@ class BrandController extends Controller
         $brand->name = $request->name;
         $brand->user_id = Auth::user()->id;
         $brand->save();
+
+            $title = $description = Auth::user()->name . ' telah menambahkan brand baru ' . $brand->name;
+            $log = new LogActivity();
+            $log->user_id = Auth::user()->id;
+            $log->source_id = $brand->id;
+            $log->source_type = '\App\Brand';
+            $log->title = $title;
+            $log->description = $description;
+            $log->save();
+
         return redirect()->route('admin.brand.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
     }
 
@@ -52,6 +63,16 @@ class BrandController extends Controller
         $brand->update([
             'name' => $params['name'] ?? $brand->name,
         ]);
+
+            $title = $description = Auth::user()->name . ' telah mengubah brand ' . $brand->name;
+            $log = new LogActivity();
+            $log->user_id = Auth::user()->id;
+            $log->source_id = $brand->id;
+            $log->source_type = '\App\Brand';
+            $log->title = $title;
+            $log->description = $description;
+            $log->save();
+
         return redirect()->route('admin.brand.index')->with('success', 'Berhasil mengubah Brand!');
     }
 

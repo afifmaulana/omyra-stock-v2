@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\LogActivity;
 use App\Models\Materials;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -34,6 +35,17 @@ class MaterialController extends Controller
         $material->type = $request->type;
         $material->user_id = Auth::user()->id;
         $material->save();
+
+            $title = $description = Auth::user()->name . ' telah menambahkan jenis brand baru ' . $material->name . ' Brand ' .
+            $material->product->brand->name . '/' . $material->product->size ;
+            $log = new LogActivity();  
+            $log->user_id = Auth::user()->id;
+            $log->source_id = $material->id;
+            $log->source_type = '\App\Material';
+            $log->title = $title;
+            $log->description = $description;
+            $log->save();
+
         return redirect()->route('admin.material.index')->with(['success' => 'Data baru berhasil ditambahkan.']);
     }
 
@@ -64,6 +76,16 @@ class MaterialController extends Controller
             'name' => $params['name'] ?? $material->name,
             'type' => $params['type'] ?? $material->type,
         ]);
+
+            $title = $description = Auth::user()->name . ' telah mengubah jenis brand ' . $material->name;
+            $log = new LogActivity();
+            $log->user_id = Auth::user()->id;
+            $log->source_id = $material->id;
+            $log->source_type = '\App\Material';
+            $log->title = $title;
+            $log->description = $description;
+            $log->save();
+
         return redirect()->route('admin.material.index')->with('success', 'Berhasil mengubah Material!');
 
     }
