@@ -90,7 +90,6 @@
         <h4 class="font-weight-bold font-20 pb-4">Laporan</h4>
         {{-- Desktop View --}}
         <div class="d-none d-md-block">
-            @if (Auth::user()->roles->pluck('name')[0] == 'warehouse' || 'staff')
                 <div class="row mb-2 px-2">
                     <div class="col-sm">
                         <div class="card mb-1px shadow-lg"
@@ -159,135 +158,7 @@
                         {{-- <p class="text-center font-xs lh-15">Inner Box</p> --}}
                     </div>
                 </div>
-            @endif
 
-            @if (Auth::user()->roles->pluck('name')[0] == 'ceo')
-                <div class="row mb-2 px-2">
-                    <div class="col-sm">
-                        <div class="card mb-1px shadow-lg"
-                            style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <a href="{{ route('frontend.report.plastic.index') }}">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <img src="{{ asset('images/icon/plastic.png') }}" alt="" height="50" width="50">
-                                    </div>
-                                    <div class="font-weight-bold text-black text-center">Plastik</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card mb-1px shadow-lg"
-                            style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <a href="{{ route('frontend.report.inner.index') }}">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <img src="{{ asset('images/icon/inner.png') }}" alt="" height="50" width="50">
-                                    </div>
-                                    <div class="font-weight-bold text-black text-center">Inner</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card mb-1px shadow-lg"
-                            style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <a href="{{ route('frontend.report.master.index') }}">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <img src="{{ asset('images/icon/master.png') }}" alt="" height="50" width="50">
-                                    </div>
-                                    <div class="font-weight-bold text-black text-center">Master</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-2 px-2">
-                    <div class="col-sm">
-                        <div class="card mb-1px shadow-lg"
-                            style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <a href="{{ route('frontend.report.semifinish.index') }}">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <img src="{{ asset('images/icon/semifinish.png') }}" alt="" height="50" width="50">
-                                    </div>
-                                    <div class="font-weight-bold text-black text-center">Borongan</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card mb-1px shadow-lg"
-                            style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <a href="{{ route('frontend.report.finish.index') }}">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <img src="{{ asset('images/icon/finish.png') }}" alt="" height="50" width="50">
-                                    </div>
-                                    <div class="font-weight-bold text-black text-center">Stuffing</div>
-                                </div>
-                            </a>
-                        </div>
-                        {{-- <p class="text-center font-xs lh-15">Inner Box</p> --}}
-                    </div>
-                    <div class="col-sm">
-                        <div class="card mb-1px shadow-lg"
-                            style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <a href="{{ route('frontend.report.brand.index') }}">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <img src="{{ asset('images/icon/suitcase.png') }}" alt="" height="50" width="50">
-                                    </div>
-                                    <div class="font-weight-bold text-black text-center">Brand</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-2 px-2">
-                    <div class="col-sm">
-                        <div class="card mb-1px shadow-lg"
-                            style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <a href="{{ route('frontend.report.product.index') }}">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <img src="{{ asset('images/icon/square.png') }}" alt="" height="50" width="50">
-                                    </div>
-                                    <div class="font-weight-bold text-black text-center">Ukuran</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card mb-1px shadow-lg"
-                            style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <a href="{{ route('frontend.report.material.index') }}">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <img src="{{ asset('images/icon/menu.png') }}" alt="" height="50" width="50">
-                                    </div>
-                                    <div class="font-weight-bold text-black text-center">Jenis</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card mb-1px shadow-lg"
-                            style="border-radius: 50px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <a href="{{ route('frontend.report.reminder.index') }}">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <img src="{{ asset('images/icon/calendar.png') }}" alt="" height="50" width="50">
-                                    </div>
-                                    <div class="font-weight-bold text-black text-center">Reminder</div>
-                                </div>
-                            </a>
-                        </div>
-                        {{-- <p class="text-center font-xs lh-15">Inner Box</p> --}}
-                    </div>
-                </div>
-            @endif
 
         </div>
         {{-- Desktop View End --}}
@@ -357,70 +228,6 @@
                 </a>
             </div>
 
-            @if (Auth::user()->roles->pluck('name')[0] == 'ceo')
-                <div class="d-flex justify-content-around mb-3">
-                    <a href="{{ route('frontend.report.brand.index') }}">
-                        <div class="rounded-circle border-2 circle--menu shadow-lg"
-                            style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <div class="text-success">
-                                <img src="{{ asset('images/icon/suitcase.png') }}" alt="" height="30" width="30">
-                            </div>
-                        </div>
-                        <div class="text-center text-black text-card-top font-size-12 pt-2 d-sm-inline-block"
-                            style="line-height: 150%;">
-                            Brand
-                        </div>
-                    </a>
-                    <a href="{{ route('frontend.report.product.index') }}">
-                        <div class="rounded-circle border-2 circle--menu shadow-lg"
-                            style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <div class="text-success">
-                                <img src="{{ asset('images/icon/square.png') }}" alt="" height="30" width="30">
-                            </div>
-                        </div>
-                        <div class="text-center text-black text-card-top font-size-12 pt-2 d-sm-inline-block"
-                            style="line-height: 150%;">
-                            Ukuran
-                        </div>
-                    </a>
-                    <a href="{{ route('frontend.report.material.index') }}">
-                        <div class="rounded-circle border-2 circle--menu shadow-lg"
-                            style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <div class="text-success">
-                                <img src="{{ asset('images/icon/menu.png') }}" alt="" height="30" width="30">
-                            </div>
-                        </div>
-                        <div class="text-center text-black text-card-top font-size-12 pt-2 d-sm-inline-block"
-                            style="line-height: 150%;">
-                            Jenis
-                        </div>
-                    </a>
-                    <a href="{{ route('frontend.report.user.index') }}">
-                        <div class="rounded-circle border-2 circle--menu shadow-lg"
-                            style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <div class="text-success">
-                                <img src="{{ asset('images/icon/user.png') }}" alt="" height="30" width="30">
-                            </div>
-                        </div>
-                        <div class="text-center text-black text-card-top font-size-12 pt-2 d-sm-inline-block"
-                            style="line-height: 150%;">
-                            User
-                        </div>
-                    </a>
-                    <a href="{{ route('frontend.report.reminder.index') }}">
-                        <div class="rounded-circle border-2 circle--menu shadow-lg"
-                            style="display: flex; align-items: center; justify-content: center; height: 60px; width: 60px; box-shadow: 3px 3px 20px 2px rgba(128, 128, 128, 0.322);">
-                            <div class="text-success">
-                                <img src="{{ asset('images/icon/calendar.png') }}" alt="" height="30" width="30">
-                            </div>
-                        </div>
-                        <div class="text-center text-black text-card-top font-size-12 pt-2 d-sm-inline-block"
-                            style="line-height: 150%;">
-                            Reminder
-                        </div>
-                    </a>
-                </div>
-            @endif
         </div>
         {{-- Mobile View End --}}
 
