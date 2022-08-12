@@ -1,54 +1,21 @@
-@extends('ui.frontend.layouts.app')
-@push('styles')
-    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
-    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-multiselect/bootstrap-multiselect.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/multi-select/css/multi-select.css') }}"> --}}
-    <style>
-        .select2-container .select2-selection--single {
-            height: 42px;
-            border: solid 1px #b4d5ff;
-        }
-
-        .input-filter {
-            border-radius: 4px !important;
-            direction: ltr !important;
-            padding: 5px !important;
-            font-size: 12px !important;
-        }
-
-        .multiselect_div>.btn-group .btn {
-            min-width: 150px;
-            font-size: 12px;
-            border: 1px solid black;
-            background: white;
-            color: black;
-        }
-
-        .multiselect_div .btn-group .multiselect-container {
-            font-size: 12px !important;
-        }
-
-        tfoot {
-            background: white;
-        }
-
-		tbody .dt-control{
-			background: "images/datatables/details_open.png" no-repeat center center;
-			cursor:pointer;
-		}
-		tbody .dt-control.shown{
-			background: "images/datatables/details_close.png" no-repeat center center;
-			cursor:pointer;
-		}
-    </style>
-@endpush
-@section('content')
+<!doctype html>
+<html lang="en">
+  @include('components.frontend.head')
+  <body>
     <div class="box-shadow">
         <div class="col-12 shadow-lg">
             <div class="py-3">
+                @if (in_array(Auth::user()->roles->pluck('name')[0], ['warehouse', 'staff']))
                 <a href="{{ route('frontend.dashboard.index') }}">
                     <img src="{{ asset('images/icon/back.png') }}" width="18" height="18">
                 </a>
+                @endif
+
+                @if (Auth::user()->roles->pluck('name')[0] == 'ceo')
+                <a href="{{ route('frontend.dashboard.ceo') }}">
+                    <img src="{{ asset('images/icon/back.png') }}" width="18" height="18">
+                </a>
+                @endif
                 <button class="btn btn-sm btn-circle btn-outline-primary float-right mr-2"
                 data-toggle="modal" data-target="#notes">
                     <i class="fa fa-info"></i>
@@ -160,9 +127,19 @@
         </div>
         </div>
     </div>
-@endsection
 
-@push('scripts')
+
+    @if (Auth::user()->roles->pluck('name')[0] == 'staff' || 'warehouse')
+        @include('components.frontend.navbar-bottom')
+        @endif
+
+
+    @if (Auth::user()->roles->pluck('name')[0] == 'ceo')
+        @include('components.frontend.navbar-bottom-ceo')
+    @endif
+
+    @include('components.frontend.scripts')
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script>
@@ -508,4 +485,8 @@
             $("#main-table").DataTable().ajax.reload(null, false);
         })
     </script>
-@endpush
+
+  </body>
+</html>
+
+
