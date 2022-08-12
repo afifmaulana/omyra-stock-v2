@@ -13,6 +13,35 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/lib/swiper@7/swiper-bundle.min.css') }}" />
     <title>Omyra Stock System</title>
+	<style>
+		.select2-container .select2-selection--single {
+            height: 42px;
+            border: solid 1px #b4d5ff;
+        }
+
+        .input-filter {
+            border-radius: 4px !important;
+            direction: ltr !important;
+            padding: 5px !important;
+            font-size: 12px !important;
+        }
+
+        .multiselect_div>.btn-group .btn {
+            min-width: 150px;
+            font-size: 12px;
+            border: 1px solid black;
+            background: white;
+            color: black;
+        }
+
+        .multiselect_div .btn-group .multiselect-container {
+            font-size: 12px !important;
+        }
+
+        tfoot {
+            background: white;
+        }
+	</style>
 
 	<script>
 		const CSRF_TOKEN = "{{ csrf_token() }}";
