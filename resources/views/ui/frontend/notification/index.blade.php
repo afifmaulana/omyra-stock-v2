@@ -1,11 +1,21 @@
-@extends('ui.frontend.layouts.app')
-@section('content')
+<!doctype html>
+<html lang="en">
+  @include('components.frontend.head')
+  <body>
     <div class="box-shadow">
-        <div class="col-12 shadow shadow-lg">
+        <div class="col-12 shadow-lg">
             <div class="py-3">
+                @if (in_array(Auth::user()->roles->pluck('name')[0], ['warehouse', 'staff']))
                 <a href="{{ route('frontend.dashboard.index') }}">
                     <img src="{{ asset('images/icon/back.png') }}" width="18" height="18">
                 </a>
+                @endif
+
+                @if (Auth::user()->roles->pluck('name')[0] == 'ceo')
+                <a href="{{ route('frontend.dashboard.ceo') }}">
+                    <img src="{{ asset('images/icon/back.png') }}" width="18" height="18">
+                </a>
+                @endif
             </div>
             <div class="row justify-content-center">
                 <div class="text-header font-size-18 text-active-pink font-weight-500">Notifikasi</div>
@@ -36,4 +46,17 @@
             </div>
         </div>
     </div>
-@endsection
+
+    @if (Auth::user()->roles->pluck('name')[0] == 'staff' || 'warehouse')
+        @include('components.frontend.navbar-bottom')
+    @endif
+
+
+    @if (Auth::user()->roles->pluck('name')[0] == 'ceo')
+        @include('components.frontend.navbar-bottom-ceo')
+    @endif
+
+    @include('components.frontend.scripts')
+
+  </body>
+</html>

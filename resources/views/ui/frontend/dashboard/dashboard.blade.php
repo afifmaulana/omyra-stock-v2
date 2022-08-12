@@ -494,7 +494,7 @@
 
     @if (Auth::user()->roles->pluck('name')[0] == 'staff' || 'warehouse')
         @include('components.frontend.navbar-bottom')
-        @endif
+    @endif
 
 
     @if (Auth::user()->roles->pluck('name')[0] == 'ceo')
