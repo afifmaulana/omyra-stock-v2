@@ -78,8 +78,6 @@ class LoginController extends Controller
             $user = Auth::user();
            if ($user->roles->pluck('name')[0] == 'admin') {
                     return redirect()->intended(route('admin.dashboard'));
-            }else if ($user->roles->pluck('name')[0] == 'ceo') {
-                return redirect()->intended(route('frontend.dashboard.ceo'));
             } else {
                     return redirect()->intended(route('frontend.dashboard.index'));
             }
